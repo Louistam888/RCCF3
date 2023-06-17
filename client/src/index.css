@@ -18,9 +18,5 @@ code {
   color: blue;
 }
 
-h1 {
-  white-space: nowrap;
-  display: flex;
-  flex-direction: column
-}
+
 
