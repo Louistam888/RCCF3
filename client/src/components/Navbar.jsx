@@ -21,7 +21,7 @@ import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 const links = [
   { linkName: "Shop", path: "/shop" },
   { linkName: "About", path: "/about" },
-  { linkName: "ShoppingCart", path: "/cart" },
+  { linkName: "CA", path: "/cart" },
 ];
 
 const NavLink = ({ path, children }) => (
@@ -50,14 +50,14 @@ const Navbar = () => {
           <Link as={ReactLink} to="/">
             <Box display="flex">
               <Flex alignItems="center">
-                <Image src="assets/RCCF.png" alt="" boxSize={{ base: "50px", sm: "60px", md: "70px", lg: "80px" }} />
+                <Image src="assets/RCCF.png" alt="" boxSize={{ base: "40px", sm: "50px", md: "70px", lg: "80px" }} />
               </Flex>
               <Flex alignItems="center" pl={{ base: "5px", md: "10px" }}>
                 <Heading
                   as="h1"
                   display="flex"
                   flexDirection="column"
-                  fontSize={{ base: "1.05rem", sm: "1.3rem", md: "1.4rem", lg: "1.8rem" }}
+                  fontSize={{ base: "0.8rem", sm: "0.9rem", md: "1.1rem", lg: "1.8rem" }}
                   lineHeight="1"
                 >
                   <span className="h1Red">ROYAL CANADIAN</span>
@@ -68,7 +68,7 @@ const Navbar = () => {
           </Link>
 
           {/* NAV BAR MENU BUTTONS FOR EACH PAGE */}
-          <HStack display={{ base: "none", md: "block" }} ml="20px" fontSize="1.3rem">
+          <HStack display={{ base: "none", md: "block" }} fontSize={{ md: "0.8rem", lg: "1.2rem" }}>
             {links.map((link) => (
               <NavLink key={link.linkName} path={link.path}>
                 {link.linkName.toUpperCase()}
@@ -77,7 +77,7 @@ const Navbar = () => {
           </HStack>
         </HStack>
 
-        <Flex alignItems="center">
+        <Flex justifyContent="flex-end" alignItems="center">
           {/* DARK.LIGHT MODE ICON */}
           <NavLink>
             <Icon
@@ -86,22 +86,76 @@ const Navbar = () => {
               onClick={() => toggleColorMode()}
             />
           </NavLink>
-          <Button as={ReactLink} to="/login" m="10px" fontSize="1.2rem" variant="link">
+          <Button
+            as={ReactLink}
+            to="/login"
+            m={{ base: "1px", lg: "5px" }}
+            fontSize={{ base: "0.7rem", md: "0.8rem", lg: "1.2rem" }}
+            w={{ base: "50px", sm: "65px", md: "100px" }}
+            display={{base: "none", sm:"flex"}}
+          >
             Sign In
           </Button>
-          <Button as={ReactLink} to="/registration" m="10px" fontSize="1.2rem" _hover={{ bg: useColorModeValue("gray.300", "whiteAlpha.800") }} border="2px" px="5px" py="5px">
+          <Button
+            as={ReactLink}
+            to="/registration"
+            m={{ base: "3px", lg: "5px" }}
+            fontSize={{ base: "0.7rem", md: "0.8rem", lg: "1.2rem" }}
+            w={{ base: "50px", sm: "65px", md: "100px"}}
+            display={{base: "none", sm:"flex"}}
+            _hover={{ bg: useColorModeValue("gray.300", "whiteAlpha.800") }}
+          >
             Sign Up
           </Button>
+          {/* HAMBURGER MENU  */}
+          <IconButton
+            size="md"
+            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            display={{ md: "none" }}
+            ml="5px"
+            onClick={isOpen ? onClose : onOpen}
+          />
         </Flex>
-
-        {/* HAMBURGER MENU  */}
-        <IconButton
-          size="md"
-          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-          display={{ md: "none" }}
-          onClick={isOpen ? onClose : onOpen}
-        />
       </Flex>
+
+      {/* RENDER LINKS IN HAMBURGER MENU ON MOBILE ONLY */}
+      {isOpen ? (
+        <Box pb={4} display={{ md: "none" }}>
+          <Stack as="nav" spacing={4}>
+            {links.map((link) => (
+              <NavLink key={link.linkName} path={link.path}>
+                {link.linkName.toUpperCase()}
+              </NavLink>
+            ))}
+          </Stack>
+          <VStack>
+            
+          <Button
+            as={ReactLink}
+            to="/login"
+            m={{ base: "1px", lg: "5px" }}
+            fontSize={{ base: "0.7rem", md: "0.8rem", lg: "1.2rem" }}
+            w={{ base: "50px", sm: "65px", md: "100px" }}
+            display={{base:"flex", sm:"none"}}
+            
+          >
+            Sign In
+          </Button>
+          <Button
+            as={ReactLink}
+            to="/registration"
+            m={{ base: "3px", lg: "5px" }}
+            fontSize={{ base: "0.7rem", md: "0.8rem", lg: "1.2rem" }}
+            w={{ base: "50px", sm: "65px", md: "100px"}}
+            display={{base:"flex", sm:"none"}}
+            // _hover={{ bg: useColorModeValue("gray.300", "whiteAlpha.800") }}
+          >
+            Sign Up
+          </Button>
+          </VStack>
+          
+        </Box>
+      ) : null}
     </Box>
   );
 };
