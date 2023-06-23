@@ -43,14 +43,15 @@ const NavLink = ({ path, children }) => {
 const Navbar = () => {
   const { isOpen, onClose, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const bgColor = useColorModeValue("whiteAlpha.900", "gray.300");
+  const fontColorDarkLight = useColorModeValue("blackAlpha.900", "whiteAlpha.900");
+  const buttonBg = useColorModeValue("gray.300", "blackAlpha.900");
+  const hoverColor = useColorModeValue("blue.300", "red.600");
   const isBelowMd = window.innerWidth <= 480;
 
   return (
-    <Box
-      bg={useColorModeValue("whiteAlpha.900", "gray.300")}
-      px={10}
-      borderBottom={{ base: "1px", md: "2px" }}
-    >
+    <Box bg={bgColor} px={10} borderBottom={{ base: "1px", md: "2px" }}>
       <Flex h={90} alignItems="center" justifyContent="space-between">
         <Flex alignItems="center" w="100%" justifyContent="space-between">
           <HStack>
@@ -77,8 +78,8 @@ const Navbar = () => {
                     fontSize={{ base: "0.8rem", sm: "0.9rem", md: "1.1rem", lg: "1.8rem" }}
                     lineHeight="1"
                   >
-                    <span className="h1Red">ROYAL CANADIAN</span>
-                    <span className="h1Blue">CHAIR FORCE</span>
+                    <Text color="red">ROYAL CANADIAN</Text>
+                    <Text color="#0204a8">CHAIR FORCE</Text>
                   </Heading>
                 </Flex>
               </Box>
@@ -110,23 +111,26 @@ const Navbar = () => {
           <Button
             as={ReactLink}
             to="/login"
+            bg={buttonBg}
             m={{ base: "1px", lg: "5px" }}
             fontSize={{ base: "0.7rem", md: "0.8rem", lg: "1.2rem" }}
             w={{ base: "50px", sm: "65px", md: "100px" }}
             display={{ base: "none", sm: "flex" }}
+            _hover={{ bg: hoverColor }}
           >
-            <Text>Sign In</Text>
+            <Text color={fontColorDarkLight}>Sign In</Text>
           </Button>
           <Button
             as={ReactLink}
             to="/registration"
+            bg={buttonBg}
             m={{ base: "3px", lg: "5px" }}
             fontSize={{ base: "0.7rem", md: "0.8rem", lg: "1.2rem" }}
             w={{ base: "50px", sm: "65px", md: "100px" }}
             display={{ base: "none", sm: "flex" }}
-            _hover={{ bg: useColorModeValue("gray.300", "whiteAlpha.800") }}
+            _hover={{ bg: hoverColor }}
           >
-            <Text> Sign Up</Text>
+            <Text color={fontColorDarkLight}> Sign Up</Text>
           </Button>
 
           {/* HAMBURGER MENU */}
@@ -135,7 +139,10 @@ const Navbar = () => {
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             display={{ md: "none" }}
             ml="5px"
+            color={fontColorDarkLight}
+            bg={buttonBg}
             onClick={onToggle}
+            _hover={{ bg: hoverColor }}
           />
         </Flex>
       </Flex>
