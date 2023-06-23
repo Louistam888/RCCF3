@@ -34,6 +34,9 @@ const NavLink = ({ path, children }) => {
       color="blackAlpha.900"
       _hover={{ textDecoration: "none", bg: useColorModeValue("gray.300", "whiteAlpha.800") }}
       fontSize="xl"
+      h="40px"
+      display="flex"
+      alignItems="center"
     >
       {children}
     </Link>
@@ -112,7 +115,7 @@ const Navbar = () => {
             as={ReactLink}
             to="/login"
             bg={buttonBg}
-            m={{ base: "1px", lg: "5px" }}
+            m={{ base: "3px", lg: "5px" }}
             fontSize={{ base: "0.7rem", md: "0.8rem", lg: "1.2rem" }}
             w={{ base: "50px", sm: "65px", md: "100px" }}
             display={{ base: "none", sm: "flex" }}
