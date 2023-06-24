@@ -24,7 +24,7 @@ const links = [
   { linkName: "Cart", path: "/cart" },
 ];
 
-const NavLink = ({ path, children }) => {
+const NavLink = ({ path, linkName }) => {
   return (
     <Link
       as={ReactLink}
@@ -38,13 +38,13 @@ const NavLink = ({ path, children }) => {
       display="flex"
       alignItems="center"
     >
-      {children}
+      {linkName}
     </Link>
   );
 };
 
 const Navbar = () => {
-  const { isOpen, onClose, onToggle } = useDisclosure();
+  const { isOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 
   const bgColor = useColorModeValue("whiteAlpha.900", "gray.300");
