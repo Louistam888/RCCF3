@@ -24,7 +24,7 @@ const links = [
   { linkName: "Cart", path: "/cart" },
 ];
 
-const NavLink = ({ path, linkName }) => {
+const NavLink = ({ path, children }) => {
   return (
     <Link
       as={ReactLink}
@@ -38,7 +38,7 @@ const NavLink = ({ path, linkName }) => {
       display="flex"
       alignItems="center"
     >
-      {linkName}
+      {children}
     </Link>
   );
 };
