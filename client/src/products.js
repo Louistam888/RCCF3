@@ -33,7 +33,7 @@ const products = [
   {
     _id: "6369860d9540445b3c45e6b1",
     name: "Darkecho Massage Gaming Chair with foot rest",
-    image: "/images/DarkechoMassageGamingChair.jpg",
+    image: "/images/DarkechoMassage-GamingChair.jpg",
     description: "The perfect combination of value and comfort. Features a pull-out foot rest underneath the chair.",
     brand: "Darkecho",
     category: "Darkecho",
@@ -47,7 +47,7 @@ const products = [
   {
     _id: "6369863c9540445b3c45e6b3",
     name: "Darkecho Massage Gaming Chair with foot rest, vintage leather edition",
-    image: "/images/DarkechoMassageGamingChair.jpg",
+    image: "/images/DarkechoMassage-GamingChair.jpg",
     description:
       "A luxurious upgradefrom the basic massage gaming chair with foot rest. Features real leather, for the refined gamer.",
     brand: "Darkecho",
@@ -78,7 +78,7 @@ const products = [
   {
     _id: "636986749540445b3c45e6b7",
     name: "DarkechoHighSpeed",
-    image: "/images/DarkechoHighSpeed",
+    image: "/images/DarkechoHighSpeed.jpg",
     description:
       "Lightweight, high speed and low drag. This chair weighs less than 20 pounds and is ideal for gamers who can't sit still in one room while they game.",
     brand: "Darkecho",
