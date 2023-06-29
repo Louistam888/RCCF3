@@ -4,12 +4,13 @@ import {
   Box,
   Image,
   Badge,
-  useColorModeValue,
   Tooltip,
   Stack,
   Link,
   HStack,
   Text,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { FiSHoppingCart } from "react-icons/fi";
 import { Link as ReactLink } from "react-router-dom";
@@ -17,43 +18,48 @@ import { StarIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 
 const ProductCard = ({ product }) => {
+  const fontColorDarkLight = useColorModeValue("blackAlpha.900", "whiteAlpha.900");
   return (
-    <Stack
-      p="2"
-      spacing="3px"
-      bg={useColorModeValue("white", "gray.800")}
-      minW="240px"
-      h="450px"
-      borderWidth="1px"
-      rounded="lg"
-      shadow="lg"
-      position="relative"
-    >
-      {product.isNew && <Circle size="10px" position="absolute" top="2" right="2" bg="green.300" />}
-      {product.stock <= 0 && <Circle size="10px" position="absolute" top="2" right="2" bg="red.300" />}
-
-      <Image src={product.image} alt={product.name} rountedTop="lg" />
-      <Box flex="1" maxH="5" alignItems="baseline">
-        {product.stock <= 0 ? (
-          <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="red">
-            SOLD OUT
-          </Badge>
-        ) : null}
-        {product.isNew ? (
-          <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="green">
-            NEW
-          </Badge>
-        ) : null}
-      </Box>
-      <Flex mt="1" justifyContent="space-between" alignContent="center">
-        <Link as={ReactLink} to={`/product${product._id}`} pt="2" cursor="pointer">
-          <Box fontSize="2xl" fontWeight="semiBold" as="h2" lineHeight="tight">
+    <Link as={ReactLink} to={`/product${product._id}`} pt="2" cursor="pointer" _hover={{ textDecoration: "none" }}>
+      <Stack
+        p="2"
+        spacing="3px"
+        bg="whiteAlpha.900"
+        minW="240px"
+        h={{ base: "540px", sm: "550px" }}
+        boxShadow="2xl"
+        rounded="lg"
+        position="relative"
+        border="1px solid gray"
+      >
+        <Box h="30px">
+          {product.stock <= 0 ? (
+            <Badge rounded="5px" px="2" fontSize="xl" colorScheme="red">
+              SOLD OUT
+            </Badge>
+          ) : null}
+          {product.isNew ? (
+            <Badge rounded="5px" px="2" fontSize="xl" colorScheme="green">
+              NEW
+            </Badge>
+          ) : null}
+        </Box>
+        <Image src={product.image} alt={product.name} w="100%" h="auto" objectFit="auto" />
+        <Flex m="10px" justifyContent="space-between" justifyContent="center">
+          <Box
+            fontSize="xl"
+            fontWeight="semiBold"
+            as="h2"
+            lineHeight="25px"
+            width="100%"
+            textAlign="center"
+            color="blackAlpha.900"
+          >
             {product.name}
           </Box>
-        </Link>
-      </Flex>
-        
-    </Stack>
+        </Flex>
+      </Stack>
+    </Link>
   );
 };
 

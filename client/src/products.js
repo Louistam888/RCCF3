@@ -71,13 +71,12 @@ const products = [
     rating: 4,
     numReviews: 1,
     isNew: false,
-
     reviews: [],
-    stock: 700000,
+    stock: 0,
   },
   {
     _id: "636986749540445b3c45e6b7",
-    name: "DarkechoHighSpeed",
+    name: "Darkecho High Speed Edition",
     image: "/images/DarkechoHighSpeed.jpg",
     description:
       "Lightweight, high speed and low drag. This chair weighs less than 20 pounds and is ideal for gamers who can't sit still in one room while they game.",

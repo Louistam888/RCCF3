@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import theme from "./theme/Theme";
 
 import Navbar from "./components/Navbar";
-import ProductsScreen from "./screens/ProductsScreen";
+import ProductsScreenAKRacing from "./screens/productsScreenByBrand/ProductsScreenAKRacing";
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
         <Navbar />
         <main>
           <Routes>
-            <Route path="/shop" element={<ProductsScreen />}></Route>
+            <Route path="/shop" element={<ProductsScreenAKRacing />}></Route>
           </Routes>
         </main>
       </Router>
