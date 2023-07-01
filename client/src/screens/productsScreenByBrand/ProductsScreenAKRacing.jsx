@@ -1,9 +1,11 @@
-import { Center, Grid, Flex, Box, Image, Heading } from "@chakra-ui/react";
+import { Center, Grid, Flex, Box, Image, Heading, useDisclosure } from "@chakra-ui/react";
 import sortByNew from "../../functions/sortByNew";
 import products from "../../products";
 import ProductCard from "../ProductCard";
 
 const ProductsScreenAKRacing = () => {
+  const { isOpen } = useDisclosure({ defaultIsOpen: false });
+
   //FUNCTION TO SORT CHAIRS BY NEW STATUS
   const chairArray = sortByNew(products);
 
@@ -11,7 +13,14 @@ const ProductsScreenAKRacing = () => {
     <>
       <Flex h="250px" overflow="hidden" position="relative">
         <Image src="/assets/brandPhotos/brandBanner.jpg" w="100%" />
-        <Flex position="absolute" justifyContent="center" alignItems="center" w="100%" h="100%">
+        <Flex
+          position="absolute"
+          justifyContent="center"
+          alignItems="center"
+          w="100%"
+          h="100%"
+          className="fadeIn"
+        >
           <Heading fontSize="7xl" textTransform="uppercase" color="whiteAlpha.800">
             AKRacing
           </Heading>
