@@ -1,9 +1,10 @@
-//SORT ITEMS BY BRAND, ASSIGN NEW ITEMS TO THE FRONT OF ARRAY
+//ASSIGNS NEW ITEMS TO THE FRONT OF ARRAY
 const sortByBrand = (products) => {
+
   const isNew = [];
   const chairArray = [];
 
-  const sortedChairs = products.map((item) => {
+  products.forEach((item) => {
     if (item.isNew === true) {
       isNew.push(item);
     } else {
@@ -14,14 +15,16 @@ const sortByBrand = (products) => {
   chairArray.sort((a, b) => {
     if (a.name > b.name) return 1;
     if (a.name < b.name) return -1;
+    return 0;
   });
 
   isNew.sort((a, b) => {
     if (a.name > b.name) return -1;
     if (a.name < b.name) return 1;
+    return 0;
   });
 
-  isNew.map((item) => {
+  isNew.forEach((item) => {
     chairArray.unshift(item);
   });
 
