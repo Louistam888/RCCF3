@@ -2,8 +2,10 @@ import { Flex, Box, Image, Badge, Tooltip, Stack, Link, Text, useColorModeValue,
 import { FiShoppingCart } from "react-icons/fi";
 import { Link as ReactLink } from "react-router-dom";
 import { StarIcon } from "@chakra-ui/icons";
+import { useState } from "react";
 
 const Rating = ({ rating, numReviews }) => {
+  const { iconSize, setIconSize } = useState("14px");
   return (
     <Flex>
       <Box spacing="2px">
