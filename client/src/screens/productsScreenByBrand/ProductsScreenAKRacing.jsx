@@ -5,16 +5,12 @@ import {
   Box,
   Image,
   Heading,
-  useDisclosure,
-  useColorModeValue,
-  useColorMode,
 } from "@chakra-ui/react";
 import sortByNew from "../../functions/sortByNew";
 import products from "../../products";
 import ProductCard from "../ProductCard";
 
 const ProductsScreenAKRacing = () => {
-  const { isOpen } = useDisclosure({ defaultIsOpen: false });
 
   //FUNCTION TO SORT CHAIRS BY NEW STATUS
   const chairArray = sortByNew(products);

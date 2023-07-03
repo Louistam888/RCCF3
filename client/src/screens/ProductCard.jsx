@@ -1,20 +1,7 @@
-import {
-  Flex,
-  Circle,
-  Box,
-  Image,
-  Badge,
-  Tooltip,
-  Stack,
-  Link,
-  HStack,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import { FiSHoppingCart } from "react-icons/fi";
+import { Flex, Box, Image, Badge, Tooltip, Stack, Link, Text, useColorModeValue, Button, Icon } from "@chakra-ui/react";
+import { FiShoppingCart } from "react-icons/fi";
 import { Link as ReactLink } from "react-router-dom";
 import { StarIcon } from "@chakra-ui/icons";
-import { useState } from "react";
 
 const ProductCard = ({ product }) => {
   const borderColor = useColorModeValue("gray", "white");
@@ -52,10 +39,24 @@ const ProductCard = ({ product }) => {
           ) : null}
         </Box>
         <Image src={product.image} alt={product.name} w="100%" h="auto" objectFit="auto" rounded="5px" />
-        <Flex m="10px" justifyContent="space-between" justifyContent="center">
+        <Flex
+          m="10px"
+          justifyContent="space-between"
+          justifyContent="center"
+          alignItems="center"
+          flexDirection="column"
+        >
           <Box fontSize="xl" fontWeight="semiBold" as="h2" lineHeight="25px" width="100%" textAlign="center">
-            {product.name}
+            <Text>{product.name}</Text>
           </Box>
+          <Box>
+            <Text>${product.price.toFixed(2)}</Text>
+          </Box>
+          <Tooltip label="Add to Cart" bg="white" placement="top" color="gray.800" fontSize="2xl">
+            <Button variant="ghost" display="flex" disabled={product.stock <= 0}>
+              <Icon as={FiShoppingCart} h={7} w={7} alignSelf="center"></Icon>
+            </Button>
+          </Tooltip>
         </Flex>
       </Stack>
     </Link>
