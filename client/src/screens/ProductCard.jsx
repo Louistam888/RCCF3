@@ -2,6 +2,24 @@ import { Flex, Box, Image, Badge, Tooltip, Stack, Link, Text, useColorModeValue,
 import { FiShoppingCart } from "react-icons/fi";
 import { Link as ReactLink } from "react-router-dom";
 import { StarIcon } from "@chakra-ui/icons";
+import { useState } from "react";
+
+const Rating = ({ rating, numReviews }) => {
+  const { iconSize, setIconSize } = useState("14px");
+
+  return (
+    <Flex>
+      <Box spacing="2px">
+        <StarIcon size={iconSize} w="14px" color="orange.500" />
+        <StarIcon size={iconSize} w="14px" color={rating >= 2 ? "orange.500" : "gray"} />
+        <StarIcon size={iconSize} w="14px" color={rating >= 3 ? "orange.500" : "gray"} />
+        <StarIcon size={iconSize} w="14px" color={rating >= 4 ? "orange.500" : "gray"} />
+        <StarIcon size={iconSize} w="14px" color={rating >= 5 ? "orange.500" : "gray"} />
+      </Box>
+      <Text ml="3px">{`${numReviews} ${numReviews === 1 ? "Review" : "Reviews"}`}</Text>
+    </Flex>
+  );
+};
 
 const ProductCard = ({ product }) => {
   const borderColor = useColorModeValue("gray", "white");
@@ -19,14 +37,14 @@ const ProductCard = ({ product }) => {
         p="2"
         spacing="3px"
         minW="240px"
-        h={{ base: "540px", sm: "550px" }}
-        boxShadow="2xl"
+        h="550px"
+        boxShadow="0 4px 12px rgba(0, 0, 0, 0.5)"
         rounded="lg"
         position="relative"
         border={`${borderWidth} solid ${borderColor}`}
         _hover={{ boxShadow: "dark-lg" }}
       >
-        <Box h="30px" mb="5px">
+        <Box h="20px" position={{ base: "relative", sm: "absolute" }} top="0" left="0" m="8px">
           {product.stock <= 0 ? (
             <Badge rounded="5px" px="2" fontSize="xl" color="white" bg="red">
               SOLD OUT
@@ -46,17 +64,57 @@ const ProductCard = ({ product }) => {
           alignItems="center"
           flexDirection="column"
         >
-          <Box fontSize="xl" fontWeight="semiBold" as="h2" lineHeight="25px" width="100%" textAlign="center">
-            <Text>{product.name}</Text>
+          <Box
+            fontSize="xl"
+            fontWeight="semiBold"
+            as="h3"
+            lineHeight="25px"
+            width="100%"
+            textAlign="center"
+            minH="50px"
+            mb="12px"
+          >
+            <Text
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: "2",
+                WebkitBoxOrient: "vertical",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+              }}
+            >
+              {product.name}
+            </Text>
           </Box>
           <Box>
-            <Text>${product.price.toFixed(2)}</Text>
+            <Rating rating={product.rating} numReviews={product.numReviews} />
           </Box>
-          <Tooltip label="Add to Cart" bg="white" placement="top" color="gray.800" fontSize="2xl">
-            <Button variant="ghost" display="flex" disabled={product.stock <= 0}>
-              <Icon as={FiShoppingCart} h={7} w={7} alignSelf="center"></Icon>
-            </Button>
-          </Tooltip>
+          <Flex fontSize="2xl" mb="3px" flexDirection={{ base: "row", sm: "column" }}>
+            <Text>${product.price.toFixed(2)}</Text>
+            <Tooltip
+              label="Add to Cart"
+              bg="blue.100"
+              border="1px solid black"
+              placement="bottom"
+              color="black"
+              fontSize="2xl"
+              rounded="5px"
+            >
+              <Button
+                variant="ghost"
+                disabled={product.stock <= 0}
+                alt="Add item to cart"
+                _hover={{ bg: "none", transform: "scale(1.5)" }}
+              >
+                <Icon
+                  as={FiShoppingCart}
+                  h={{ base: "23px", sm: "30px" }}
+                  w={{ base: "23px", sm: "30px" }}
+                  alignSelf="center"
+                ></Icon>
+              </Button>
+            </Tooltip>
+          </Flex>
         </Flex>
       </Stack>
     </Link>

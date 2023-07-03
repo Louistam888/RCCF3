@@ -1,17 +1,9 @@
-import {
-  Center,
-  Grid,
-  Flex,
-  Box,
-  Image,
-  Heading,
-} from "@chakra-ui/react";
+import { Center, Grid, Flex, Box, Image, Heading } from "@chakra-ui/react";
 import sortByNew from "../../functions/sortByNew";
 import products from "../../products";
 import ProductCard from "../ProductCard";
 
 const ProductsScreenAKRacing = () => {
-
   //FUNCTION TO SORT CHAIRS BY NEW STATUS
   const chairArray = sortByNew(products);
 
@@ -27,7 +19,7 @@ const ProductsScreenAKRacing = () => {
       </Flex>
       <Grid
         templateColumns="repeat(auto-fit, minmax(280px, 350px))"
-        gap={{ base: "0px", sm: "5px", md: "10px", lg: "20px" }}
+        gap={{ base: "15px", md: "10px", lg: "20px" }}
         justifyContent="center"
         mx="5.5%"
       >
