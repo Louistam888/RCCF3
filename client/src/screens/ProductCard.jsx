@@ -2,19 +2,16 @@ import { Flex, Box, Image, Badge, Tooltip, Stack, Link, Text, useColorModeValue,
 import { FiShoppingCart } from "react-icons/fi";
 import { Link as ReactLink } from "react-router-dom";
 import { StarIcon } from "@chakra-ui/icons";
-import { useState } from "react";
 
 const Rating = ({ rating, numReviews }) => {
-  const { iconSize, setIconSize } = useState("14px");
-
   return (
     <Flex>
       <Box spacing="2px">
-        <StarIcon size={iconSize} w="14px" color="orange.500" />
-        <StarIcon size={iconSize} w="14px" color={rating >= 2 ? "orange.500" : "gray"} />
-        <StarIcon size={iconSize} w="14px" color={rating >= 3 ? "orange.500" : "gray"} />
-        <StarIcon size={iconSize} w="14px" color={rating >= 4 ? "orange.500" : "gray"} />
-        <StarIcon size={iconSize} w="14px" color={rating >= 5 ? "orange.500" : "gray"} />
+        <StarIcon color="orange.500" />
+        <StarIcon color={rating >= 2 ? "orange.500" : "gray"} />
+        <StarIcon color={rating >= 3 ? "orange.500" : "gray"} />
+        <StarIcon color={rating >= 4 ? "orange.500" : "gray"} />
+        <StarIcon color={rating >= 5 ? "orange.500" : "gray"} />
       </Box>
       <Text ml="3px">{`${numReviews} ${numReviews === 1 ? "Review" : "Reviews"}`}</Text>
     </Flex>
@@ -57,13 +54,7 @@ const ProductCard = ({ product }) => {
           ) : null}
         </Box>
         <Image src={product.image} alt={product.name} w="100%" h="auto" objectFit="auto" rounded="5px" />
-        <Flex
-          m="10px"
-          justifyContent="space-between"
-          justifyContent="center"
-          alignItems="center"
-          flexDirection="column"
-        >
+        <Flex m="10px" justifyContent="center" alignItems="center" flexDirection="column">
           <Box
             fontSize="xl"
             fontWeight="semiBold"
