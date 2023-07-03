@@ -1,7 +1,7 @@
 import { Center, Grid, Flex, Box, Image, Heading } from "@chakra-ui/react";
 import sortByNew from "../../functions/sortByNew";
 import products from "../../products";
-import ProductCard from "../ProductCard";
+import ProductCard from "../../components/ProductCard";
 
 const ProductsScreenAKRacing = () => {
   //FUNCTION TO SORT CHAIRS BY NEW STATUS
