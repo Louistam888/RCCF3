@@ -10,6 +10,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+.rccfRed {
+  color: red;
+}
+
+.rccfBlue {
+  color: #0204a8
+}
+
 
 .fadeIn {
   opacity: 0;

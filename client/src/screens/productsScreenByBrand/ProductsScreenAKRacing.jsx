@@ -1,4 +1,14 @@
-import { Center, Grid, Flex, Box, Image, Heading, useDisclosure } from "@chakra-ui/react";
+import {
+  Center,
+  Grid,
+  Flex,
+  Box,
+  Image,
+  Heading,
+  useDisclosure,
+  useColorModeValue,
+  useColorMode,
+} from "@chakra-ui/react";
 import sortByNew from "../../functions/sortByNew";
 import products from "../../products";
 import ProductCard from "../ProductCard";
@@ -10,25 +20,18 @@ const ProductsScreenAKRacing = () => {
   const chairArray = sortByNew(products);
 
   return (
-    <>
-      <Flex h="250px" overflow="hidden" position="relative">
+    <Box>
+      <Flex h={{ base: "180px", md: "250px" }} overflow="hidden" position="relative" mb={{ base: "20px", sm: "50px" }}>
         <Image src="/assets/brandPhotos/brandBanner.jpg" w="100%" />
-        <Flex
-          position="absolute"
-          justifyContent="center"
-          alignItems="center"
-          w="100%"
-          h="100%"
-          className="fadeIn"
-        >
-          <Heading fontSize="7xl" textTransform="uppercase" color="whiteAlpha.800">
+        <Flex position="absolute" justifyContent="center" alignItems="center" w="100%" h="100%" className="fadeIn">
+          <Heading fontSize={{ base: "5xl", sm: "7xl" }} textTransform="uppercase" color="whiteAlpha.900">
             AKRacing
           </Heading>
         </Flex>
       </Flex>
       <Grid
         templateColumns="repeat(auto-fit, minmax(280px, 350px))"
-        gap={{ base: "0px", sm: "5px", md: "10px", lg: "15px" }}
+        gap={{ base: "0px", sm: "5px", md: "10px", lg: "20px" }}
         justifyContent="center"
         mx="5.5%"
       >
@@ -40,7 +43,7 @@ const ProductsScreenAKRacing = () => {
           </Box>
         ))}
       </Grid>
-    </>
+    </Box>
   );
 };
 
