@@ -8,7 +8,7 @@ const ProductsScreenAKRacing = () => {
   const chairArray = sortByNew(products);
 
   return (
-    <Box>
+    <Box pt="90px">
       <Flex h={{ base: "180px", md: "250px" }} overflow="hidden" position="relative" mb={{ base: "20px", sm: "50px" }}>
         <Image src="/assets/brandPhotos/brandBanner.jpg" w="100%" />
         <Flex position="absolute" justifyContent="center" alignItems="center" w="100%" h="100%" className="fadeIn">
