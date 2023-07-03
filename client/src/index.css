@@ -10,5 +10,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+.rccfRed {
+  color: red;
+}
+
+.rccfBlue {
+  color: #0204a8
+}
 
 
+.fadeIn {
+  opacity: 0;
+  animation: fade 2.5s forwards;
+}
+
+@keyframes fade {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}

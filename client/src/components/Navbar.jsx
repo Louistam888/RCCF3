@@ -81,8 +81,8 @@ const Navbar = () => {
                     fontSize={{ base: "0.8rem", sm: "0.9rem", md: "1.1rem", lg: "1.8rem" }}
                     lineHeight="1"
                   >
-                    <Text color="red">ROYAL CANADIAN</Text>
-                    <Text color="#0204a8">CHAIR FORCE</Text>
+                    <span className="rccfRed">ROYAL CANADIAN</span>
+                    <span className="rccfBlue">CHAIR FORCE</span>
                   </Heading>
                 </Flex>
               </Box>
