@@ -1,5 +1,5 @@
 import { Center, Grid, Flex, Box, Image, Heading } from "@chakra-ui/react";
-import sortByNew from "../../functions/sortByNew";
+import sortByNew from "../../functions/sortByNew.js";
 import products from "../../products";
 import ProductCard from "../../components/ProductCard";
 

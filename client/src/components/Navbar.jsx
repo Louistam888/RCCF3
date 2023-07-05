@@ -46,11 +46,10 @@ const NavLink = ({ path, children }) => {
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-  const bgColor = {base: useColorModeValue("white", "gray.300"), sm:useColorModeValue("whiteAlpha.900", "gray.300") }
+  const bgColor = { base: useColorModeValue("white", "gray.300"), sm: useColorModeValue("whiteAlpha.900", "gray.300") };
   const fontColorDarkLight = useColorModeValue("blackAlpha.900", "whiteAlpha.900");
   const buttonBg = useColorModeValue("gray.300", "blackAlpha.900");
   const hoverColor = useColorModeValue("blue.300", "red.600");
-  const isBelowMd = window.innerWidth <= 480;
 
   return (
     <Box bg={bgColor} px={10} borderBottom={{ base: "1px", md: "2px" }} position="fixed" w="100%" zIndex="1000">
@@ -160,16 +159,14 @@ const Navbar = () => {
             ))}
 
             {/* THESE ARE ONLY RENDERED IN HAMBURGER MENU BELOW 480PX VW */}
-            {isBelowMd ? (
-              <>
-                <NavLink>
-                  <Text textTransform="uppercase">Sign in</Text>
-                </NavLink>
-                <NavLink>
-                  <Text textTransform="uppercase">Sign Up</Text>
-                </NavLink>
-              </>
-            ) : null}
+            <Box display={{ base: "relative", sm: "none" }}>
+              <NavLink>
+                <Text textTransform="uppercase">Sign in</Text>
+              </NavLink>
+              <NavLink>
+                <Text textTransform="uppercase">Sign Up</Text>
+              </NavLink>
+            </Box>
           </Stack>
         </Box>
       </Collapse>
