@@ -31,9 +31,27 @@ const Footer = () => {
           justifyContent="center"
           mt={{ base: "20px", md: "0" }}
         >
-          <IconButton as="a" href="#" aria-label="Instagram" icon={<FaInstagram fontSize="50px" />} />
-          <IconButton as="a" href="#" aria-label="YouTube" icon={<FaYoutube fontSize="50px" />} />
-          <IconButton as="a" href="#" aria-label="Facebook" icon={<FaFacebook fontSize="50px" />} />
+          <IconButton
+            as="a"
+            href="#"
+            aria-label="Instagram"
+            fontSize={{ base: "2xl", sm: "3xl", md: "4xl", lg: "5xl" }}
+            icon={<FaInstagram />}
+          />
+          <IconButton
+            as="a"
+            href="#"
+            aria-label="YouTube"
+            fontSize={{ base: "2xl", sm: "3xl", md: "4xl", lg: "5xl" }}
+            icon={<FaYoutube />}
+          />
+          <IconButton
+            as="a"
+            href="#"
+            aria-label="Facebook"
+            fontSize={{ base: "2xl", sm: "3xl", md: "4xl", lg: "5xl" }}
+            icon={<FaFacebook />}
+          />
         </ButtonGroup>
       </Flex>
     </Box>

@@ -22,6 +22,25 @@ code {
 
 /* MAIN BACKGROUND IMAGE */
 
+.mainFade1 {
+  animation: mainFade1 2s;
+}
+
+.mainFade2 {
+  animation: mainFade2 5s;
+}
+
+@keyframes mainFade1 {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+@keyframes mainFade2 {
+  0% {opacity: 0;}
+  45% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
 /* FADE IN AMINMATIONS FOR BRAND PAGES  */
 .fadeIn {
   opacity: 0;
