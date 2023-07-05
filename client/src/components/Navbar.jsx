@@ -53,7 +53,7 @@ const Navbar = () => {
   const isBelowMd = window.innerWidth <= 480;
 
   return (
-    <Box bg={bgColor} px={10} borderBottom={{ base: "1px", md: "2px" }} position="absolute" w="100%" zIndex="1000">
+    <Box bg={bgColor} px={10} borderBottom={{ base: "1px", md: "2px" }} position="fixed" w="100%" zIndex="1000">
       <Flex h={90} alignItems="center" justifyContent="space-between">
         <Flex alignItems="center" w="100%" justifyContent="space-between">
           <HStack>
