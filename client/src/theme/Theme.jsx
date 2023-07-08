@@ -7,7 +7,10 @@ const theme = extendTheme({
   },
   styles: {
     global: (state) => ({
-      main: {
+      hr: {
+        borderColor: state.colorMode === "dark" ? "whiteAlpha.900" : "gray.900",
+      },
+      body: {
         bg: state.colorMode === "dark" ? "black" : "white",
         color: state.colorMode === "dark" ? "whiteAlpha.900" : "blackAlpha.900",
       },

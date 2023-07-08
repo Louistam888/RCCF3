@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Anek Latin", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Anek Latin", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -10,21 +10,48 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+/* NAV BAR LOGO SPANS */
+
 .rccfRed {
   color: red;
 }
 
 .rccfBlue {
-  color: #0204a8
+  color: #0204a8;
 }
 
+/* MAIN BACKGROUND IMAGE */
 
+.mainFade1 {
+  animation: mainFade1 2s;
+}
+
+.mainFade2 {
+  animation: mainFade2 5s;
+}
+
+@keyframes mainFade1 {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+@keyframes mainFade2 {
+  0% {opacity: 0;}
+  45% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+/* FADE IN AMINMATIONS FOR BRAND PAGES  */
 .fadeIn {
   opacity: 0;
   animation: fade 2.5s forwards;
 }
 
 @keyframes fade {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

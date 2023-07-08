@@ -1,14 +1,14 @@
 import { Center, Grid, Flex, Box, Image, Heading } from "@chakra-ui/react";
-import sortByNew from "../../functions/sortByNew";
+import sortByNew from "../../functions/sortByNew.js";
 import products from "../../products";
-import ProductCard from "../ProductCard";
+import ProductCard from "../../components/ProductCard";
 
 const ProductsScreenAKRacing = () => {
   //FUNCTION TO SORT CHAIRS BY NEW STATUS
   const chairArray = sortByNew(products);
 
   return (
-    <Box>
+    <Box pt="90px">
       <Flex h={{ base: "180px", md: "250px" }} overflow="hidden" position="relative" mb={{ base: "20px", sm: "50px" }}>
         <Image src="/assets/brandPhotos/brandBanner.jpg" w="100%" />
         <Flex position="absolute" justifyContent="center" alignItems="center" w="100%" h="100%" className="fadeIn">

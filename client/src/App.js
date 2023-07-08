@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import theme from "./theme/Theme";
 
 import Navbar from "./components/Navbar";
+import LandingScreen from "./screens/LandingScreen";
+import Footer from "./components/Footer";
 import ProductsScreenAKRacing from "./screens/productsScreenByBrand/ProductsScreenAKRacing";
 
 const App = () => {
@@ -16,9 +18,11 @@ const App = () => {
         <Navbar />
         <main>
           <Routes>
+            <Route path="/" element={<LandingScreen />}></Route>
             <Route path="/shop" element={<ProductsScreenAKRacing />}></Route>
           </Routes>
         </main>
+        <Footer />
       </Router>
     </ChakraProvider>
   );
