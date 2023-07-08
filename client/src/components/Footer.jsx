@@ -1,10 +1,10 @@
-import { Box, Flex, Text, useColorModeValue, Button, ButtonGroup, IconButton } from "@chakra-ui/react";
+import { Box, Flex, Text, ButtonGroup, IconButton } from "@chakra-ui/react";
 import { FaInstagram, FaFacebook, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
  
   return (
-    <Box px={{ base: "5px", sm: "10px" }} ml="30px" mr="30px" mt="60px" mb="30px">
+    <Box px={{ base: "5px", sm: "10px" }} ml="30px" mr="30px" mt="20px" mb="30px">
       <hr />
       <Flex
         flexDirection={{ base: "column", md: "row" }}

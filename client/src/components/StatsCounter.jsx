@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import CountUp from "react-countup";
 import ScrollTrigger from "react-scroll-trigger";
@@ -19,18 +19,20 @@ const StatsCounter = () => {
             backgroundColor="whiteAlpha.900"
             rounded="5px"
             px="15px"
+            my={{ base: "5px", sm: "0" }}
             boxShadow="0 4px 12px rgba(0, 0, 0, 0.5)"
           >
-            <Text className="rccfRed" fontSize={{ base: "xl", md: "4xl", lg: "5xl", xl: "6xl" }}>
+            <Text className="rccfRed" fontSize={{ base: "4xl", sm: "xl", md: "4xl", lg: "5xl", xl: "6xl" }}>
               {counterOn && <CountUp start={0} end={5000000} duration={2.5} delay={0} />} +
             </Text>
             <Text
               overflowWrap="break-word"
               fontSize={{ base: "lg", sm: "md", md: "xl", lg: "2xl", xl: "3xl" }}
-              lineHeight={{ base: "28px", sm: "20px", xl: "32px" }}
+              lineHeight={{ base: "28px", sm: "20px", md: "22px", lg: "25px", xl: "32px" }}
               fontWeight="semibold"
               h={{ base: "auto", md: "64px" }}
               w="100%"
+              color="black"
             >
               CHAIRS SOLD WORLDWIDE
             </Text>
@@ -45,18 +47,20 @@ const StatsCounter = () => {
             backgroundColor="whiteAlpha.900"
             rounded="5px"
             px="15px"
+            my={{ base: "5px", sm: "0" }}
             boxShadow="0 4px 12px rgba(0, 0, 0, 0.5)"
           >
-            <Text className="rccfRed" fontSize={{ base: "xl", md: "4xl", lg: "5xl", xl: "6xl" }}>
+            <Text className="rccfRed" fontSize={{ base: "4xl", sm: "xl", md: "4xl", lg: "5xl", xl: "6xl" }}>
               {counterOn && <CountUp start={0} end={90} duration={2.5} delay={0} />} +
             </Text>
             <Text
               overflowWrap="break-word"
               fontSize={{ base: "lg", sm: "md", md: "xl", lg: "2xl", xl: "3xl" }}
-              lineHeight={{ base: "28px", sm: "20px", xl: "32px" }}
+              lineHeight={{ base: "28px", sm: "20px", md: "22px", lg: "25px", xl: "32px" }}
               fontWeight="semibold"
               h={{ base: "auto", md: "64px" }}
               w="100%"
+              color="black"
             >
               COUNTRIES SERVED
             </Text>
@@ -71,18 +75,20 @@ const StatsCounter = () => {
             backgroundColor="whiteAlpha.900"
             rounded="5px"
             px="15px"
+            my={{ base: "5px", sm: "0" }}
             boxShadow="0 4px 12px rgba(0, 0, 0, 0.5)"
           >
-            <Text className="rccfRed" fontSize={{ base: "xl", md: "4xl", lg: "5xl", xl: "6xl" }}>
+            <Text className="rccfRed" fontSize={{ base: "4xl", sm: "xl", md: "4xl", lg: "5xl", xl: "6xl" }}>
               {counterOn && <CountUp start={0} end={180} duration={2.5} delay={0} />} +
             </Text>
             <Text
               overflowWrap="break-word"
               fontSize={{ base: "lg", sm: "md", md: "xl", lg: "2xl", xl: "3xl" }}
-              lineHeight={{ base: "28px", sm: "20px", xl: "32px" }}
+              lineHeight={{ base: "28px", sm: "20px", md: "22px", lg: "25px", xl: "32px" }}
               fontWeight="semibold"
               h={{ base: "auto", md: "64px" }}
               w="100%"
+              color="black"
             >
               DISTRIBUTOR PARTNERS
             </Text>
