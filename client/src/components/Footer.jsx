@@ -2,7 +2,7 @@ import { Box, Flex, Text, useColorModeValue, Button, ButtonGroup, IconButton } f
 import { FaInstagram, FaFacebook, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
-  const lineColor = useColorModeValue("black", "white");
+ 
   return (
     <Box px={{ base: "5px", sm: "10px" }} ml="30px" mr="30px" mt="60px" mb="30px">
       <hr />
