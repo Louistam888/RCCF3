@@ -17,7 +17,7 @@ const Footer = () => {
           fontSize={{ base: "15px", sm: "xl" }}
         >
           <Text fontWeight="semibold">Royal Canadian Chair Force</Text>
-          <Text>1Toronto St.</Text>
+          <Text>1 Toronto St.</Text>
           <Text>416-888-8888</Text>
           <Text>
             <a href="mailto: info@royalcanadianchairforce.com">info@royalcanadianchairforce.com</a>
