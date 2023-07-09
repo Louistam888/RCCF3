@@ -5,7 +5,7 @@ const sortByBrand = (products) => {
   const chairArray = [];
 
   products.forEach((item) => {
-    if (item.isNew === true) {
+    if (item.productIsNew === true) {
       isNew.push(item);
     } else {
       chairArray.push(item);

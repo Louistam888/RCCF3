@@ -49,7 +49,7 @@ const ProductCard = ({ product }) => {
               SOLD OUT
             </Badge>
           ) : null}
-          {product.isNew ? (
+          {product.productIsNew ? (
             <Badge rounded="5px" px="2" fontSize="xl" color="white" bg="green">
               NEW
             </Badge>
@@ -83,7 +83,7 @@ const ProductCard = ({ product }) => {
             <Rating rating={product.rating} numReviews={product.numReviews} />
           </Box>
           <Flex fontSize="2xl" mb="3px" flexDirection={{ base: "row", sm: "column" }}>
-            <Text>${product.price.toFixed(2)}</Text>
+            <Text>${Number(product.price).toFixed(2)}</Text>
             <Tooltip
               label="Add to Cart"
               bg="blue.100"

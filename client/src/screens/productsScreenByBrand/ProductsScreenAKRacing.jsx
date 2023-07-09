@@ -1,9 +1,19 @@
 import { Center, Grid, Flex, Box, Image, Heading } from "@chakra-ui/react";
 import sortByNew from "../../functions/sortByNew.js";
-import products from "../../products";
 import ProductCard from "../../components/ProductCard";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../../redux/actions/productActions.js";
+import { useEffect } from "react";
 
 const ProductsScreenAKRacing = () => {
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.products);
+  const { loading, error, products } = productList;
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch]);
+
   //FUNCTION TO SORT CHAIRS BY NEW STATUS
   const chairArray = sortByNew(products);
 

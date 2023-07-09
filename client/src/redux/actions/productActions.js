@@ -5,7 +5,7 @@ import { setProducts, setLoading, setError } from "../slices/products";
 export const getProducts = () => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const { data } = await axios.get("https://localhost:3000/api/products");
+    const { data } = await axios.get("api/products");
     dispatch(setProducts(data));
   } catch (error) {
     dispatch(
@@ -14,7 +14,7 @@ export const getProducts = () => async (dispatch) => {
           ? error.response.data.message
           : error.message
           ? error.message
-          : "An unexpected error has occurred. Please try again later"
+          : "An unexpected error has occurred. Please try again later."
       )
     );
   }
