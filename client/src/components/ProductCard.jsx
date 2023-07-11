@@ -27,7 +27,7 @@ const ProductCard = ({ product }) => {
   return (
     <Link
       as={ReactLink}
-      to={`/product${product._id}`}
+      to={`/product/${product._id}`}
       pt="2"
       cursor="pointer"
       _hover={{ textDecoration: "none", transform: "scale(1.03)" }}

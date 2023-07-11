@@ -1,12 +1,12 @@
-import { Box, Flex, Heading, Grid, Image, Center } from "@chakra-ui/react";
+import { Center, Grid, Flex, Box, Image, Heading } from "@chakra-ui/react";
+import sortByNew from "../functions/sortByNew.js";
+import ProductCard from "../components/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
-import BrandCard from "../components/BrandCard";
 import { getProducts } from "../redux/actions/productActions.js";
 import { useEffect } from "react";
 
-const Shop = () => {
+const ProductsScreenAKRacing = () => {
   const dispatch = useDispatch();
-
   const productList = useSelector((state) => state.products);
   const { loading, error, products } = productList;
 
@@ -14,25 +14,16 @@ const Shop = () => {
     dispatch(getProducts());
   }, [dispatch]);
 
-  //FUNCTION TAKES ALL BRANDS, REMOVES DUPLICATES AND ALPHABETIZES
-
-  const allBrands = [];
-
-  products.forEach((object) => {
-    const brand = object.brand;
-    allBrands.push(brand);
-  });
-
-  const reducedArrayOfBrands = [...new Set(allBrands)];
-  const brandsToDisplay = reducedArrayOfBrands.sort();
+  //FUNCTION TO SORT CHAIRS BY NEW STATUS
+  const chairArray = sortByNew(products);
 
   return (
     <Box pt="90px">
       <Flex h={{ base: "180px", md: "250px" }} overflow="hidden" position="relative" mb={{ base: "20px", sm: "50px" }}>
-        <Image src="/assets/tech.jpg" w="100%" />
+        <Image src="/assets/brandPhotos/brandBanner.jpg" w="100%" />
         <Flex position="absolute" justifyContent="center" alignItems="center" w="100%" h="100%" className="fadeIn">
           <Heading fontSize={{ base: "5xl", sm: "7xl" }} textTransform="uppercase" color="whiteAlpha.900">
-            our brands
+            AKRacing
           </Heading>
         </Flex>
       </Flex>
@@ -42,10 +33,10 @@ const Shop = () => {
         justifyContent="center"
         mx="5.5%"
       >
-        {brandsToDisplay.map((brand, index) => (
-          <Box key={index}>
+        {chairArray.map((product) => (
+          <Box key={product._id}>
             <Center w="100%" h="550px">
-              <BrandCard brand={brand} />
+              <ProductCard product={product} />
             </Center>
           </Box>
         ))}
@@ -54,4 +45,4 @@ const Shop = () => {
   );
 };
 
-export default Shop;
+export default ProductsScreenAKRacing;

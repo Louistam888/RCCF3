@@ -10,7 +10,8 @@ import Navbar from "./components/Navbar";
 import LandingScreen from "./screens/LandingScreen";
 import Footer from "./components/Footer";
 import Shop from "./screens/Shop";
-import ProductsScreenAKRacing from "./screens/productsScreenByBrand/ProductsScreenAKRacing";
+import ProductsScreen from "./screens/ProductsScreen";
+import ProductsScreenAKRacing from "./screens/template/templateProductPage";
 
 const App = () => {
   return (
@@ -20,8 +21,9 @@ const App = () => {
         <main>
           <Routes>
             <Route path="/" element={<LandingScreen />}></Route>
-            {/* <Route path="/shop" element={<Shop />}></Route> */}
-            <Route path="/shop" element={<ProductsScreenAKRacing />}></Route>
+            <Route path="/shop" element={<Shop />}></Route>
+            <Route path="/shop/:brand" element={<ProductsScreen />}></Route>
+            <Route path="/test" element={<ProductsScreenAKRacing />}></Route>
           </Routes>
         </main>
         <Footer />
