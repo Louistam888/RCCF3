@@ -1,12 +1,13 @@
-import { Center, Grid, Flex, Box, Image, Heading } from "@chakra-ui/react";
-import sortByNew from "../../functions/sortByNew.js";
-import ProductCard from "../../components/ProductCard";
+import { Box, Flex, Heading, Grid, Image, Center } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../redux/actions/productActions.js";
+import BrandCard from "../components/BrandCard";
+import { getProducts } from "../redux/actions/productActions.js";
 import { useEffect } from "react";
 
-const ProductsScreenAKRacing = () => {
+const Shop = () => {
   const dispatch = useDispatch();
+
+
   const productList = useSelector((state) => state.products);
   const { loading, error, products } = productList;
 
@@ -14,16 +15,25 @@ const ProductsScreenAKRacing = () => {
     dispatch(getProducts());
   }, [dispatch]);
 
-  //FUNCTION TO SORT CHAIRS BY NEW STATUS
-  const chairArray = sortByNew(products);
+  //FUNCTION TAKES ALL BRANDS, REMOVES DUPLICATES AND ALPHABETIZES
+
+  const allBrands = [];
+
+  products.forEach((object) => {
+    const brand = object.brand;
+    allBrands.push(brand);
+  });
+
+  const reducedArrayOfBrands = [...new Set(allBrands)];
+  const brandsToDisplay = reducedArrayOfBrands.sort();
 
   return (
     <Box pt="90px">
       <Flex h={{ base: "180px", md: "250px" }} overflow="hidden" position="relative" mb={{ base: "20px", sm: "50px" }}>
-        <Image src="/assets/brandPhotos/brandBanner.jpg" w="100%" />
+        <Image src="/assets/tech.jpg" w="100%" />
         <Flex position="absolute" justifyContent="center" alignItems="center" w="100%" h="100%" className="fadeIn">
           <Heading fontSize={{ base: "5xl", sm: "7xl" }} textTransform="uppercase" color="whiteAlpha.900">
-            AKRacing
+            our brands
           </Heading>
         </Flex>
       </Flex>
@@ -33,10 +43,10 @@ const ProductsScreenAKRacing = () => {
         justifyContent="center"
         mx="5.5%"
       >
-        {chairArray.map((product) => (
-          <Box key={product._id}>
+        {brandsToDisplay.map((brand, index) => (
+          <Box key={index}>
             <Center w="100%" h="550px">
-              <ProductCard product={product} />
+              <BrandCard brand={brand} />
             </Center>
           </Box>
         ))}
@@ -45,4 +55,4 @@ const ProductsScreenAKRacing = () => {
   );
 };
 
-export default ProductsScreenAKRacing;
+export default Shop;
