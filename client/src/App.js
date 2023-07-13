@@ -23,7 +23,6 @@ const App = () => {
             <Route path="/" element={<LandingScreen />}></Route>
             <Route path="/shop" element={<Shop />}></Route>
             <Route path="/shop/:brand" element={<ProductsScreen />}></Route>
-            <Route path="/test" element={<ProductsScreenAKRacing />}></Route>
           </Routes>
         </main>
         <Footer />
