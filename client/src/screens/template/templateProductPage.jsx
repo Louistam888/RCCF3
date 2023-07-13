@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions/productActions.js";
 import { useEffect } from "react";
 
-const ProductsScreenAKRacing = () => {
+const TemplateProductPage = () => {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.products);
   const { loading, error, products } = productList;
@@ -45,4 +45,4 @@ const ProductsScreenAKRacing = () => {
   );
 };
 
-export default ProductsScreenAKRacing;
+export default TemplateProductPage;

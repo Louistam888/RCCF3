@@ -2,16 +2,18 @@ import { Center, Grid, Flex, Box, Image, Heading } from "@chakra-ui/react";
 import sortByNew from "../functions/sortByNew.js";
 import ProductCard from "../components/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../redux/actions/productActions.js";
+import { getProducts} from "../redux/actions/productActions.js";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const ProductsScreen = () => {
+  const { brand } = useParams(); 
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.products);
   const { loading, error, products } = productList;
 
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getProducts()); 
   }, [dispatch]);
 
   //FUNCTION TO SORT CHAIRS BY NEW STATUS
@@ -23,7 +25,7 @@ const ProductsScreen = () => {
         <Image src="/assets/brandPhotos/brandBanner.jpg" w="100%" />
         <Flex position="absolute" justifyContent="center" alignItems="center" w="100%" h="100%" className="fadeIn">
           <Heading fontSize={{ base: "5xl", sm: "7xl" }} textTransform="uppercase" color="whiteAlpha.900">
-            AKRacing
+            {brand} {/* Render the brand name dynamically */}
           </Heading>
         </Flex>
       </Flex>

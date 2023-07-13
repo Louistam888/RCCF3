@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import { setProducts, setLoading, setError } from "../slices/products";
 
 export const getProducts = () => async (dispatch) => {

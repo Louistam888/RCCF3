@@ -19,7 +19,7 @@ const Shop = () => {
   const allBrands = [];
 
   products.forEach((object) => {
-    const brand = object.brand;
+    const brand = object.brand.toLowerCase();
     allBrands.push(brand);
   });
 
