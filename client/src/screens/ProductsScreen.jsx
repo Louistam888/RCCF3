@@ -13,7 +13,7 @@ const ProductsScreen = () => {
   const { loading, error, products } = productList;
 
   useEffect(() => {
-    dispatch(getProducts()); 
+    dispatch(getProducts(brand)); 
   }, []);
 
   //FUNCTION TO SORT CHAIRS BY NEW STATUS

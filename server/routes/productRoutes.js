@@ -11,11 +11,11 @@ const getProducts = async (req, res) => {
   } else {
     products = await Product.find({});
   }
-
   res.json(products);
 };
 
 productRoutes.route("/").get(getProducts);
-productRoutes.route("/shop/").get(getProducts);
+productRoutes.route("/shop").get(getProducts);
+productRoutes.route("/shop/:brand").get(getProducts);
 
 export default productRoutes;

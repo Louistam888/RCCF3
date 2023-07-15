@@ -1,13 +1,12 @@
 import axios from "axios";
-import { setProducts, setLoading, setError } from "../slices/products.js";
+import { setBrands, setLoading, setError } from "../slices/brands.js";
 import { useParams } from "react-router-dom";
 
-export const getProducts = (brandURL) => async (dispatch) => {
+export const getBrands = () => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    
-    const { data } = await axios.get(`/api/products/shop/${brandURL}`);
-    dispatch(setProducts(data));
+    const { data } = await axios.get("/api/brands/");
+    dispatch(setBrands(data));
   } catch (error) {
     dispatch(
       setError(
