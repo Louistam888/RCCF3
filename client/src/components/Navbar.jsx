@@ -69,7 +69,7 @@ const Navbar = () => {
             >
               <Box display="flex">
                 <Flex alignItems="center">
-                  <Image src="assets/RCCF.png" alt="" boxSize={{ base: "40px", sm: "50px", md: "70px", lg: "80px" }} />
+                  <Image src={`${process.env.PUBLIC_URL}/assets/RCCF.png`} alt="" boxSize={{ base: "40px", sm: "50px", md: "70px", lg: "80px" }} />
                 </Flex>
                 <Flex alignItems="center" pl={{ base: "5px", md: "10px" }}>
                   <Heading

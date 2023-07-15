@@ -14,7 +14,7 @@ const ProductsScreen = () => {
 
   useEffect(() => {
     dispatch(getProducts()); 
-  }, [dispatch]);
+  }, []);
 
   //FUNCTION TO SORT CHAIRS BY NEW STATUS
   const chairArray = sortByNew(products);
