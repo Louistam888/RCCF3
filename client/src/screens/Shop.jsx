@@ -1,29 +1,15 @@
 import { Box, Flex, Heading, Grid, Image, Center } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import BrandCard from "../components/BrandCard";
-import { getBrands } from "../redux/actions/shopBrandActions.js";
+import { getProducts } from "../redux/actions/productActions.js";
+// import { getBrands } from "../redux/actions/shopBrandActions.js";
 import { useEffect } from "react";
 
 const Shop = () => {
-  const dispatch = useDispatch();
-  const productList = useSelector((state) => state.products);
-  const { loading, error, products } = productList;
+  // FUNCTION TAKES ALL BRANDS, REMOVES DUPLICATES AND ALPHABETIZES
 
-  useEffect(() => {
-    dispatch(getBrands());
-  }, [dispatch]);
-
-  //FUNCTION TAKES ALL BRANDS, REMOVES DUPLICATES AND ALPHABETIZES
-
-  const allBrands = [];
-
-  products.forEach((object) => {
-    const brand = object.brand.toLowerCase();
-    allBrands.push(brand);
-  });
-
-  const reducedArrayOfBrands = [...new Set(allBrands)];
-  const brandsToDisplay = reducedArrayOfBrands.sort();
+  const allBrands = ["sukida", "akracing", "gtracing", "darkecho"];
+  const brandsToDisplay = allBrands.sort();
 
   return (
     <Box pt="90px">
