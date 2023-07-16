@@ -1,5 +1,4 @@
 import { Center, Grid, Flex, Box, Image, Heading } from "@chakra-ui/react";
-import sortByNew from "../functions/sortByNew.js";
 import ProductCard from "../components/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts} from "../redux/actions/productActions.js";
@@ -17,6 +16,38 @@ const ProductsScreen = () => {
   }, []);
 
   //FUNCTION TO SORT CHAIRS BY NEW STATUS
+  const sortByNew = (products) => {
+
+    const isNew = [];
+    const chairArray = [];
+  
+    products.forEach((item) => {
+      if (item.productIsNew === true) {
+        isNew.push(item);
+      } else {
+        chairArray.push(item);
+      }
+    });
+  
+    chairArray.sort((a, b) => {
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+      return 0;
+    });
+  
+    isNew.sort((a, b) => {
+      if (a.name > b.name) return -1;
+      if (a.name < b.name) return 1;
+      return 0;
+    });
+  
+    isNew.forEach((item) => {
+      chairArray.unshift(item);
+    });
+  
+    const finalArray = chairArray;
+    return finalArray;
+  };
   const chairArray = sortByNew(products);
 
   return (
