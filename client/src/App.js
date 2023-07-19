@@ -11,7 +11,6 @@ import LandingScreen from "./screens/LandingScreen";
 import Footer from "./components/Footer";
 import Shop from "./screens/Shop";
 import ProductsScreen from "./screens/ProductsScreen";
-import TemplateProductPage from "./screens/template/TemplateProductPage";
 
 const App = () => {
   return (

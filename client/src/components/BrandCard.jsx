@@ -1,7 +1,5 @@
-import { Box, Flex, Link, Heading, useColorModeValue, Stack, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Flex, Link, useColorModeValue, Stack, Text } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
-import ProductsScreen from "../screens/ProductsScreen";
 
 const BrandCard = ({ brand }) => {
   const borderColor = useColorModeValue("gray", "white");

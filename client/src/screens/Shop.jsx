@@ -1,9 +1,5 @@
 import { Box, Flex, Heading, Grid, Image, Center } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
 import BrandCard from "../components/BrandCard";
-import { getProducts } from "../redux/actions/productActions.js";
-// import { getBrands } from "../redux/actions/shopBrandActions.js";
-import { useEffect } from "react";
 
 const Shop = () => {
   // FUNCTION TAKES ALL BRANDS, REMOVES DUPLICATES AND ALPHABETIZES
