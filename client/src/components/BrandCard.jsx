@@ -6,6 +6,7 @@ import ProductsScreen from "../screens/ProductsScreen";
 const BrandCard = ({ brand }) => {
   const borderColor = useColorModeValue("gray", "white");
   const borderWidth = useColorModeValue("1px", "2px");
+
   return (
     <Link
       as={ReactLink}
@@ -37,7 +38,7 @@ const BrandCard = ({ brand }) => {
             minH="50px"
             mb="12px"
           >
-            <Text textTransform="capitalize">{brand}</Text>
+            <Text textTransform="uppercase">{brand}</Text>
           </Box>
         </Flex>
       </Stack>

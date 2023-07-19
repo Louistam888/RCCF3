@@ -43,7 +43,7 @@ const ProductCard = ({ product }) => {
         border={`${borderWidth} solid ${borderColor}`}
         _hover={{ boxShadow: "dark-lg" }}
       >
-        <Box h="20px" position={{ base: "relative", sm: "absolute" }} top="0" left="0" m="8px">
+        <Box h="20px" position={{ base: "relative", sm: "absolute" }} top="0" left="0" m="8px" zIndex="2">
           {product.stock <= 0 ? (
             <Badge rounded="5px" px="2" fontSize="xl" color="white" bg="red">
               SOLD OUT
@@ -55,7 +55,15 @@ const ProductCard = ({ product }) => {
             </Badge>
           ) : null}
         </Box>
-        <Image src={product.image} alt={product.name} w="100%" h="auto" objectFit="auto" rounded="5px" />
+        <Image
+          src={product.image}
+          alt={product.name}
+          w="100%"
+          h="auto"
+          objectFit="auto"
+          rounded="5px"
+          filter={product.stock <= 0 ? "blur(5px)" : "none"}
+        />
         <Flex m="10px" justifyContent="center" alignItems="center" flexDirection="column">
           <Box
             fontSize="xl"
@@ -80,7 +88,7 @@ const ProductCard = ({ product }) => {
             </Text>
           </Box>
           <Box>
-            <Rating rating={product.rating} numReviews={product.numReviews} />
+            <Rating rating={product.rating} numReviews={product.numberOfReviews} />
           </Box>
           <Flex fontSize="2xl" mb="3px" flexDirection={{ base: "row", sm: "column" }}>
             <Text>${Number(product.price).toFixed(2)}</Text>
