@@ -9,7 +9,9 @@ import theme from "./theme/Theme";
 import Navbar from "./components/Navbar";
 import LandingScreen from "./screens/LandingScreen";
 import Footer from "./components/Footer";
-import ProductsScreenAKRacing from "./screens/productsScreenByBrand/ProductsScreenAKRacing";
+import Shop from "./screens/Shop";
+import ProductsScreen from "./screens/ProductsScreen";
+import TemplateProductPage from "./screens/template/TemplateProductPage";
 
 const App = () => {
   return (
@@ -19,7 +21,8 @@ const App = () => {
         <main>
           <Routes>
             <Route path="/" element={<LandingScreen />}></Route>
-            <Route path="/shop" element={<ProductsScreenAKRacing />}></Route>
+            <Route path="/shop" element={<Shop />}></Route>
+            <Route path="/shop/:brand" element={<ProductsScreen />}></Route>        
           </Routes>
         </main>
         <Footer />

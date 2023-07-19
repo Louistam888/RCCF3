@@ -46,7 +46,7 @@ const NavLink = ({ path, children }) => {
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-  const bgColor = { base: useColorModeValue("white", "gray.300"), sm: useColorModeValue("whiteAlpha.900", "gray.300") };
+  const bgColor = useColorModeValue("white", "gray.300");
   const fontColorDarkLight = useColorModeValue("blackAlpha.900", "whiteAlpha.900");
   const buttonBg = useColorModeValue("gray.300", "blackAlpha.900");
   const hoverColor = useColorModeValue("blue.300", "red.600");
@@ -69,7 +69,11 @@ const Navbar = () => {
             >
               <Box display="flex">
                 <Flex alignItems="center">
-                  <Image src="assets/RCCF.png" alt="" boxSize={{ base: "40px", sm: "50px", md: "70px", lg: "80px" }} />
+                  <Image
+                    src={`${process.env.PUBLIC_URL}/assets/RCCF.png`}
+                    alt=""
+                    boxSize={{ base: "40px", sm: "50px", md: "70px", lg: "80px" }}
+                  />
                 </Flex>
                 <Flex alignItems="center" pl={{ base: "5px", md: "10px" }}>
                   <Heading
