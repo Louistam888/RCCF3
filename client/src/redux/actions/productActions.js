@@ -1,6 +1,5 @@
 import axios from "axios";
 import { setProducts, setLoading, setError } from "../slices/products.js";
-import { useParams } from "react-router-dom";
 
 export const getProducts = (brandURL) => async (dispatch) => {
   dispatch(setLoading(true));
