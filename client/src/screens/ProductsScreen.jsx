@@ -1,20 +1,8 @@
-import {
-  Center,
-  Grid,
-  Flex,
-  Box,
-  Image,
-  Heading,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  Spinner,
-  Stack,
-} from "@chakra-ui/react";
+import { Center, Grid, Flex, Box, Image, Heading, Spinner } from "@chakra-ui/react";
 import ProductCard from "../components/ProductCard";
-import { useDispatch, useSelector } from "react-redux";
+import PageNotFound from "../components/PageNotFound";
 import { getProducts } from "../redux/actions/productActions.js";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -76,11 +64,9 @@ const ProductsScreen = () => {
           />
         </Flex>
       ) : error ? (
-        <Alert status="error">
-          <AlertIcon />
-          <AlertTitle>Oops! This brand can't be found!</AlertTitle>
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
+        <>
+          <PageNotFound error={error} />
+        </>
       ) : (
         <Box>
           <Flex
