@@ -21,13 +21,14 @@ const Rating = ({ rating, numReviews }) => {
 };
 
 const ProductCard = ({ product }) => {
+  
   const borderColor = useColorModeValue("gray", "white");
   const borderWidth = useColorModeValue("1px", "2px");
 
   return (
     <Link
       as={ReactLink}
-      to={`/product/${product._id}`}
+      to={`/shop/${product.brand}/${product._id}`}
       pt="2"
       cursor="pointer"
       _hover={{ textDecoration: "none", transform: "scale(1.03)" }}

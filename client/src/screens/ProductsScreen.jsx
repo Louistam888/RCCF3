@@ -1,4 +1,17 @@
-import { Center, Grid, Flex, Box, Image, Heading } from "@chakra-ui/react";
+import {
+  Center,
+  Grid,
+  Flex,
+  Box,
+  Image,
+  Heading,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  Spinner,
+  Stack,
+} from "@chakra-ui/react";
 import ProductCard from "../components/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../redux/actions/productActions.js";
@@ -51,28 +64,54 @@ const ProductsScreen = () => {
 
   return (
     <Box pt="90px">
-      <Flex h={{ base: "180px", md: "250px" }} overflow="hidden" position="relative" mb={{ base: "20px", sm: "50px" }}>
-        <Image src="/assets/brandPhotos/brandBanner.jpg" w="100%" />
-        <Flex position="absolute" justifyContent="center" alignItems="center" w="100%" h="100%" className="fadeIn">
-          <Heading fontSize={{ base: "5xl", sm: "7xl" }} textTransform="uppercase" color="whiteAlpha.900">
-            {brand} {/* Render the brand name dynamically */}
-          </Heading>
+      {loading ? (
+        <Flex w="100%" h="calc(100vh - 90px)" justifyContent="center" alignItems="center">
+          <Spinner
+            mt="50px"
+            thickness="20px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="red.600"
+            style={{ width: "250px", height: "250px" }}
+          />
         </Flex>
-      </Flex>
-      <Grid
-        templateColumns="repeat(auto-fit, minmax(280px, 350px))"
-        gap={{ base: "15px", md: "10px", lg: "20px" }}
-        justifyContent="center"
-        mx="5.5%"
-      >
-        {chairArray.map((product) => (
-          <Box key={product._id}>
-            <Center w="100%" h="550px">
-              <ProductCard product={product} />
-            </Center>
-          </Box>
-        ))}
-      </Grid>
+      ) : error ? (
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle>Oops! This brand can't be found!</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      ) : (
+        <Box>
+          <Flex
+            h={{ base: "180px", md: "250px" }}
+            overflow="hidden"
+            position="relative"
+            mb={{ base: "20px", sm: "50px" }}
+          >
+            <Image src="/assets/brandPhotos/brandBanner.jpg" w="100%" />
+            <Flex position="absolute" justifyContent="center" alignItems="center" w="100%" h="100%" className="fadeIn">
+              <Heading fontSize={{ base: "5xl", sm: "7xl" }} textTransform="uppercase" color="whiteAlpha.900">
+                {brand} {/* Render the brand name dynamically */}
+              </Heading>
+            </Flex>
+          </Flex>
+          <Grid
+            templateColumns="repeat(auto-fit, minmax(280px, 350px))"
+            gap={{ base: "15px", md: "10px", lg: "20px" }}
+            justifyContent="center"
+            mx="5.5%"
+          >
+            {chairArray.map((product) => (
+              <Box key={product._id}>
+                <Center w="100%" h="550px">
+                  <ProductCard product={product} />
+                </Center>
+              </Box>
+            ))}
+          </Grid>
+        </Box>
+      )}
     </Box>
   );
 };

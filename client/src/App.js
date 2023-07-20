@@ -11,6 +11,7 @@ import LandingScreen from "./screens/LandingScreen";
 import Footer from "./components/Footer";
 import Shop from "./screens/Shop";
 import ProductsScreen from "./screens/ProductsScreen";
+import ProductScreen from "./screens/ProductScreen";
 
 const App = () => {
   return (
@@ -21,7 +22,8 @@ const App = () => {
           <Routes>
             <Route path="/" element={<LandingScreen />}></Route>
             <Route path="/shop" element={<Shop />}></Route>
-            <Route path="/shop/:brand" element={<ProductsScreen />}></Route>        
+            <Route path="/shop/:brand" element={<ProductsScreen />}></Route>
+            <Route path="/shop/:brand/:id" element={<ProductScreen />}></Route>
           </Routes>
         </main>
         <Footer />
