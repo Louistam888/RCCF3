@@ -11,10 +11,12 @@ const ProductsScreen = () => {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.products);
   const { loading, error, products } = productList;
-
+  const brands = products.map((product) => product.brand)
+  
   useEffect(() => {
     dispatch(getProducts(brand));
   }, []);
+
 
   //FUNCTION TO SORT CHAIRS BY NEW STATUS
   const sortByNew = (products) => {

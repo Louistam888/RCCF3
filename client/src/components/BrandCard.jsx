@@ -24,7 +24,6 @@ const BrandCard = ({ brand }) => {
         border={`${borderWidth} solid ${borderColor}`}
         _hover={{ boxShadow: "dark-lg" }}
       >
-        {/* <Image src={product.image} alt={product.name} w="100%" h="auto" objectFit="auto" rounded="5px" /> */}
         <Flex m="10px" justifyContent="center" alignItems="center" flexDirection="column">
           <Box
             fontSize="xl"
