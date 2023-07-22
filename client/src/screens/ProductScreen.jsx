@@ -1,7 +1,8 @@
 import { Box, Image, Text, Button, Tooltip, Textarea, Flex, Spinner } from "@chakra-ui/react";
-import { getProducts } from "../redux/actions/productActions.js";
+// import { getProduct } from "../redux/actions/productActions.js";
 import PageNotFound from "../components/PageNotFound";
 import { useDispatch, useSelector } from "react-redux";
+import { getProduct } from "../redux/actions/productActions.js";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -10,12 +11,13 @@ const ProductScreen = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   const { loading, error, product } = products;
-  let { id } = useParams();
+  let { brand, id } = useParams();
+  //product is giving errors
 
-  // useEffect(() => {
-  //   dispatch(getProducts(brand, id));
-  // }, []);
-  
+  useEffect(() => {
+    dispatch(getProduct(brand, id));
+  }, [dispatch, brand, id]);
+
   return (
     <Box pt="90px">
       {loading ? (
@@ -34,7 +36,7 @@ const ProductScreen = () => {
           <PageNotFound error={error} />
         </>
       ) : (
-        <Box pt="90px">{products.name}</Box>
+        <Box>TEST</Box>
       )}
     </Box>
   );
