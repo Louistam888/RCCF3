@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import Shop from "./screens/Shop";
 import ProductsScreen from "./screens/ProductsScreen";
 import ProductScreen from "./screens/ProductScreen";
+import PageNotFound from "./screens/PageNotFound";
 
 const App = () => {
   return (
@@ -24,6 +25,8 @@ const App = () => {
             <Route path="/shop" element={<Shop />}></Route>
             <Route path="/shop/:brand" element={<ProductsScreen />}></Route>
             <Route path="/shop/:brand/:id" element={<ProductScreen />}></Route>
+            <Route path="/*" element={<PageNotFound />} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </main>
         <Footer />

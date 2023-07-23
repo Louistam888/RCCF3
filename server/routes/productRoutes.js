@@ -3,7 +3,8 @@ import Product from "../models/Product.js";
 const productRoutes = express.Router();
 
 const getProducts = async (req, res) => {
-  const brand = req.params.brand;
+  const brandRaw = req.params.brand;
+  const brand = brandRaw.toLowerCase();
   let products;
 
   if (brand) {
@@ -21,22 +22,32 @@ const getProducts = async (req, res) => {
 
 const getProduct = async (req, res) => {
   try {
-    const brand = req.params.brand;
+    const brandRaw = req.params.brand;
+    const brand = brandRaw.toLowerCase();
     const id = req.params.id;
     let product;
+    let brandMatch = false;
+
+    //FUNCTIONS WILL CHECK IF THE URL PARAMS MATCH BRAND AND ID OF ANYTHING IN THE BACKEND
 
     if (id && brand) {
       product = await Product.findById(id);
+      const brandOfProduct = product.brand;
+      if (brand === brandOfProduct) {
+        brandMatch = true;
+      }
     }
 
-    if (!product) {
+    //IF THE URL PARAMS DO NOT MATCH A BRAND OR ID, A HARD 404 ERROR IS RETURNED
+
+    if (!product || brandMatch === false) {
       return res.status(404).json({ error: "No product found." });
     }
 
     res.json(product);
   } catch (error) {
     console.error("Error in getProduct:", error);
-    return res.status(500).json({ error: "An unexpected error occurred." });
+    return res.status(404).json({ error: "An unexpected error occurred." });
   }
 };
 

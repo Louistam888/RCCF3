@@ -1,6 +1,6 @@
 import { Center, Grid, Flex, Box, Image, Heading, Spinner } from "@chakra-ui/react";
 import ProductCard from "../components/ProductCard";
-import PageNotFound from "../components/PageNotFound";
+import PageNotFound from "./PageNotFound";
 import { getProducts } from "../redux/actions/productActions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";

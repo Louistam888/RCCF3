@@ -1,6 +1,6 @@
 import { Box, Image, Text, Button, Tooltip, Textarea, Flex, Spinner } from "@chakra-ui/react";
 // import { getProduct } from "../redux/actions/productActions.js";
-import PageNotFound from "../components/PageNotFound";
+import PageNotFound from "./PageNotFound";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../redux/actions/productActions.js";
 import { useEffect } from "react";
@@ -12,7 +12,6 @@ const ProductScreen = () => {
   const products = useSelector((state) => state.products);
   const { loading, error, product } = products;
   let { brand, id } = useParams();
-  //product is giving errors
 
   useEffect(() => {
     dispatch(getProduct(brand, id));
