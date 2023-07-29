@@ -32,7 +32,10 @@ const NavLink = ({ path, children }) => {
       p="10px"
       rounded="md"
       color="blackAlpha.900"
-      _hover={{ textDecoration: "none", bg: useColorModeValue("gray.300", "whiteAlpha.800") }}
+      _hover={{
+        textDecoration: "none",
+        bg: useColorModeValue("gray.300", "whiteAlpha.800"),
+      }}
       fontSize="xl"
       h="40px"
       display="flex"
@@ -47,12 +50,22 @@ const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const bgColor = useColorModeValue("white", "gray.300");
-  const fontColorDarkLight = useColorModeValue("blackAlpha.900", "whiteAlpha.900");
+  const fontColorDarkLight = useColorModeValue(
+    "blackAlpha.900",
+    "whiteAlpha.900"
+  );
   const buttonBg = useColorModeValue("gray.300", "blackAlpha.900");
   const hoverColor = useColorModeValue("blue.300", "red.600");
 
   return (
-    <Box bg={bgColor} px={10} borderBottom={{ base: "1px", md: "2px" }} position="fixed" w="100%" zIndex="1000">
+    <Box
+      bg={bgColor}
+      px={10}
+      borderBottom={{ base: "1px", md: "2px" }}
+      position="fixed"
+      w="100%"
+      zIndex="1000"
+    >
       <Flex h={90} alignItems="center" justifyContent="space-between">
         <Flex alignItems="center" w="100%" justifyContent="space-between">
           <HStack>
@@ -72,7 +85,12 @@ const Navbar = () => {
                   <Image
                     src={`${process.env.PUBLIC_URL}/assets/RCCF.png`}
                     alt=""
-                    boxSize={{ base: "40px", sm: "50px", md: "70px", lg: "80px" }}
+                    boxSize={{
+                      base: "40px",
+                      sm: "50px",
+                      md: "70px",
+                      lg: "80px",
+                    }}
                   />
                 </Flex>
                 <Flex alignItems="center" pl={{ base: "5px", md: "10px" }}>
@@ -80,7 +98,12 @@ const Navbar = () => {
                     as="h1"
                     display="flex"
                     flexDirection="column"
-                    fontSize={{ base: "0.8rem", sm: "0.9rem", md: "1.1rem", lg: "1.8rem" }}
+                    fontSize={{
+                      base: "0.8rem",
+                      sm: "0.9rem",
+                      md: "1.1rem",
+                      lg: "1.8rem",
+                    }}
                     lineHeight="1"
                   >
                     <span className="rccfRed">ROYAL CANADIAN</span>
@@ -92,11 +115,16 @@ const Navbar = () => {
           </HStack>
 
           {/* NAV BAR MENU BUTTONS FOR EACH PAGE */}
-          <HStack display={{ base: "none", md: "block" }} mr={{ base: "0", lg: "5%" }}>
+          <HStack
+            display={{ base: "none", md: "block" }}
+            mr={{ base: "0", lg: "5%" }}
+          >
             <Flex>
               {links.map((link) => (
                 <NavLink key={link.linkName} path={link.path}>
-                  <Text fontSize={{ md: "1rem", lg: "1.2rem" }}>{link.linkName.toUpperCase()}</Text>
+                  <Text fontSize={{ md: "1rem", lg: "1.2rem" }}>
+                    {link.linkName.toUpperCase()}
+                  </Text>
                 </NavLink>
               ))}
             </Flex>
