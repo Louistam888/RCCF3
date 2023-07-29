@@ -55,12 +55,12 @@ const ProductScreen = () => {
         ) : (
           <Flex px={10} w="100%" border="2px solid yellow" >
             <Flex flexDirection={{base:"column", md:"row"}} border="2px solid red" justifyContent="center" alignItems={{base:"center", md:"flex-start"}} w="100%">
-              <Flex w="50%" border="2px solid blue" flexDirection="column">
+              <Flex w={{base:"100%", md:"50%"}} border="2px solid blue" flexDirection="column">
                 <Text as="h2" fontSize="20px">{name}</Text>
                 <Text>{price}</Text>
                 <Text>{description}</Text>
               </Flex>
-              <Box w="50%" border="2px solid green">
+              <Box w={{base:"100%", md:"50%"}} border="2px solid green">
                 <Image src={image} alt={name} />
               </Box>
             </Flex>
