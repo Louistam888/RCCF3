@@ -1,27 +1,23 @@
-import { Flex, Box, Image, Badge, Tooltip, Stack, Link, Text, useColorModeValue, Button, Icon } from "@chakra-ui/react";
+import {
+  Flex,
+  Box,
+  Image,
+  Badge,
+  Tooltip,
+  Stack,
+  Link,
+  Text,
+  useColorModeValue,
+  Button,
+  Icon,
+} from "@chakra-ui/react";
+import Rating from "./Rating"
 import { FiShoppingCart } from "react-icons/fi";
 import { Link as ReactLink } from "react-router-dom";
 import { StarIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 
-const Rating = ({ rating, numReviews }) => {
-  const { iconSize, setIconSize } = useState("14px");
-  return (
-    <Flex>
-      <Box spacing="2px">
-        <StarIcon color="orange.500" />
-        <StarIcon color={rating >= 2 ? "orange.500" : "gray"} />
-        <StarIcon color={rating >= 3 ? "orange.500" : "gray"} />
-        <StarIcon color={rating >= 4 ? "orange.500" : "gray"} />
-        <StarIcon color={rating >= 5 ? "orange.500" : "gray"} />
-      </Box>
-      <Text ml="3px">{`${numReviews} ${numReviews === 1 ? "Review" : "Reviews"}`}</Text>
-    </Flex>
-  );
-};
-
 const ProductCard = ({ product }) => {
-  
   const borderColor = useColorModeValue("gray", "white");
   const borderWidth = useColorModeValue("1px", "2px");
 
@@ -44,7 +40,14 @@ const ProductCard = ({ product }) => {
         border={`${borderWidth} solid ${borderColor}`}
         _hover={{ boxShadow: "dark-lg" }}
       >
-        <Box h="20px" position={{ base: "relative", sm: "absolute" }} top="0" left="0" m="8px" zIndex="2">
+        <Box
+          h="20px"
+          position={{ base: "relative", sm: "absolute" }}
+          top="0"
+          left="0"
+          m="8px"
+          zIndex="2"
+        >
           {product.stock <= 0 ? (
             <Badge rounded="5px" px="2" fontSize="xl" color="white" bg="red">
               SOLD OUT
@@ -65,7 +68,12 @@ const ProductCard = ({ product }) => {
           rounded="5px"
           filter={product.stock <= 0 ? "blur(5px)" : "none"}
         />
-        <Flex m="10px" justifyContent="center" alignItems="center" flexDirection="column">
+        <Flex
+          m="10px"
+          justifyContent="center"
+          alignItems="center"
+          flexDirection="column"
+        >
           <Box
             fontSize="xl"
             fontWeight="semiBold"
@@ -73,9 +81,7 @@ const ProductCard = ({ product }) => {
             lineHeight="25px"
             width="100%"
             textAlign="center"
-            minH="50px"
-            mb="12px"
-          >
+                      >
             <Text
               style={{
                 display: "-webkit-box",
@@ -89,9 +95,16 @@ const ProductCard = ({ product }) => {
             </Text>
           </Box>
           <Box>
-            <Rating rating={product.rating} numReviews={product.numberOfReviews} />
+            <Rating 
+              rating={product.rating}
+              numReviews={product.numberOfReviews}
+            />
           </Box>
-          <Flex fontSize="2xl" mb="3px" flexDirection={{ base: "row", sm: "column" }}>
+          <Flex
+            fontSize="2xl"
+            mb="3px"
+            flexDirection={{ base: "row", sm: "column" }}
+          >
             <Text>${Number(product.price).toFixed(2)}</Text>
             <Tooltip
               label="Add to Cart"

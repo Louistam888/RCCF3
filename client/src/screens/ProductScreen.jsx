@@ -8,15 +8,21 @@ import {
   Flex,
   Spinner,
   Heading,
+  Badge,
+  Icon,
 } from "@chakra-ui/react";
 // import { getProduct } from "../redux/actions/productActions.js";
 import PageNotFound from "./PageNotFound";
+import Rating from "../components/Rating";
+import { MinusIcon, SmallAddIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../redux/actions/productActions.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const ProductScreen = () => {
+  const [amount, setAmount] = useState(1);
+
   //redux
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
@@ -26,6 +32,17 @@ const ProductScreen = () => {
   useEffect(() => {
     dispatch(getProduct(brand, id));
   }, [dispatch, brand, id]);
+
+  // FUNCTION TO CHANGE QUANITTY OF ITEM
+  const changeAmount = (input) => {
+    if (input === "plus") {
+      setAmount(amount + 1);
+    } else if (input === "minus") {
+      setAmount(amount - 1);
+    }
+  };
+
+  //FUNCTION TO ADD TO CART
 
   if (product) {
     const { brand, name, image, price, description } = product;
@@ -53,15 +70,123 @@ const ProductScreen = () => {
             <PageNotFound error={error} />
           </>
         ) : (
-          <Flex px={10} w="100%" border="2px solid yellow" >
-            <Flex flexDirection={{base:"column", md:"row"}} border="2px solid red" justifyContent="center" alignItems={{base:"center", md:"flex-start"}} w="100%">
-              <Flex w={{base:"100%", md:"50%"}} border="2px solid blue" flexDirection="column">
-                <Text as="h2" fontSize="20px">{name}</Text>
-                <Text>{price}</Text>
-                <Text>{description}</Text>
+          <Flex px={10} w="100%" border="2px solid yellow">
+            <Flex
+              flexDirection={{ base: "column-reverse", md: "row" }}
+              border="2px solid red"
+              justifyContent="center"
+              alignItems={{ base: "center", md: "flex-start" }}
+              w="100%"
+            >
+              {/* LEFT DIV */}
+              <Flex
+                w={{ base: "100%", md: "50%" }}
+                border="2px solid blue"
+                flexDirection="column"
+                h="100%"
+                py="10px"
+              >
+                <Text
+                  as="h2"
+                  fontSize={{ base: "2xl", sm: "3xl" }}
+                  fontWeight="bold"
+                  lineHeight={1}
+                  textAlign="center"
+                  pb="10px"
+                  px="20px"
+                >
+                  {name}
+                </Text>
+                <Text fontSize={{ base: "md", sm: "xl" }} textAlign="center">
+                  ${price}
+                </Text>
+                <Flex justifyContent="center">
+                  <Rating
+                    rating={product.rating}
+                    numReviews={product.numberOfReviews}
+                  />
+                </Flex>
+                <Text p="20px">{description}</Text>
+
+                {/* ADD TO CART SECTION */}
+                <Flex
+                  justifyContent="center"
+                  alignItems="center"
+                  flexDirection="column"
+                >
+                  <Text fontWeight="bold">Quantity</Text>
+                  <Box
+                    w="170px"
+                    p="5px"
+                    
+                    alignItems="center"
+                    display="flex"
+                  >
+                    <Button
+                      disabled={amount <= 1}
+                      onClick={() => changeAmount("minus")}
+                    >
+                      <MinusIcon />
+                    </Button>
+                    <Text px="20px">{amount}</Text>
+                    <Button
+                      disabled={amount >= product.stock}
+                      onClick={() => changeAmount("plus")}
+                    >
+                      <SmallAddIcon w="20px" h="25px" />
+                    </Button>
+                  </Box>
+
+                  {/* ADD FUNCTIONALITY */}
+                  <Button>
+                    <Text>Add to Cart</Text>
+                  </Button>
+                </Flex>
               </Flex>
-              <Box w={{base:"100%", md:"50%"}} border="2px solid green">
-                <Image src={image} alt={name} />
+
+              {/* RIGHT DIV */}
+              <Box w={{ base: "100%", md: "50%" }} border="2px solid green">
+                <Box h="50px" w="100%" border="2px solid purple">
+                  {product.stock <= 0 ? (
+                    <Badge
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      rounded="5px"
+                      px="2"
+                      fontSize="xl"
+                      color="white"
+                      bg="red"
+                      h="100%"
+                      w="150px"
+                      fontSize="2xl"
+                    >
+                      SOLD OUT
+                    </Badge>
+                  ) : null}
+                  {product.productIsNew ? (
+                    <Badge
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      rounded="5px"
+                      px="2"
+                      fontSize="xl"
+                      color="white"
+                      bg="green"
+                      h="100%"
+                      w="100px"
+                      fontSize="2xl"
+                    >
+                      NEW
+                    </Badge>
+                  ) : null}
+                </Box>
+                <Image
+                  src={image}
+                  alt={name}
+                  filter={product.stock <= 0 ? "blur(5px)" : "none"}
+                />
               </Box>
             </Flex>
           </Flex>
