@@ -10,6 +10,8 @@ import {
   Heading,
   Badge,
   Icon,
+  useColorModeValue,
+  useColorMode,
 } from "@chakra-ui/react";
 // import { getProduct } from "../redux/actions/productActions.js";
 import PageNotFound from "./PageNotFound";
@@ -21,6 +23,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const ProductScreen = () => {
+  const buttonBorderColor = useColorModeValue("whiteAlpha.800");
+  const bgColor = useColorModeValue("gray.300");
+  const hoverColor = useColorModeValue("blue.300", "red.600");
+
+  //state for add quantity
   const [amount, setAmount] = useState(1);
 
   //redux
@@ -70,10 +77,9 @@ const ProductScreen = () => {
             <PageNotFound error={error} />
           </>
         ) : (
-          <Flex px={10} w="100%" border="2px solid yellow">
+          <Flex px={10} w="100%">
             <Flex
               flexDirection={{ base: "column-reverse", md: "row" }}
-              border="2px solid red"
               justifyContent="center"
               alignItems={{ base: "center", md: "flex-start" }}
               w="100%"
@@ -81,7 +87,6 @@ const ProductScreen = () => {
               {/* LEFT DIV */}
               <Flex
                 w={{ base: "100%", md: "50%" }}
-                border="2px solid blue"
                 flexDirection="column"
                 h="100%"
                 py="10px"
@@ -94,6 +99,7 @@ const ProductScreen = () => {
                   textAlign="center"
                   pb="10px"
                   px="20px"
+                  mt="50px"
                 >
                   {name}
                 </Text>
@@ -111,17 +117,16 @@ const ProductScreen = () => {
                 {/* ADD TO CART SECTION */}
                 <Flex
                   justifyContent="center"
-                  alignItems="center"
                   flexDirection="column"
+                  mt="30px"
+                  px="20px"
                 >
-                  <Text fontWeight="bold">Quantity</Text>
-                  <Box
-                    w="170px"
-                    p="5px"
-                    
-                    alignItems="center"
-                    display="flex"
-                  >
+                  <Text fontWeight="bold" textTransform="uppercase">
+                    Quantity
+                  </Text>
+
+                  {/* CHANGE QUANTITY BOX */}
+                  <Box w="170px" alignItems="center" display="flex">
                     <Button
                       disabled={amount <= 1}
                       onClick={() => changeAmount("minus")}
@@ -138,15 +143,18 @@ const ProductScreen = () => {
                   </Box>
 
                   {/* ADD FUNCTIONALITY */}
-                  <Button>
+                  <Button w="100%">
                     <Text>Add to Cart</Text>
+                  </Button>
+                  <Button>
+                    TESTING
                   </Button>
                 </Flex>
               </Flex>
 
               {/* RIGHT DIV */}
-              <Box w={{ base: "100%", md: "50%" }} border="2px solid green">
-                <Box h="50px" w="100%" border="2px solid purple">
+              <Box w={{ base: "100%", md: "50%" }}>
+                <Box h="50px" w="100%">
                   {product.stock <= 0 ? (
                     <Badge
                       display="flex"
