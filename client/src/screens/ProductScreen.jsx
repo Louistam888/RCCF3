@@ -10,7 +10,7 @@ import {
   Heading,
   Badge,
   Icon,
-  useColorModeValue,
+  useColorModeValue as mode,
   useColorMode,
 } from "@chakra-ui/react";
 // import { getProduct } from "../redux/actions/productActions.js";
@@ -23,8 +23,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const ProductScreen = () => {
-  const hoverColor = useColorModeValue("blue.300", "red.900");
-
   //state for add quantity
   const [amount, setAmount] = useState(1);
 
@@ -33,6 +31,10 @@ const ProductScreen = () => {
   const products = useSelector((state) => state.products);
   const { loading, error, product } = products;
   let { brand, id } = useParams();
+
+  //useColorMode
+  const buttonBg = mode("gray.300");
+  const hoverColor = mode("blue.300", "red.600");
 
   useEffect(() => {
     dispatch(getProduct(brand, id));
@@ -124,26 +126,36 @@ const ProductScreen = () => {
                   </Text>
 
                   {/* CHANGE QUANTITY BOX */}
-                  <Box w="170px" alignItems="center" display="flex">
+                  <Box w="150px" alignItems="center" display="flex" mt="10px">
                     <Button
                       disabled={amount <= 1}
-                      onClick={() => changeAmount("minus")}
+                      bg={buttonBg}
+                      border="2px solid white"
                       _hover={{ bg: hoverColor }}
+                      onClick={() => changeAmount("minus")}
                     >
                       <MinusIcon />
                     </Button>
                     <Text px="20px">{amount}</Text>
                     <Button
                       disabled={amount >= product.stock}
-                      onClick={() => changeAmount("plus")}
+                      bg={buttonBg}
                       _hover={{ bg: hoverColor }}
+                      border="2px solid white"
+                      onClick={() => changeAmount("plus")}
                     >
                       <SmallAddIcon w="20px" h="25px" />
                     </Button>
                   </Box>
 
                   {/* ADD FUNCTIONALITY */}
-                  <Button w="100%" _hover={{ bg: hoverColor }}>
+                  <Button
+                    w="100%"
+                    bg={buttonBg}
+                    _hover={{ bg: hoverColor }}
+                    border="2px solid white"
+                    mt="5px"
+                  >
                     <Text>Add to Cart</Text>
                   </Button>
                 </Flex>
@@ -164,7 +176,6 @@ const ProductScreen = () => {
                       bg="red"
                       h="100%"
                       w="150px"
-                      
                     >
                       SOLD OUT
                     </Badge>
@@ -180,7 +191,7 @@ const ProductScreen = () => {
                       color="white"
                       bg="green"
                       h="100%"
-                      w="100px"                    
+                      w="100px"
                     >
                       NEW
                     </Badge>

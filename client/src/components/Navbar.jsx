@@ -10,7 +10,7 @@ import {
   useDisclosure,
   Button,
   Stack,
-  useColorModeValue,
+  useColorModeValue as mode,
   useColorMode,
   Image,
   Collapse,
@@ -34,7 +34,7 @@ const NavLink = ({ path, children }) => {
       color="blackAlpha.900"
       _hover={{
         textDecoration: "none",
-        bg: useColorModeValue("gray.300", "whiteAlpha.800"),
+        bg: mode("gray.300", "whiteAlpha.800"),
       }}
       fontSize="xl"
       h="40px"
@@ -49,13 +49,13 @@ const NavLink = ({ path, children }) => {
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-  const bgColor = useColorModeValue("white", "gray.300");
-  const fontColorDarkLight = useColorModeValue(
+  const bgColor = mode("white", "gray.300");
+  const fontColorDarkLight = mode(
     "blackAlpha.900",
     "whiteAlpha.900"
   );
-  const buttonBg = useColorModeValue("gray.300", "blackAlpha.900");
-  const hoverColor = useColorModeValue("blue.300", "red.600");
+  const buttonBg = mode("gray.300", "blackAlpha.900");
+  const hoverColor = mode("blue.300", "red.600");
 
   return (
     <Box
