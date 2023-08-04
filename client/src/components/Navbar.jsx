@@ -145,11 +145,11 @@ const Navbar = () => {
             as={ReactLink}
             to="/login"
             bg={buttonBg}
+            _hover={{ bg: hoverColor }}
             m={{ base: "3px", lg: "5px" }}
             fontSize={{ base: "0.7rem", md: "0.8rem", lg: "1.2rem" }}
             w={{ base: "50px", sm: "65px", md: "100px" }}
             display={{ base: "none", sm: "flex" }}
-            _hover={{ bg: hoverColor }}
           >
             <Text color={fontColorDarkLight}>Sign In</Text>
           </Button>

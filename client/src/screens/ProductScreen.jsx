@@ -23,9 +23,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const ProductScreen = () => {
-  const buttonBorderColor = useColorModeValue("whiteAlpha.800");
-  const bgColor = useColorModeValue("gray.300");
-  const hoverColor = useColorModeValue("blue.300", "red.600");
+  const hoverColor = useColorModeValue("blue.300", "red.900");
 
   //state for add quantity
   const [amount, setAmount] = useState(1);
@@ -130,6 +128,7 @@ const ProductScreen = () => {
                     <Button
                       disabled={amount <= 1}
                       onClick={() => changeAmount("minus")}
+                      _hover={{ bg: hoverColor }}
                     >
                       <MinusIcon />
                     </Button>
@@ -137,17 +136,15 @@ const ProductScreen = () => {
                     <Button
                       disabled={amount >= product.stock}
                       onClick={() => changeAmount("plus")}
+                      _hover={{ bg: hoverColor }}
                     >
                       <SmallAddIcon w="20px" h="25px" />
                     </Button>
                   </Box>
 
                   {/* ADD FUNCTIONALITY */}
-                  <Button w="100%">
+                  <Button w="100%" _hover={{ bg: hoverColor }}>
                     <Text>Add to Cart</Text>
-                  </Button>
-                  <Button>
-                    TESTING
                   </Button>
                 </Flex>
               </Flex>
