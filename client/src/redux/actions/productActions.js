@@ -27,7 +27,7 @@ export const getProducts = (brandURL) => async (dispatch) => {
 export const getProduct = (brandURL, id) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const url = `/products/shop/${brandURL}/${id}`;
+    const url = `/api/products/shop/${brandURL}/${id}`;
     const { data } = await axios.get(url);
     dispatch(setProduct(data));
   } catch (error) {
