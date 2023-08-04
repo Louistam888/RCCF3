@@ -1,10 +1,11 @@
 import axios from "axios";
 import { setLoading, setError, cartItemAdd } from "../slices/cart";
 
-export const addCartItem = (id, qty) => async (dispatch) => {
+export const addCartItem = (id, qty, brand) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const { data } = await axios.get(`/api/products/shop/${brand}/{id}`);
+    const { data } = await axios.get(`/api/products/shop/${brand}/${id}`);
+    console.log(data)
     const itemToAdd = {
       id: data._id,
       name: data.name,

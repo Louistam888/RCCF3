@@ -164,7 +164,7 @@ const ProductScreen = () => {
                       bg="red"
                       h="100%"
                       w="150px"
-                      fontSize="2xl"
+                      
                     >
                       SOLD OUT
                     </Badge>
@@ -180,8 +180,7 @@ const ProductScreen = () => {
                       color="white"
                       bg="green"
                       h="100%"
-                      w="100px"
-                      fontSize="2xl"
+                      w="100px"                    
                     >
                       NEW
                     </Badge>

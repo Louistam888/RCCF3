@@ -10,16 +10,43 @@ import {
   useColorModeValue,
   Button,
   Icon,
+  useToast,
 } from "@chakra-ui/react";
-import Rating from "./Rating"
+import Rating from "./Rating";
 import { FiShoppingCart } from "react-icons/fi";
 import { Link as ReactLink } from "react-router-dom";
 import { StarIcon } from "@chakra-ui/icons";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addCartItem } from "../redux/actions/cartActions";
 
 const ProductCard = ({ product }) => {
   const borderColor = useColorModeValue("gray", "white");
   const borderWidth = useColorModeValue("1px", "2px");
+
+  const dispatch = useDispatch();
+  const toast = useToast();
+
+  const cartInfo = useSelector((state) => state.cart);
+  const { cart } = cartInfo;
+
+  const addItem = (id) => {
+    if (cart.some((cartItem) => cartItem.id === id)) {
+      toast({
+        description:
+          "You've alredy added this to your cart. Go to your cart to change the quantity.",
+        status: "error",
+        isClosable: true,
+      });
+    } else {
+      dispatch(addCartItem(id, 1));
+      toast({
+        description: "Item has been added.",
+        status: "success",
+        isClosable: true,
+      });
+    }
+  };
 
   return (
     <Link
@@ -81,7 +108,7 @@ const ProductCard = ({ product }) => {
             lineHeight="25px"
             width="100%"
             textAlign="center"
-                      >
+          >
             <Text
               style={{
                 display: "-webkit-box",
@@ -95,7 +122,7 @@ const ProductCard = ({ product }) => {
             </Text>
           </Box>
           <Box>
-            <Rating 
+            <Rating
               rating={product.rating}
               numReviews={product.numberOfReviews}
             />
@@ -120,6 +147,7 @@ const ProductCard = ({ product }) => {
                 disabled={product.stock <= 0}
                 alt="Add item to cart"
                 _hover={{ bg: "none", transform: "scale(1.5)" }}
+                onClick={() => addItem(product._id)}
               >
                 <Icon
                   as={FiShoppingCart}
