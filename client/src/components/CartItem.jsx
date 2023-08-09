@@ -7,7 +7,6 @@ import {
   Image,
   Box,
   Text,
-  Select,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { addCartItem } from "../redux/actions/cartActions.js";

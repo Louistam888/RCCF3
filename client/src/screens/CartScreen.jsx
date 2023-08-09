@@ -16,10 +16,10 @@ import {
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 import PageNotFound from "./PageNotFound";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
+import CartItem from "../components/CartItem";
 
 const CartScreen = () => {
-
   const cartInfo = useSelector((state) => state.cart);
   const { loading, error, cart } = cartInfo;
   return (
@@ -70,7 +70,11 @@ const CartScreen = () => {
               <Heading fontSize="2xl" fontWeight="extrabold">
                 Your Cart
               </Heading>
-              <Stack spacing="6">{/* CartItem */}</Stack>
+              <Stack spacing="6">
+                {cart.map((cartItem) => (
+                  <CartItem key={cartItem.id} cartItem={cartItem} />
+                ))}
+              </Stack>
             </Stack>
             <Flex direction="column" align="center" flex="1">
               {/* CartOrderSummary */}

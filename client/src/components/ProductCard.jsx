@@ -116,6 +116,7 @@ const ProductCard = ({ product }) => {
                 WebkitBoxOrient: "vertical",
                 textOverflow: "ellipsis",
                 overflow: "hidden",
+                height: "50px",
               }}
             >
               {product.name}
