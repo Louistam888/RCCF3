@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import Rating from "./Rating";
 import { FiShoppingCart } from "react-icons/fi";
-import { Link as ReactLink } from "react-router-dom";
+import { Link as ReactLink, useParams } from "react-router-dom";
 import { StarIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +24,7 @@ const ProductCard = ({ product }) => {
   const borderColor = useColorModeValue("gray", "white");
   const borderWidth = useColorModeValue("1px", "2px");
 
+  const {brand} = useParams()
   const dispatch = useDispatch();
   const toast = useToast();
 
@@ -39,7 +40,7 @@ const ProductCard = ({ product }) => {
         isClosable: true,
       });
     } else {
-      dispatch(addCartItem(id, 1));
+      dispatch(addCartItem(id, 1, brand));
       toast({
         description: "Item has been added.",
         status: "success",

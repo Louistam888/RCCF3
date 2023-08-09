@@ -3,7 +3,7 @@ import {
   Flex,
   Heading,
   Text,
-  useColorMode as mode,
+  useColorModeValue as mode,
   Badge,
   Stack,
 } from "@chakra-ui/react";
@@ -19,7 +19,7 @@ const CartOrderSummary = () => {
   const { subtotal } = cartItems;
   const navigate = useNavigate();
 
-  contcheckoutHandler = () => {
+  const checkoutHandler = () => {
     setButtonLoading(true)
     navigate("/checkout")
   }
