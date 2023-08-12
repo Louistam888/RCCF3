@@ -164,7 +164,7 @@ const ProductScreen = () => {
                     {/* CHANGE QUANTITY BOX */}
                     <Box w="150px" alignItems="center" display="flex" mt="10px">
                       <Button
-                        disabled={amount <= 1}
+                        isDisabled={amount <= 1}
                         bg={buttonBg}
                         border="2px solid white"
                         _hover={{ bg: hoverColor }}
@@ -174,7 +174,7 @@ const ProductScreen = () => {
                       </Button>
                       <Text px="20px">{amount}</Text>
                       <Button
-                        disabled={amount >= product.stock}
+                        isDisabled={amount >= product.stock}
                         bg={buttonBg}
                         _hover={{ bg: hoverColor }}
                         border="2px solid white"
