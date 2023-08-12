@@ -12,6 +12,7 @@ import {
   Icon,
   useColorModeValue as mode,
   useColorMode,
+  useToast,
 } from "@chakra-ui/react";
 // import { getProduct } from "../redux/actions/productActions.js";
 import PageNotFound from "./PageNotFound";
@@ -21,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../redux/actions/productActions.js";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { addCartItem } from "../redux/actions/cartActions";
 
 const ProductScreen = () => {
   //state for add quantity
@@ -32,9 +34,20 @@ const ProductScreen = () => {
   const { loading, error, product } = products;
   let { brand, id } = useParams();
 
-  //useColorMode
+  //chakra
   const buttonBg = mode("gray.300");
   const hoverColor = mode("blue.300", "red.600");
+  const toast = useToast();
+
+  //function for adding production qty to cart
+  const addItem = (id, qty) => {
+    dispatch(addCartItem(id, qty, brand));
+    toast({
+      description: `You have added ${qty} of this product to your cart`,
+      status: "success",
+      isClosable: true,
+    });
+  };
 
   useEffect(() => {
     dispatch(getProduct(brand, id));
@@ -48,7 +61,7 @@ const ProductScreen = () => {
       setAmount(amount - 1);
     }
   };
-
+  console.log(amount);
   //FUNCTION TO ADD TO CART
 
   if (product) {
@@ -155,6 +168,7 @@ const ProductScreen = () => {
                     _hover={{ bg: hoverColor }}
                     border="2px solid white"
                     mt="5px"
+                    onClick={() => addItem(product._id, amount)}
                   >
                     <Text>Add to Cart</Text>
                   </Button>
@@ -209,7 +223,6 @@ const ProductScreen = () => {
       </Box>
     );
   }
-
   // Return null if product.product has not yet been retrieved on page load
   return null;
 };

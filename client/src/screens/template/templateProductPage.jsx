@@ -47,6 +47,51 @@ const TemplateProductPage = () => {
   };
   const chairArray = sortByNew(products);
 
+ // const addItem = (id) => {
+  //   if (cart.some((cartItem) => cartItem.id === id)) {
+  //     toast({
+  //       description:
+  //         "You've alredy added this to your cart. Go to your cart to change the quantity.",
+  //       status: "error",
+  //       isClosable: true,
+  //     });
+  //   } else {
+  //     dispatch(addCartItem(id, 1, brand));
+  //     toast({
+  //       description: "Item has been added.",
+  //       status: "success",
+  //       isClosable: true,
+  //     });
+  //   }
+  // };
+
+  {/* <Tooltip
+              label="Add to Cart"
+              bg="blue.100"
+              border="1px solid black"
+              placement="bottom"
+              color="black"
+              fontSize="2xl"
+              rounded="5px"
+            >
+              <Button
+                variant="ghost"
+                disabled={product.stock <= 0}
+                alt="Add item to cart"
+                _hover={{ bg: "none", transform: "scale(1.5)" }}
+                onClick={() => addItem(product._id)}
+              >
+                <Icon
+                  as={FiShoppingCart}
+                  h={{ base: "23px", sm: "30px" }}
+                  w={{ base: "23px", sm: "30px" }}
+                  alignSelf="center"
+                ></Icon>
+              </Button>
+            </Tooltip> */}
+
+
+
   return (
     <Box pt="90px">
       <Flex h={{ base: "180px", md: "250px" }} overflow="hidden" position="relative" mb={{ base: "20px", sm: "50px" }}>

@@ -3,13 +3,14 @@ import {
   Flex,
   Select,
   useColorModeValue as mode,
-  Stack,
   Image,
   Box,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { addCartItem } from "../redux/actions/cartActions.js";
+import { MinusIcon, SmallAddIcon } from "@chakra-ui/icons";
 
 const CartItem = ({ cartItem }) => {
   const { name, image, price, stock, qty, id } = cartItem;
@@ -21,7 +22,7 @@ const CartItem = ({ cartItem }) => {
       justifyContent="space-between"
       align="center"
     >
-      <Stack direction="row" spacing="5" width="full">
+      <Flex direction="row" spacing="5" width="full">
         <Image
           rounded="lg"
           width="120px"
@@ -31,19 +32,21 @@ const CartItem = ({ cartItem }) => {
           alt={name}
         />
         <Box pt="4">
-          <Stack spacing="0.5">
+          <Box spacing="0.5">
             <Text>{name}</Text>
-          </Stack>
+          </Box>
         </Box>
-      </Stack>
+      </Flex>
       <Flex
         width="full"
-        mt={{ base: "4", md: "0" }}
+        mt={{ base: "5px", md: "0" }}
         align={{ base: "center", md: "baseine" }}
         justifyContent="space-between"
         display="flex"
       >
-        <Select
+        {qty}
+
+        {/* <Select
           maxW="64px"
           focusBorderColor={mode("orange.500", "orange.200")}
           value={qty}
@@ -51,13 +54,29 @@ const CartItem = ({ cartItem }) => {
             dispatch(addCartItem((id, e.target.value)));
           }}
         >
-          {[...Array(stock).keys()].map((item) => (
-            <option key={item + 1}>{item + 1}</option>
-          ))}
-        </Select>
+          {stock >= 20
+            ? [...Array(20).keys()].map((item) => (
+                <option key={item + 1} value={item + 1}>
+                  {item + 1}
+                </option>
+              ))
+            : null }
+        </Select> */}
 
         <Text fontWeight="bold">${price}</Text>
+
+        <Tooltip
+              label="Remove"
+              bg="blue.100"
+              border="1px solid black"
+              placement="bottom"
+              color="black"
+              fontSize="2xl"
+              rounded="5px"
+            >
+
         <CloseButton />
+        </Tooltip>
       </Flex>
     </Flex>
   );
