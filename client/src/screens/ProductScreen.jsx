@@ -61,11 +61,10 @@ const ProductScreen = () => {
       setAmount(amount - 1);
     }
   };
-  console.log(amount);
   //FUNCTION TO ADD TO CART
 
   if (product) {
-    const { brand, name, image, price, description } = product;
+    const { brand, name, image, price, description, stock } = product;
 
     return (
       <Box pt="90px">
@@ -126,52 +125,65 @@ const ProductScreen = () => {
                   />
                 </Flex>
                 <Text p="20px">{description}</Text>
+                <Box display="flex" justifyContent="center">
+                  <Badge
+                    rounded="5px"
+                    px="2"
+                    fontSize="xl"
+                    color="white"
+                    bg="red"
+                  >
+                    {stock <= 10 ? `Only ${stock} left in stock!` : null}
+                  </Badge>
+                </Box>
 
                 {/* ADD TO CART SECTION */}
                 <Flex
                   justifyContent="center"
+                  alignItems="center"
                   flexDirection="column"
                   mt="30px"
-                  px="20px"
+                  p="20px"
                 >
-                  <Text fontWeight="bold" textTransform="uppercase">
-                    Quantity
-                  </Text>
+                  <Box >
+                    <Text fontWeight="bold" textTransform="uppercase" textAlign="center">
+                      Quantity
+                    </Text>
+                    {/* CHANGE QUANTITY BOX */}
+                    <Box w="150px" alignItems="center" display="flex" mt="10px">
+                      <Button
+                        disabled={amount <= 1}
+                        bg={buttonBg}
+                        border="2px solid white"
+                        _hover={{ bg: hoverColor }}
+                        onClick={() => changeAmount("minus")}
+                      >
+                        <MinusIcon />
+                      </Button>
+                      <Text px="20px">{amount}</Text>
+                      <Button
+                        disabled={amount >= product.stock}
+                        bg={buttonBg}
+                        _hover={{ bg: hoverColor }}
+                        border="2px solid white"
+                        onClick={() => changeAmount("plus")}
+                      >
+                        <SmallAddIcon w="20px" h="25px" />
+                      </Button>
+                    </Box>
 
-                  {/* CHANGE QUANTITY BOX */}
-                  <Box w="150px" alignItems="center" display="flex" mt="10px">
+                    {/* ADD TO CART FUNCTIONALITY */}
                     <Button
-                      disabled={amount <= 1}
-                      bg={buttonBg}
-                      border="2px solid white"
-                      _hover={{ bg: hoverColor }}
-                      onClick={() => changeAmount("minus")}
-                    >
-                      <MinusIcon />
-                    </Button>
-                    <Text px="20px">{amount}</Text>
-                    <Button
-                      disabled={amount >= product.stock}
+                      w="150px"
                       bg={buttonBg}
                       _hover={{ bg: hoverColor }}
                       border="2px solid white"
-                      onClick={() => changeAmount("plus")}
+                      mt="5px"
+                      onClick={() => addItem(product._id, amount)}
                     >
-                      <SmallAddIcon w="20px" h="25px" />
+                      <Text>Add to Cart</Text>
                     </Button>
                   </Box>
-
-                  {/* ADD FUNCTIONALITY */}
-                  <Button
-                    w="100%"
-                    bg={buttonBg}
-                    _hover={{ bg: hoverColor }}
-                    border="2px solid white"
-                    mt="5px"
-                    onClick={() => addItem(product._id, amount)}
-                  >
-                    <Text>Add to Cart</Text>
-                  </Button>
                 </Flex>
               </Flex>
 
