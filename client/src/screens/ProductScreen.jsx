@@ -53,18 +53,21 @@ const ProductScreen = () => {
     dispatch(getProduct(brand, id));
   }, [dispatch, brand, id]);
 
-  // FUNCTION TO CHANGE QUANITTY OF ITEM
-  const changeAmount = (input) => {
-    if (input === "plus") {
-      setAmount(amount + 1);
-    } else if (input === "minus") {
-      setAmount(amount - 1);
-    }
-  };
-  //FUNCTION TO ADD TO CART
-
   if (product) {
     const { brand, name, image, price, description, stock } = product;
+
+    // function to change quantity. This is declared in the if block to ensure product is loaded
+    const changeAmount = (input) => {
+      if (input === "plus") {
+        if (amount < stock) {
+          setAmount(amount + 1);
+        }
+      } else if (input === "minus") {
+        if (amount > 1) {
+          setAmount(amount - 1);
+        }
+      }
+    };
 
     return (
       <Box pt="90px">
@@ -133,7 +136,11 @@ const ProductScreen = () => {
                     color="white"
                     bg="red"
                   >
-                    {stock <= 10 ? `Only ${stock} left in stock!` : null}
+                    {stock <= 10 && stock >= 1
+                      ? `Only ${stock} left in stock!`
+                      : stock === 0
+                      ? "Sold Out!"
+                      : null}
                   </Badge>
                 </Box>
 
@@ -142,11 +149,15 @@ const ProductScreen = () => {
                   justifyContent="center"
                   alignItems="center"
                   flexDirection="column"
-                  mt="30px"
+                  mt="10px"
                   p="20px"
                 >
-                  <Box >
-                    <Text fontWeight="bold" textTransform="uppercase" textAlign="center">
+                  <Box>
+                    <Text
+                      fontWeight="bold"
+                      textTransform="uppercase"
+                      textAlign="center"
+                    >
                       Quantity
                     </Text>
                     {/* CHANGE QUANTITY BOX */}
@@ -174,6 +185,7 @@ const ProductScreen = () => {
 
                     {/* ADD TO CART FUNCTIONALITY */}
                     <Button
+                      isDisabled={stock === 0}
                       w="150px"
                       bg={buttonBg}
                       _hover={{ bg: hoverColor }}
@@ -190,22 +202,6 @@ const ProductScreen = () => {
               {/* RIGHT DIV */}
               <Box w={{ base: "100%", md: "50%" }}>
                 <Box h="50px" w="100%">
-                  {product.stock <= 0 ? (
-                    <Badge
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      rounded="5px"
-                      px="2"
-                      fontSize="xl"
-                      color="white"
-                      bg="red"
-                      h="100%"
-                      w="150px"
-                    >
-                      SOLD OUT
-                    </Badge>
-                  ) : null}
                   {product.productIsNew ? (
                     <Badge
                       display="flex"
