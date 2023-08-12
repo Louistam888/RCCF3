@@ -32,6 +32,7 @@ const ProductScreen = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   const { loading, error, product } = products;
+  console.log(products);
   let { brand, id } = useParams();
 
   //chakra
@@ -54,7 +55,7 @@ const ProductScreen = () => {
   }, [dispatch, brand, id]);
 
   if (product) {
-    const { brand, name, image, price, description, stock } = product;
+    const { brand, name, image, price, description, stock, reviews } = product;
 
     // function to change quantity. This is declared in the if block to ensure product is loaded
     const changeAmount = (input) => {

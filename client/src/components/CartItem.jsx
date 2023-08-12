@@ -22,7 +22,13 @@ const CartItem = ({ cartItem }) => {
       justifyContent="space-between"
       align="center"
     >
-      <Flex direction="row" spacing="5" width="full">
+      <Flex
+        direction="row"
+        spacing="5"
+        width="full"
+        justifyContent="center"
+        alignItems="center"
+      >
         <Image
           rounded="lg"
           width="120px"
@@ -31,11 +37,9 @@ const CartItem = ({ cartItem }) => {
           src={image}
           alt={name}
         />
-        <Box pt="4">
-          <Box spacing="0.5">
-            <Text>{name}</Text>
-          </Box>
-        </Box>
+        <Flex m="0 10px">
+          <Text>{name}</Text>
+        </Flex>
       </Flex>
       <Flex
         width="full"
@@ -44,7 +48,7 @@ const CartItem = ({ cartItem }) => {
         justifyContent="space-between"
         display="flex"
       >
-        {qty}
+        <Text>Quantity: {qty}</Text>
 
         {/* <Select
           maxW="64px"
@@ -64,18 +68,16 @@ const CartItem = ({ cartItem }) => {
         </Select> */}
 
         <Text fontWeight="bold">${price}</Text>
-
         <Tooltip
-              label="Remove"
-              bg="blue.100"
-              border="1px solid black"
-              placement="bottom"
-              color="black"
-              fontSize="2xl"
-              rounded="5px"
-            >
-
-        <CloseButton />
+          label="Remove"
+          bg="blue.100"
+          border="1px solid black"
+          placement="bottom"
+          color="black"
+          fontSize="2xl"
+          rounded="5px"
+        >
+          <CloseButton />
         </Tooltip>
       </Flex>
     </Flex>
