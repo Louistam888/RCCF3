@@ -26,7 +26,7 @@ const Shop = () => {
         {brandsToDisplay.map((brand, index) => (
           <Box key={index}>
             <Center w="100%" h="550px">
-              <BrandCard brand={brand} />
+              <BrandCard brand={brand}/>
             </Center>
           </Box>
         ))}

@@ -1,33 +1,39 @@
-import { Flex, Box, Image, Badge, Tooltip, Stack, Link, Text, useColorModeValue, Button, Icon } from "@chakra-ui/react";
-import { FiShoppingCart } from "react-icons/fi";
-import { Link as ReactLink } from "react-router-dom";
+import {
+  Flex,
+  Box,
+  Image,
+  Badge,
+  Tooltip,
+  Stack,
+  Link,
+  Text,
+  useColorModeValue,
+  Button,
+  Icon,
+  useToast,
+} from "@chakra-ui/react";
+import Rating from "./Rating";
+import { Link as ReactLink, useParams } from "react-router-dom";
 import { StarIcon } from "@chakra-ui/icons";
 import { useState } from "react";
-
-const Rating = ({ rating, numReviews }) => {
-  const { iconSize, setIconSize } = useState("14px");
-  return (
-    <Flex>
-      <Box spacing="2px">
-        <StarIcon color="orange.500" />
-        <StarIcon color={rating >= 2 ? "orange.500" : "gray"} />
-        <StarIcon color={rating >= 3 ? "orange.500" : "gray"} />
-        <StarIcon color={rating >= 4 ? "orange.500" : "gray"} />
-        <StarIcon color={rating >= 5 ? "orange.500" : "gray"} />
-      </Box>
-      <Text ml="3px">{`${numReviews} ${numReviews === 1 ? "Review" : "Reviews"}`}</Text>
-    </Flex>
-  );
-};
+import { useDispatch, useSelector } from "react-redux";
+import { addCartItem } from "../redux/actions/cartActions";
 
 const ProductCard = ({ product }) => {
   const borderColor = useColorModeValue("gray", "white");
   const borderWidth = useColorModeValue("1px", "2px");
 
+  const { brand } = useParams();
+  const dispatch = useDispatch();
+  const toast = useToast();
+
+  const cartInfo = useSelector((state) => state.cart);
+  const { cart } = cartInfo;
+
   return (
     <Link
       as={ReactLink}
-      to={`/product/${product._id}`}
+      to={`/shop/${product.brand}/${product._id}`}
       pt="2"
       cursor="pointer"
       _hover={{ textDecoration: "none", transform: "scale(1.03)" }}
@@ -43,7 +49,14 @@ const ProductCard = ({ product }) => {
         border={`${borderWidth} solid ${borderColor}`}
         _hover={{ boxShadow: "dark-lg" }}
       >
-        <Box h="20px" position={{ base: "relative", sm: "absolute" }} top="0" left="0" m="8px" zIndex="2">
+        <Box
+          h="20px"
+          position={{ base: "relative", sm: "absolute" }}
+          top="0"
+          left="0"
+          m="8px"
+          zIndex="2"
+        >
           {product.stock <= 0 ? (
             <Badge rounded="5px" px="2" fontSize="xl" color="white" bg="red">
               SOLD OUT
@@ -64,7 +77,12 @@ const ProductCard = ({ product }) => {
           rounded="5px"
           filter={product.stock <= 0 ? "blur(5px)" : "none"}
         />
-        <Flex m="10px" justifyContent="center" alignItems="center" flexDirection="column">
+        <Flex
+          m="10px"
+          justifyContent="center"
+          alignItems="center"
+          flexDirection="column"
+        >
           <Box
             fontSize="xl"
             fontWeight="semiBold"
@@ -72,8 +90,6 @@ const ProductCard = ({ product }) => {
             lineHeight="25px"
             width="100%"
             textAlign="center"
-            minH="50px"
-            mb="12px"
           >
             <Text
               style={{
@@ -82,39 +98,24 @@ const ProductCard = ({ product }) => {
                 WebkitBoxOrient: "vertical",
                 textOverflow: "ellipsis",
                 overflow: "hidden",
+                height: "50px",
               }}
             >
               {product.name}
             </Text>
           </Box>
           <Box>
-            <Rating rating={product.rating} numReviews={product.numberOfReviews} />
+            <Rating
+              rating={product.rating}
+              numReviews={product.numberOfReviews}
+            />
           </Box>
-          <Flex fontSize="2xl" mb="3px" flexDirection={{ base: "row", sm: "column" }}>
+          <Flex
+            fontSize="2xl"
+            mb="3px"
+            flexDirection={{ base: "row", sm: "column" }}
+          >
             <Text>${Number(product.price).toFixed(2)}</Text>
-            <Tooltip
-              label="Add to Cart"
-              bg="blue.100"
-              border="1px solid black"
-              placement="bottom"
-              color="black"
-              fontSize="2xl"
-              rounded="5px"
-            >
-              <Button
-                variant="ghost"
-                disabled={product.stock <= 0}
-                alt="Add item to cart"
-                _hover={{ bg: "none", transform: "scale(1.5)" }}
-              >
-                <Icon
-                  as={FiShoppingCart}
-                  h={{ base: "23px", sm: "30px" }}
-                  w={{ base: "23px", sm: "30px" }}
-                  alignSelf="center"
-                ></Icon>
-              </Button>
-            </Tooltip>
           </Flex>
         </Flex>
       </Stack>
