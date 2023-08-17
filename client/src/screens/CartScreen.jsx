@@ -59,7 +59,7 @@ const CartScreen = () => {
             height="auto"
           />
           <Heading mt="20px" fontSize={{ base: "2xl", md: "3xl" }}>
-            There is nothing in your cart!
+            There is nothing in your cart
           </Heading>
           <Link as={ReactLink} to="/shop">
             <Text mt="10px" fontSize={{ base: "sm", md: "xl" }}>
