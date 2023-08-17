@@ -13,7 +13,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import Rating from "./Rating";
-import { FiShoppingCart } from "react-icons/fi";
 import { Link as ReactLink, useParams } from "react-router-dom";
 import { StarIcon } from "@chakra-ui/icons";
 import { useState } from "react";

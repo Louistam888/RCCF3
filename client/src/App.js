@@ -28,7 +28,7 @@ const App = () => {
             <Route path="/shop/:brand" element={<ProductsScreen />}></Route>
             <Route path="/shop/:brand/:id" element={<ProductScreen />}></Route>
             <Route path="/shop/*" element={<PageNotFound />} />
-            <Route path="/shop/:brand/:id*" element={<PageNotFound />} />
+            <Route path="/shop/:brand/*" element={<PageNotFound />} />
             <Route path="/*" element={<PageNotFound />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>

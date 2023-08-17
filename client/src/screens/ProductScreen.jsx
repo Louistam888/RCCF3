@@ -32,7 +32,6 @@ const ProductScreen = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   const { loading, error, product } = products;
-  console.log(products);
   let { brand, id } = useParams();
 
   //chakra
