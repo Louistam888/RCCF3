@@ -11,8 +11,8 @@ import {
   AlertTitle,
   AlertIcon,
   AlertDescription,
-  Wrap,
   Text,
+  Image,
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 import PageNotFound from "./PageNotFound";
@@ -43,19 +43,30 @@ const CartScreen = () => {
           />
         </Flex>
       ) : error ? (
-        <>
-          <PageNotFound error={error} />
-        </>
+        <PageNotFound error={error} />
       ) : cart.length <= 0 ? (
-        <Alert status="warning">
-          <AlertIcon />
-          <AlertTitle>We are sorry!</AlertTitle>
-          <AlertDescription>
-            <Link as={ReactLink} to="/shop">
-              Your cart is empty. Shop for a chair!
-            </Link>
-          </AlertDescription>
-        </Alert>
+        <Flex
+          justifyContent="center"
+          alignItems="center"
+          pt="50px"
+          px="10px"
+          flexDirection="column"
+          textAlign="center"
+        >
+          <Image
+            src="/assets/cartEmpty.png"
+            width={{ base: "40%", sm: "30%", md: "20%" }}
+            height="auto"
+          />
+          <Heading mt="20px" fontSize={{ base: "2xl", md: "3xl" }}>
+            There is nothing in your cart!
+          </Heading>
+          <Link as={ReactLink} to="/shop">
+            <Text mt="10px" fontSize={{ base: "sm", md: "xl" }}>
+              Head back to the shop
+            </Text>
+          </Link>
+        </Flex>
       ) : (
         <Box
           maxW={{ base: "3xl", lg: "7xl" }}
