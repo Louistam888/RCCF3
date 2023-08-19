@@ -23,6 +23,7 @@ import { getProduct } from "../redux/actions/productActions.js";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { addCartItem } from "../redux/actions/cartActions";
+import { changeAmount, addItem } from "../utilityFunctions/utilityFunctions";
 
 const ProductScreen = () => {
   //state for add quantity
@@ -39,35 +40,12 @@ const ProductScreen = () => {
   const hoverColor = mode("blue.300", "red.600");
   const toast = useToast();
 
-  //function for adding production qty to cart
-  const addItem = (id, qty) => {
-    dispatch(addCartItem(id, qty, brand));
-    toast({
-      description: `You have added ${qty} of this product to your cart`,
-      status: "success",
-      isClosable: true,
-    });
-  };
-
   useEffect(() => {
     dispatch(getProduct(brand, id));
   }, [dispatch, brand, id]);
 
   if (product) {
     const { brand, name, image, price, description, stock, reviews } = product;
-
-    // function to change quantity. This is declared in the if block to ensure product is loaded
-    const changeAmount = (input) => {
-      if (input === "plus") {
-        if (amount < stock) {
-          setAmount(amount + 1);
-        }
-      } else if (input === "minus") {
-        if (amount > 1) {
-          setAmount(amount - 1);
-        }
-      }
-    };
 
     return (
       <Box pt="90px">
@@ -167,7 +145,9 @@ const ProductScreen = () => {
                         bg={buttonBg}
                         border="2px solid white"
                         _hover={{ bg: hoverColor }}
-                        onClick={() => changeAmount("minus")}
+                        onClick={() =>
+                          changeAmount("minus", amount, setAmount, stock)
+                        }
                       >
                         <MinusIcon />
                       </Button>
@@ -177,7 +157,9 @@ const ProductScreen = () => {
                         bg={buttonBg}
                         _hover={{ bg: hoverColor }}
                         border="2px solid white"
-                        onClick={() => changeAmount("plus")}
+                        onClick={() =>
+                          changeAmount("plus", amount, setAmount, stock)
+                        }
                       >
                         <SmallAddIcon w="20px" h="25px" />
                       </Button>
@@ -191,7 +173,16 @@ const ProductScreen = () => {
                       _hover={{ bg: hoverColor }}
                       border="2px solid white"
                       mt="5px"
-                      onClick={() => addItem(product._id, amount)}
+                      onClick={() =>
+                        addItem(
+                          product._id,
+                          amount,
+                          brand,
+                          dispatch,
+                          toast,
+                          addCartItem
+                        )
+                      }
                     >
                       <Text>Add to Cart</Text>
                     </Button>
