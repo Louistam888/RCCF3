@@ -7,27 +7,47 @@ import {
   Box,
   Text,
   Tooltip,
+  Input,
+  Button,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { addCartItem } from "../redux/actions/cartActions.js";
-import { MinusIcon, SmallAddIcon } from "@chakra-ui/icons";
+import { useState, useRef } from "react";
 
 const CartItem = ({ cartItem }) => {
   const { name, image, price, stock, qty, id } = cartItem;
   const dispatch = useDispatch();
 
+  //handle change quantity
+  const [editQty, setEditQty] = useState(true);
+  const [updateQtyBtn, setUpdateQtyBtn] = useState("none");
+  const [displayQtyBtn, setDisplayQtyBtn] = useState("block");
+
+  //focus cursor on input on click for editing qty
+  const inputRef = useRef(null);
+
+  const handleQtyClick = () => {
+    setEditQty(!editQty);
+    setDisplayQtyBtn("none");
+    setUpdateQtyBtn("block");
+
+    inputRef.current.focus(); // Focus the input element
+    inputRef.current.selectionStart = 0; //move cursor to input box
+  };
+
   return (
     <Flex
-      direction={{ base: "column", md: "row" }}
-      justifyContent="space-between"
+      direction={{ base: "column", sm: "row" }}
+      justifyContent="center"
       align="center"
+      border="1px solid black"
     >
       <Flex
-        direction="row"
+        direction={{ base: "column-reverse", sm: "row" }}
         spacing="5"
         width="full"
         justifyContent="center"
         alignItems="center"
+        textAlign={{ base: "center", sm: "left" }}
       >
         <Image
           rounded="lg"
@@ -47,27 +67,39 @@ const CartItem = ({ cartItem }) => {
         align={{ base: "center", md: "baseine" }}
         justifyContent="space-between"
         display="flex"
+        flexDirection={{ base: "column", sm: "row" }}
       >
-        <Text>Quantity: {qty}</Text>
-
-        {/* <Select
-          maxW="64px"
-          focusBorderColor={mode("orange.500", "orange.200")}
-          value={qty}
-          onChange={(e) => {
-            dispatch(addCartItem((id, e.target.value)));
-          }}
+        <Flex
+          flexDirection="column"
+          justifyContent="flex-start"
+          alignItems="center"
+          height="100%"
         >
-          {stock >= 20
-            ? [...Array(20).keys()].map((item) => (
-                <option key={item + 1} value={item + 1}>
-                  {item + 1}
-                </option>
-              ))
-            : null }
-        </Select> */}
-
-        <Text fontWeight="bold">${price}</Text>
+          <Text mb="5px" textTransform="uppercase" fontWeight="semibold">
+            QUANTITY
+          </Text>
+          <Input
+            variant="filled"
+            color="black"
+            fontWeight="bold"
+            width="50px"
+            textAlign="center"
+            isDisabled={editQty}
+            ref={inputRef}
+            value={qty}
+          />
+          <Button
+            onClick={handleQtyClick}
+            display={displayQtyBtn}
+            mb={{ base: "10px", sm: "0" }}
+          >
+            Edit
+          </Button>
+          <Button display={updateQtyBtn}>Save</Button>
+        </Flex>
+        <Text fontWeight="bold" mb={{ base: "10px", sm: "0" }}>
+          ${price}
+        </Text>
         <Tooltip
           label="Remove"
           bg="blue.100"
@@ -77,7 +109,7 @@ const CartItem = ({ cartItem }) => {
           fontSize="2xl"
           rounded="5px"
         >
-          <CloseButton />
+          <CloseButton mb={{ base: "10px", sm: "0" }} />
         </Tooltip>
       </Flex>
     </Flex>
