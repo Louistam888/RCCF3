@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { useState, useRef } from "react";
+import { removeCartItem } from "../redux/actions/cartActions";
 
 const CartItem = ({ cartItem }) => {
   const { name, image, price, stock, qty, id } = cartItem;
@@ -109,7 +110,10 @@ const CartItem = ({ cartItem }) => {
           fontSize="2xl"
           rounded="5px"
         >
-          <CloseButton mb={{ base: "10px", sm: "0" }} />
+          <CloseButton
+            mb={{ base: "10px", sm: "0" }}
+            onClick={() => dispatch(removeCartItem(id))}
+          />
         </Tooltip>
       </Flex>
     </Flex>
