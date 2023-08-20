@@ -32,14 +32,14 @@ const CartOrderSummary = () => {
           <Text fontWeight="medium" color={mode("gray.600", "gray.400")}>
             Subtotal
           </Text>
-          <Text fontWeight="medium">{subtotal}</Text>
+          <Text fontWeight="medium">${subtotal}</Text>
         </Flex>
         <Flex justify="space-between">
           <Text fontWeight="medium" color={mode("gray.600", "gray.400")}>
             Shipping
           </Text>
           <Text fontWeight="medium">
-            {subtotal <= 1000 ? (
+            ${subtotal <= 1000 ? (
               standardShipping
             ) : (
               <Badge rounded="full" px="2" fontSize="15px" colorScheme="green">
@@ -49,8 +49,8 @@ const CartOrderSummary = () => {
           </Text>
         </Flex>
         <Flex fontSize="lg" fontWeight="semibold">
-          {subtotal <= 1000
-            ? Number(subtotal) + Number(standardShipping)
+          ${subtotal <= 1000
+            ? (Number(subtotal) + Number(standardShipping)).toFixed(2)
             : subtotal}
         </Flex>
       </Stack>
