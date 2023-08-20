@@ -15,14 +15,15 @@ import { useState, useRef } from "react";
 import { removeCartItem } from "../redux/actions/cartActions";
 
 const CartItem = ({ cartItem }) => {
-  console.log(cartItem);
   const { name, image, price, stock, qty, id } = cartItem;
   const dispatch = useDispatch();
 
   //handle change quantity
-  const [editQty, setEditQty] = useState(true);
-  const [displayEditBtn, setDisplayEditBtn] = useState("block");
-  const [updateQtyBtn, setUpdateQtyBtn] = useState("none");
+  const [editQty, setEditQty] = useState(true); // determines if input field is disabled
+  const [updateQty, setUpdateQty] = useState(qty); // quantity of item
+  const [displayEditBtn, setDisplayEditBtn] = useState("block"); // determines if edit btn is displayed after click
+  const [updateQtyBtn, setUpdateQtyBtn] = useState("none"); // determines if save button is displayed after click
+  const [isFocused, setIsFocused] = useState(false); // handles whether input placeholder appears when input is selected
 
   //focus cursor on input on click for editing qty
   const inputRef = useRef(null);
@@ -36,12 +37,20 @@ const CartItem = ({ cartItem }) => {
     inputRef.current.selectionStart = 0; //move cursor to input box
   };
 
-  const updateQtyClick = () => {
-    // need to e.target input to get qty and use that to update cart
+  const updateQtyClick = (event) => {
     setDisplayEditBtn("block");
     setUpdateQtyBtn("none");
   };
 
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleInputChange = (event) => {
+    setUpdateQty(event.target.value); // still one character behind
+    console.log(updateQty)
+  };
+  
   return (
     <Flex
       direction={{ base: "column", sm: "row" }}
@@ -94,7 +103,10 @@ const CartItem = ({ cartItem }) => {
             textAlign="center"
             isDisabled={editQty}
             ref={inputRef}
-            value={qty}
+            placeholder={isFocused ? "" : qty}
+            _placeholder={{ opacity: 1, color: "inherit" }}
+            onFocus={handleFocus}
+            onChange={handleInputChange}
           />
           <Button
             onClick={handleQtyClick}
@@ -103,7 +115,9 @@ const CartItem = ({ cartItem }) => {
           >
             Edit
           </Button>
-          <Button display={updateQtyBtn}>Save</Button>
+          <Button display={updateQtyBtn} onClick={updateQtyClick}>
+            Save
+          </Button>
         </Flex>
         <Text fontWeight="bold" mb={{ base: "10px", sm: "0" }}>
           ${price}
