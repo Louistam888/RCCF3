@@ -106,6 +106,20 @@ const ProductScreen = () => {
                   />
                 </Flex>
                 <Text p="20px">{description}</Text>
+
+                <Box display="flex" justifyContent="center">
+                  <Badge
+                    rounded="5px"
+                    px="2"
+                    fontSize="xl"
+                    color="white"
+                    bg="green"
+                    textTransform="uppercase"
+                  >
+                    {product.productIsNew ? "new" : null}
+                  </Badge>
+                </Box>
+
                 <Box display="flex" justifyContent="center">
                   <Badge
                     rounded="5px"
@@ -192,24 +206,6 @@ const ProductScreen = () => {
 
               {/* RIGHT DIV */}
               <Box w={{ base: "100%", md: "50%" }}>
-                <Box h="50px" w="100%">
-                  {product.productIsNew ? (
-                    <Badge
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      rounded="5px"
-                      px="2"
-                      fontSize="xl"
-                      color="white"
-                      bg="green"
-                      h="100%"
-                      w="100px"
-                    >
-                      NEW
-                    </Badge>
-                  ) : null}
-                </Box>
                 <Image
                   src={image}
                   alt={name}
