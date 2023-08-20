@@ -15,24 +15,31 @@ import { useState, useRef } from "react";
 import { removeCartItem } from "../redux/actions/cartActions";
 
 const CartItem = ({ cartItem }) => {
+  console.log(cartItem);
   const { name, image, price, stock, qty, id } = cartItem;
   const dispatch = useDispatch();
 
   //handle change quantity
   const [editQty, setEditQty] = useState(true);
+  const [displayEditBtn, setDisplayEditBtn] = useState("block");
   const [updateQtyBtn, setUpdateQtyBtn] = useState("none");
-  const [displayQtyBtn, setDisplayQtyBtn] = useState("block");
 
   //focus cursor on input on click for editing qty
   const inputRef = useRef(null);
 
   const handleQtyClick = () => {
     setEditQty(!editQty);
-    setDisplayQtyBtn("none");
+    setDisplayEditBtn("none");
     setUpdateQtyBtn("block");
 
     inputRef.current.focus(); // Focus the input element
     inputRef.current.selectionStart = 0; //move cursor to input box
+  };
+
+  const updateQtyClick = () => {
+    // need to e.target input to get qty and use that to update cart
+    setDisplayEditBtn("block");
+    setUpdateQtyBtn("none");
   };
 
   return (
@@ -91,7 +98,7 @@ const CartItem = ({ cartItem }) => {
           />
           <Button
             onClick={handleQtyClick}
-            display={displayQtyBtn}
+            display={displayEditBtn}
             mb={{ base: "10px", sm: "0" }}
           >
             Edit

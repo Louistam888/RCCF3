@@ -50,14 +50,26 @@ export const cartSlice = createSlice({
     cartItemRemoval: (state, { payload }) => {
       state.cart = [...state.cart].filter((item) => item.id !== payload);
       updateLocalStorage(state.cart);
-      state.subtotal = calculateSubtotal(state.cart);
       state.loading = false;
       state.error = null;
+      state.subtotal = calculateSubtotal(state.cart);
     },
+    updateCartItem: (state, { payload }) => {
+      const indexToBeUpdated = state.cart.findIndex((item) => item.id === payload.id);
+      if (indexToBeUpdated !== -1) {
+        const updatedItem = {
+          ...state.cart[indexToBeUpdated],
+          qty: payload.qty,
+        };
+        state.cart.splice(indexToBeUpdated, 1, updatedItem);
+      }
+    },
+    
   },
 });
 
-export const { setLoading, setError, cartItemAdd, cartItemRemoval } = cartSlice.actions;
+export const { setLoading, setError, cartItemAdd, cartItemRemoval, updateCartItem } =
+  cartSlice.actions;
 export default cartSlice.reducer;
 
 export const cartSelector = (state) => state.cart;
