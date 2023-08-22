@@ -29,7 +29,6 @@ export const cartSlice = createSlice({
       state.loading = true;
     },
     cartItemAdd: (state, { payload }) => {
-      console.log(state.cart);
       const existingItem = state.cart.find((item) => item.id === payload.id);
       if (existingItem) {
         state.cart = state.cart.map((item) =>
@@ -54,22 +53,31 @@ export const cartSlice = createSlice({
       state.error = null;
       state.subtotal = calculateSubtotal(state.cart);
     },
-    updateCartItem: (state, { payload }) => {
-      const indexToBeUpdated = state.cart.findIndex((item) => item.id === payload.id);
+    cartItemUpdate: (state, { payload }) => {
+      const { id, qty } = payload;
+      const indexToBeUpdated = state.cart.findIndex(
+        (item) => item.id === id
+      );
       if (indexToBeUpdated !== -1) {
         const updatedItem = {
           ...state.cart[indexToBeUpdated],
-          qty: payload.qty,
+          qty: qty,
         };
         state.cart.splice(indexToBeUpdated, 1, updatedItem);
       }
+      state.loading = false;
+      state.error = null;
     },
-    
   },
 });
 
-export const { setLoading, setError, cartItemAdd, cartItemRemoval, updateCartItem } =
-  cartSlice.actions;
+export const {
+  setLoading,
+  setError,
+  cartItemAdd,
+  cartItemRemoval,
+  cartItemUpdate,
+} = cartSlice.actions;
 export default cartSlice.reducer;
 
 export const cartSelector = (state) => state.cart;

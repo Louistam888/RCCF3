@@ -23,7 +23,6 @@ import { getProduct } from "../redux/actions/productActions.js";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { addCartItem } from "../redux/actions/cartActions";
-import { changeAmount, addItem } from "../utilityFunctions/utilityFunctions";
 
 const ProductScreen = () => {
   //state for add quantity
@@ -39,6 +38,29 @@ const ProductScreen = () => {
   const buttonBg = mode("gray.300");
   const hoverColor = mode("blue.300", "red.600");
   const toast = useToast();
+
+  //function to add or subtract qty value
+  const changeAmount = (input, amount, setAmount, stock) => {
+    if (input === "plus") {
+      if (amount < stock) {
+        setAmount(amount + 1);
+      }
+    } else if (input === "minus") {
+      if (amount > 1) {
+        setAmount(amount - 1);
+      }
+    }
+  };
+
+  //function for adding production qty to cart
+  const addItem = (id, qty, brand, dispatch, toast, addCartItem) => {
+    dispatch(addCartItem(id, qty, brand));
+    toast({
+      description: `You have added ${qty} of this product to your cart`,
+      status: "success",
+      isClosable: true,
+    });
+  };
 
   useEffect(() => {
     dispatch(getProduct(brand, id));

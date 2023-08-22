@@ -4,6 +4,7 @@ import {
   setError,
   cartItemAdd,
   cartItemRemoval,
+  cartItemUpdate,
 } from "../slices/cart";
 
 export const addCartItem = (id, qty, brand) => async (dispatch) => {
@@ -19,7 +20,6 @@ export const addCartItem = (id, qty, brand) => async (dispatch) => {
       stock: data.stock,
       qty,
     };
-    console.log(itemToAdd.brand)
     dispatch(cartItemAdd(itemToAdd));
   } catch (error) {
     dispatch(
@@ -34,12 +34,14 @@ export const addCartItem = (id, qty, brand) => async (dispatch) => {
   }
 };
 
+//need error handling for both 
+
 export const removeCartItem = (id) => async (dispatch) => {
   dispatch(setLoading(true));
   dispatch(cartItemRemoval(id));
 };
 
-export const updateCartItem = (id) => async (dispatch) => {
-  dispatch(setLoading(true))
-  dispatch(updateCartItem(id))
-}
+export const updateCartItem = (id, qty) => async (dispatch) => {
+  dispatch(setLoading(true));
+  dispatch(cartItemUpdate({id, qty}));
+};

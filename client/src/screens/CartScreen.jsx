@@ -23,6 +23,7 @@ import CartOrderSummary from "../components/CartOrderSummary";
 const CartScreen = () => {
   const cartInfo = useSelector((state) => state.cart);
   const { loading, error, cart } = cartInfo;
+  console.log(cartInfo)
 
   return (
     <Box pt="90px">
@@ -91,8 +92,7 @@ const CartScreen = () => {
             </Stack>
             <Flex direction="column" align="center" flex="1">
               <CartOrderSummary />
-            </Flex>
-            <HStack mt="6" fontWeight="semibold">
+
               <Text>or</Text>
               <Link
                 as={ReactLink}
@@ -101,7 +101,7 @@ const CartScreen = () => {
               >
                 Continue Shopping
               </Link>
-            </HStack>
+            </Flex>
           </Stack>
         </Box>
       )}

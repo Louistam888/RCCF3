@@ -20,9 +20,9 @@ const CartOrderSummary = () => {
   const navigate = useNavigate();
 
   const checkoutHandler = () => {
-    setButtonLoading(true)
-    navigate("/checkout")
-  }
+    setButtonLoading(true);
+    navigate("/checkout");
+  };
 
   return (
     <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" w="full">
@@ -39,17 +39,18 @@ const CartOrderSummary = () => {
             Shipping
           </Text>
           <Text fontWeight="medium">
-            ${subtotal <= 1000 ? (
-              standardShipping
+            {subtotal <= 1000 ? (
+              `$${standardShipping}`
             ) : (
               <Badge rounded="full" px="2" fontSize="15px" colorScheme="green">
-                Free Shipping for all orders over $1,000
+                Free shipping
               </Badge>
             )}
           </Text>
         </Flex>
         <Flex fontSize="lg" fontWeight="semibold">
-          ${subtotal <= 1000
+          $
+          {subtotal <= 1000
             ? (Number(subtotal) + Number(standardShipping)).toFixed(2)
             : subtotal}
         </Flex>
