@@ -92,7 +92,6 @@ const CartScreen = () => {
             </Stack>
             <Flex direction="column" align="center" flex="1">
               <CartOrderSummary />
-
               <Text>or</Text>
               <Link
                 as={ReactLink}

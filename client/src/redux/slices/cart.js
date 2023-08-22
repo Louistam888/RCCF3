@@ -65,6 +65,7 @@ export const cartSlice = createSlice({
         };
         state.cart.splice(indexToBeUpdated, 1, updatedItem);
       }
+      updateLocalStorage(state.cart);
       state.loading = false;
       state.error = null;
     },
