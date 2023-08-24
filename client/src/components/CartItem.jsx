@@ -1,10 +1,8 @@
 import {
   CloseButton,
   Flex,
-  Select,
   useColorModeValue as mode,
   Image,
-  Box,
   Text,
   Tooltip,
   Input,
@@ -17,7 +15,6 @@ import { removeCartItem, updateCartItem } from "../redux/actions/cartActions";
 
 const CartItem = ({ cartItem }) => {
   const { name, image, price, stock, qty, id } = cartItem;
-
   const dispatch = useDispatch();
 
   //states for handling changes to item Quantity
@@ -70,10 +67,6 @@ const CartItem = ({ cartItem }) => {
       isClosable: true,
     });
   };
-
-  // console.log(updateQty)
-
-  //useEffect to re-render quantity on state.cart change
 
   return (
     <Flex
@@ -129,6 +122,7 @@ const CartItem = ({ cartItem }) => {
             ref={inputRef}
             placeholder={isFocused ? "" : qty}
             _placeholder={{ opacity: 1, color: "inherit" }}
+            focusBorderColor="blackAlpha"
             onChange={handleInputChange}
           />
           <Button

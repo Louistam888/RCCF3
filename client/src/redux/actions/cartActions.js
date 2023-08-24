@@ -34,14 +34,38 @@ export const addCartItem = (id, qty, brand) => async (dispatch) => {
   }
 };
 
-//need error handling for both 
+//need error handling for both
 
 export const removeCartItem = (id) => async (dispatch) => {
   dispatch(setLoading(true));
-  dispatch(cartItemRemoval(id));
+  try {
+    dispatch(cartItemRemoval(id));
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : "An unexpected error has occurred. Please try again later."
+      )
+    );
+  }
 };
 
 export const updateCartItem = (id, qty) => async (dispatch) => {
   dispatch(setLoading(true));
-  dispatch(cartItemUpdate({id, qty}));
+  try {
+    dispatch(cartItemUpdate({ id, qty }));
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : "An unexpected error has occurred. Please try again later."
+      )
+    );
+  }
 };

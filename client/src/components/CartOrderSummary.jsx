@@ -32,7 +32,7 @@ const CartOrderSummary = () => {
           <Text fontWeight="medium" color={mode("gray.600", "gray.400")}>
             Subtotal
           </Text>
-          <Text fontWeight="medium">${subtotal}</Text>
+          <Text fontWeight="medium">${subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Text>
         </Flex>
         <Flex justify="space-between">
           <Text fontWeight="medium" color={mode("gray.600", "gray.400")}>
@@ -51,8 +51,8 @@ const CartOrderSummary = () => {
         <Flex fontSize="lg" fontWeight="semibold">
           $
           {subtotal <= 1000
-            ? (Number(subtotal) + Number(standardShipping)).toFixed(2)
-            : subtotal}
+            ? ((Number(subtotal) + Number(standardShipping)).toFixed(2)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            : subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </Flex>
       </Stack>
       <Button
