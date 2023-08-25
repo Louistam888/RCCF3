@@ -30,10 +30,12 @@ export const cartSlice = createSlice({
     },
     cartItemAdd: (state, { payload }) => {
       const existingItem = state.cart.find((item) => item.id === payload.id);
+
       if (existingItem) {
-        state.cart = state.cart.map((item) =>
-          item.id === existingItem.id ? payload : item
+        const existingItemIndex = state.cart.findIndex(
+          (item) => item.id === payload.id
         );
+        state.cart[existingItemIndex].qty += payload.qty;
       } else {
         state.cart = [...state.cart, payload]; //new preferred way to push payload into state with spread operator instead of .push
       }
@@ -55,13 +57,11 @@ export const cartSlice = createSlice({
     },
     cartItemUpdate: (state, { payload }) => {
       const { id, qty } = payload;
-      const indexToBeUpdated = state.cart.findIndex(
-        (item) => item.id === id
-      );
+      const indexToBeUpdated = state.cart.findIndex((item) => item.id === id);
       if (indexToBeUpdated !== -1) {
         const updatedItem = {
           ...state.cart[indexToBeUpdated],
-          qty: qty,
+          qty: Number(qty),
         };
         state.cart.splice(indexToBeUpdated, 1, updatedItem);
       }
@@ -81,4 +81,4 @@ export const {
 } = cartSlice.actions;
 export default cartSlice.reducer;
 
-export const cartSelector = (state) => state.cart;
+// export const cartSelector = (state) => state.cart;

@@ -23,7 +23,6 @@ import CartOrderSummary from "../components/CartOrderSummary";
 const CartScreen = () => {
   const cartInfo = useSelector((state) => state.cart);
   const { loading, error, cart } = cartInfo;
-  console.log(cartInfo)
 
   return (
     <Box pt="90px">
