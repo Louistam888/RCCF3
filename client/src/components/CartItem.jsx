@@ -102,6 +102,7 @@ const CartItem = ({ cartItem }) => {
         justifyContent="space-between"
         display="flex"
         flexDirection={{ base: "column", sm: "row" }}
+        height="100px"
       >
         <Flex
           flexDirection="column"
@@ -113,6 +114,7 @@ const CartItem = ({ cartItem }) => {
             QUANTITY
           </Text>
           <Input
+            // type="number"
             variant="filled"
             color="black"
             fontWeight="bold"
@@ -136,9 +138,19 @@ const CartItem = ({ cartItem }) => {
             Save
           </Button>
         </Flex>
-        <Text fontWeight="bold" mb={{ base: "10px", sm: "0" }}>
-          ${price}
-        </Text>
+        <Flex
+          flexDirection="column"
+          justifyContent="flex-start"
+          alignItems="center"
+          height="100%"
+        >
+          <Text mb="10px" textTransform="uppercase" fontWeight="semibold">
+            ITEM PRICE
+          </Text>
+          <Text fontWeight="bold" mb={{ base: "10px", sm: "0" }}>
+            ${price}
+          </Text>
+        </Flex>
         <Tooltip
           label="Remove"
           bg="blue.100"

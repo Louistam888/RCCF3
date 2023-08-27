@@ -15,6 +15,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
+import { useState, useEffect } from "react";
 import PageNotFound from "./PageNotFound";
 import { useSelector } from "react-redux";
 import CartItem from "../components/CartItem";

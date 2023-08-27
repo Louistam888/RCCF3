@@ -17,6 +17,7 @@ const CartOrderSummary = () => {
   const standardShipping = Number(4.99).toFixed(2);
   const cartItems = useSelector((state) => state.cart);
   const { subtotal } = cartItems;
+
   const navigate = useNavigate();
 
   const checkoutHandler = () => {
@@ -32,7 +33,9 @@ const CartOrderSummary = () => {
           <Text fontWeight="medium" color={mode("gray.600", "gray.400")}>
             Subtotal
           </Text>
-          <Text fontWeight="medium">${subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Text>
+          <Text fontWeight="medium">
+            ${subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </Text>
         </Flex>
         <Flex justify="space-between">
           <Text fontWeight="medium" color={mode("gray.600", "gray.400")}>
@@ -51,7 +54,10 @@ const CartOrderSummary = () => {
         <Flex fontSize="lg" fontWeight="semibold">
           $
           {subtotal <= 1000
-            ? ((Number(subtotal) + Number(standardShipping)).toFixed(2)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            ? (Number(subtotal) + Number(standardShipping))
+                .toFixed(2)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             : subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </Flex>
       </Stack>

@@ -58,14 +58,23 @@ export const cartSlice = createSlice({
     cartItemUpdate: (state, { payload }) => {
       const { id, qty } = payload;
       const indexToBeUpdated = state.cart.findIndex((item) => item.id === id);
+
+      //New copy of the state.cart array is made since redux state cannot be edited immutably. Below code makes a copy of all array items before and after the index to be updated, and updates the item to be updated. Then the entire copy of the array is assigned ot replace state.cart
+
       if (indexToBeUpdated !== -1) {
-        const updatedItem = {
-          ...state.cart[indexToBeUpdated],
-          qty: Number(qty),
-        };
-        state.cart.splice(indexToBeUpdated, 1, updatedItem);
+        const updatedCart = [
+          ...state.cart.slice(0, indexToBeUpdated), // Copy items before the updated item in the array
+          {
+            ...state.cart[indexToBeUpdated], // Copy the properties of the existing item
+            qty: Number(qty), // Update qty
+          },
+          ...state.cart.slice(indexToBeUpdated + 1), // Copy items after the updated item in the array
+        ];
+
+        state.cart = updatedCart; // Update the cart with the new updatedCart array
       }
       updateLocalStorage(state.cart);
+      state.subtotal = calculateSubtotal(state.cart);
       state.loading = false;
       state.error = null;
     },
@@ -80,5 +89,3 @@ export const {
   cartItemUpdate,
 } = cartSlice.actions;
 export default cartSlice.reducer;
-
-// export const cartSelector = (state) => state.cart;

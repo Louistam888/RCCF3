@@ -34,8 +34,6 @@ export const addCartItem = (id, qty, brand) => async (dispatch) => {
   }
 };
 
-//need error handling for both
-
 export const removeCartItem = (id) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
