@@ -23,13 +23,13 @@ const App = () => {
         <main>
           <Routes>
             <Route path="/" element={<LandingScreen />}></Route>
-            <Route path="/shop" element={<Shop />}></Route>
-            <Route path="/cart" element={<CartScreen />}></Route>
-            <Route path="/shop/:brand" element={<ProductsScreen />}></Route>
-            <Route path="/shop/:brand/:id" element={<ProductScreen />}></Route>
-            <Route path="/shop/*" element={<PageNotFound />} />
-            <Route path="/shop/:brand/*" element={<PageNotFound />} />
             <Route path="/*" element={<PageNotFound />} />
+            <Route path="/shop" element={<Shop />}></Route>
+            <Route path="/shop/*" element={<PageNotFound />} />
+            <Route path="/shop/:brand" element={<ProductsScreen />}></Route>
+            <Route path="/shop/:brand/*" element={<PageNotFound />} />
+            <Route path="/shop/:brand/:id" element={<ProductScreen />}></Route>
+            <Route path="/cart" element={<CartScreen />}></Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </main>

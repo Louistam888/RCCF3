@@ -15,6 +15,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
+import { useState, useEffect } from "react";
 import PageNotFound from "./PageNotFound";
 import { useSelector } from "react-redux";
 import CartItem from "../components/CartItem";
@@ -59,7 +60,7 @@ const CartScreen = () => {
             height="auto"
           />
           <Heading mt="20px" fontSize={{ base: "2xl", md: "3xl" }}>
-            There is nothing in your cart!
+            There is nothing in your cart
           </Heading>
           <Link as={ReactLink} to="/shop">
             <Text mt="10px" fontSize={{ base: "sm", md: "xl" }}>
@@ -91,8 +92,6 @@ const CartScreen = () => {
             </Stack>
             <Flex direction="column" align="center" flex="1">
               <CartOrderSummary />
-            </Flex>
-            <HStack mt="6" fontWeight="semibold">
               <Text>or</Text>
               <Link
                 as={ReactLink}
@@ -101,7 +100,7 @@ const CartScreen = () => {
               >
                 Continue Shopping
               </Link>
-            </HStack>
+            </Flex>
           </Stack>
         </Box>
       )}

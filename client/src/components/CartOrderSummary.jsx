@@ -17,12 +17,13 @@ const CartOrderSummary = () => {
   const standardShipping = Number(4.99).toFixed(2);
   const cartItems = useSelector((state) => state.cart);
   const { subtotal } = cartItems;
+
   const navigate = useNavigate();
 
   const checkoutHandler = () => {
-    setButtonLoading(true)
-    navigate("/checkout")
-  }
+    setButtonLoading(true);
+    navigate("/checkout");
+  };
 
   return (
     <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" w="full">
@@ -32,7 +33,9 @@ const CartOrderSummary = () => {
           <Text fontWeight="medium" color={mode("gray.600", "gray.400")}>
             Subtotal
           </Text>
-          <Text fontWeight="medium">{subtotal}</Text>
+          <Text fontWeight="medium">
+            ${subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </Text>
         </Flex>
         <Flex justify="space-between">
           <Text fontWeight="medium" color={mode("gray.600", "gray.400")}>
@@ -40,18 +43,22 @@ const CartOrderSummary = () => {
           </Text>
           <Text fontWeight="medium">
             {subtotal <= 1000 ? (
-              standardShipping
+              `$${standardShipping}`
             ) : (
               <Badge rounded="full" px="2" fontSize="15px" colorScheme="green">
-                Free Shipping for all orders over $1,000
+                Free shipping
               </Badge>
             )}
           </Text>
         </Flex>
         <Flex fontSize="lg" fontWeight="semibold">
+          $
           {subtotal <= 1000
-            ? Number(subtotal) + Number(standardShipping)
-            : subtotal}
+            ? (Number(subtotal) + Number(standardShipping))
+                .toFixed(2)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            : subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </Flex>
       </Stack>
       <Button

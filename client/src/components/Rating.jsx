@@ -4,10 +4,12 @@ import { useState } from "react";
 
 const Rating = ({ rating, numReviews }) => {
   const { iconSize, setIconSize } = useState("14px");
+  console.log(rating)
+
   return (
     <Flex flexDirection="column" pb="5px">
       <Box spacing="2px">
-        <StarIcon color="orange.500" />
+        <StarIcon color={rating >= 1 ? "orange.500" : "gray"} />
         <StarIcon color={rating >= 2 ? "orange.500" : "gray"} />
         <StarIcon color={rating >= 3 ? "orange.500" : "gray"} />
         <StarIcon color={rating >= 4 ? "orange.500" : "gray"} />
