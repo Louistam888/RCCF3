@@ -118,7 +118,7 @@ const CartItem = ({ cartItem }) => {
             variant="filled"
             color="black"
             fontWeight="bold"
-            width="50px"
+            width="70px"
             textAlign="center"
             isDisabled={editQty}
             ref={inputRef}
