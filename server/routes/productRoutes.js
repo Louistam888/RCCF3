@@ -8,7 +8,7 @@ const getProducts = async (req, res) => {
   let products;
 
   if (brand) {
-    products = await Product.find({ brand });
+    products = await Product.find({ brand }); //retrieve all brands that match
   } else {
     products = await Product.find({});
   }
