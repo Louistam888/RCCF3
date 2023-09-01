@@ -1,5 +1,5 @@
 import express from "express";
-import User from "../models/User";
+import User from "../models/User.js";
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
 
@@ -60,4 +60,4 @@ const registerUser = asyncHandler(async (req, res) => {
 userRoutes.route("/login").post(loginUser);
 userRoutes.route("/register").post(registerUser);
 
-export default productRoutes;
+export default userRoutes;
