@@ -17,7 +17,8 @@ const loginUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPasswords(password))) {
     res.json({
       _id: user._id,
-      name: user.name,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       isAdmin: user.isAdmin,
       token: genToken(user._id),
@@ -29,16 +30,16 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.status(400);
-    throw new Error("Email already registered");
+    res.status(400).json("We already have an account with that email address.");
   }
 
   const user = await User.create({
-    name,
+    firstName,
+    lastName,
     email,
     password,
   });
@@ -46,10 +47,11 @@ const registerUser = asyncHandler(async (req, res) => {
   if (user) {
     res.status(201).json({
       _id: user._id,
-      name: user.name,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: genToken(uesr._id),
+      token: genToken(user._id),
     });
   } else {
     res.json(400);

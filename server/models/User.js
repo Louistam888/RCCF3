@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema(
   {
@@ -16,10 +17,8 @@ const userSchema = new mongoose.Schema(
       unique: true,
     },
     password: {
-      type: {
-        type: String,
-        required: true,
-      },
+      type: String,
+      required: true,
     },
     isAdmin: {
       type: {
