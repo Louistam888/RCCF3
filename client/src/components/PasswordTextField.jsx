@@ -19,7 +19,7 @@ const PasswordTextField = ({label, type, name, placeholder}) => {
         <Field
           as={Input}
           {...field}
-          type={type}
+          type={showPassword ? "text" : type}
           name={name}
           placeholder={placeholder}
         />

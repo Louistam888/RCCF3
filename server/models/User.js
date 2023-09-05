@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
@@ -35,10 +35,11 @@ userSchema.methods.matchPasswords = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password); //this refers to password
 };
 
+//middleware for updating new password. Checks if the password has been modified. If not, call next() to allow save to continue and generate a new salt
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
-  } // if password is modified, generate new salt
+  }
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
