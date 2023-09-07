@@ -23,8 +23,6 @@ import {
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 import {
-  HamburgerIcon,
-  CloseIcon,
   MoonIcon,
   SunIcon,
   ChevronDownIcon,
@@ -33,6 +31,7 @@ import { CgProfile } from "react-icons/cg";
 import { MdLocalShipping, MdLogout } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/actions/userActions.js";
+import Hamburger from "./Hamburger.jsx";
 
 const links = [
   { linkName: "Shop", path: "/shop" },
@@ -42,7 +41,6 @@ const links = [
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
-  console.log(isOpen);
   const { colorMode, toggleColorMode } = useColorMode();
   const bgColor = mode("white", "gray.300");
   const fontColorDarkLight = mode("blackAlpha.900", "whiteAlpha.900");
@@ -92,13 +90,13 @@ const Navbar = () => {
   return (
     <Box
       bg={bgColor}
-      px={10}
+      px="10px"
       borderBottom={{ base: "1px", md: "2px" }}
       position="fixed"
       w="100%"
       zIndex="1000"
     >
-      <Flex h={90} alignItems="center" justifyContent="space-between">
+      <Flex h="90px" alignItems="center" justifyContent="space-between">
         <Flex alignItems="center" w="100%" justifyContent="space-between">
           <HStack>
             {/* NAV BAR LOGO AND SITE NAME */}
@@ -166,13 +164,20 @@ const Navbar = () => {
         {/* ICONS FOR SIGN IN/OUT CART AND DARK/LIGHT MODE */}
         <Flex justifyContent="flex-end" alignItems="center">
           {/* DARK/LIGHT MODE ICON */}
-          <NavLink>
+          <Flex
+            p="10px"
+            _hover={{ bg: hoverColor }}
+            justifyContent="center"
+            alignItems="center"
+            rounded="md"
+            cursor="pointer"
+          >
             <Icon
               as={colorMode === "light" ? MoonIcon : SunIcon}
               alignSelf="center"
               onClick={() => toggleColorMode()}
             />
-          </NavLink>
+          </Flex>
 
           {userInfo ? (
             <>
@@ -229,7 +234,7 @@ const Navbar = () => {
           {/* HAMBURGER MENU */}
           <IconButton
             size="md"
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            icon= {<Hamburger isOpen={isOpen} />}
             display={{ md: "none" }}
             ml="5px"
             color={fontColorDarkLight}
@@ -241,9 +246,16 @@ const Navbar = () => {
       </Flex>
 
       {/* RENDER LINKS IN HAMBURGER MENU ON MOBILE ONLY */}
-      <Collapse in={isOpen} animateOpacity>
-        <Box pb={4} display={{ md: "none" }}>
-          <Stack as="nav" spacing={0} display="flex" alignItems="center">
+
+      <Collapse in={isOpen} endingHeight="100vh">
+        <Box
+          pb="4px"
+          width="100%"
+          height="100%"
+          px="-10px"
+          display={{ md: "none" }}
+        >
+          <Stack as="nav" spacing="0" display="flex" alignItems="center">
             {links.map((link) => (
               <NavLink key={link.linkName} path={link.path}>
                 <Text>{link.linkName.toUpperCase()}</Text>
