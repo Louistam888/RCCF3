@@ -171,11 +171,12 @@ const Navbar = () => {
             alignItems="center"
             rounded="md"
             cursor="pointer"
+            onClick={() => toggleColorMode()}
           >
             <Icon
               as={colorMode === "light" ? MoonIcon : SunIcon}
               alignSelf="center"
-              onClick={() => toggleColorMode()}
+              
             />
           </Flex>
 
