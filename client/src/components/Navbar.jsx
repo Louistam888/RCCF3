@@ -80,7 +80,6 @@ const Navbar = () => {
         h="40px"
         display="flex"
         alignItems="center"
-        onClick={onToggle}
       >
         {children}
       </Link>
@@ -176,7 +175,6 @@ const Navbar = () => {
             <Icon
               as={colorMode === "light" ? MoonIcon : SunIcon}
               alignSelf="center"
-              
             />
           </Flex>
 
@@ -258,7 +256,7 @@ const Navbar = () => {
         >
           <Stack as="nav" spacing="0" display="flex" alignItems="center">
             {links.map((link) => (
-              <NavLink key={link.linkName} path={link.path}>
+              <NavLink key={link.linkName} path={link.path} onClick={onToggle}>
                 <Text>{link.linkName.toUpperCase()}</Text>
               </NavLink>
             ))}
