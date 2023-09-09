@@ -4,7 +4,6 @@ import { useState } from "react";
 
 const Rating = ({ rating, numReviews }) => {
   const { iconSize, setIconSize } = useState("14px");
-  console.log(rating)
 
   return (
     <Flex flexDirection="column" pb="5px">

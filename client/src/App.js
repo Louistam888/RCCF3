@@ -11,6 +11,8 @@ import LandingScreen from "./screens/LandingScreen";
 import Footer from "./components/Footer";
 import Shop from "./screens/Shop";
 import CartScreen from "./screens/CartScreen";
+import LoginScreen from "./screens/LoginScreen";
+import RegistrationScreen from "./screens/RegistrationScreen";
 import ProductsScreen from "./screens/ProductsScreen";
 import ProductScreen from "./screens/ProductScreen";
 import PageNotFound from "./screens/PageNotFound";
@@ -30,6 +32,8 @@ const App = () => {
             <Route path="/shop/:brand/*" element={<PageNotFound />} />
             <Route path="/shop/:brand/:id" element={<ProductScreen />}></Route>
             <Route path="/cart" element={<CartScreen />}></Route>
+            <Route path="/login" element={<LoginScreen />}></Route>
+            <Route path="/registration" element={<RegistrationScreen />}></Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </main>
