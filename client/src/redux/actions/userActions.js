@@ -16,7 +16,7 @@ export const login = (email, password) => async (dispatch) => {
       config
     );
     dispatch(userLogin(data));
-    localStorage.setItem("userInfo", JSON.stringify(data)); // assigns login iformation to local storage so user does not need to log in again onpage refresh
+    localStorage.setItem("userInfo", JSON.stringify(data)); // assigns login information to local storage so user does not need to log in again onpage refresh
   } catch (error) {
     dispatch(
       setError(

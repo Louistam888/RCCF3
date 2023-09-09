@@ -2,6 +2,7 @@ import { Box, Flex, Link, useColorModeValue, Stack, Text } from "@chakra-ui/reac
 import { Link as ReactLink } from "react-router-dom";
 
 const BrandCard = ({ brand }) => {
+
   const borderColor = useColorModeValue("gray", "white");
   const borderWidth = useColorModeValue("1px", "2px");
 

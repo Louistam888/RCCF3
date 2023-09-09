@@ -45,6 +45,7 @@ const getProduct = async (req, res) => {
     }
 
     res.json(product);
+
   } catch (error) {
     console.error("Error in getProduct:", error);
     return res.status(404).json({ error: "An unexpected error occurred." });
@@ -52,7 +53,7 @@ const getProduct = async (req, res) => {
 };
 
 productRoutes.route("/").get(getProducts);
-productRoutes.route("/shop").get(getProducts);
+// productRoutes.route("/shop").get(getProducts);
 productRoutes.route("/shop/:brand").get(getProducts);
 productRoutes.route("/shop/:brand/:id").get(getProduct);
 
