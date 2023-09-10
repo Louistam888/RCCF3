@@ -6,20 +6,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 const Shop = () => {
-  // const allBrands = ["sukida", "akracing", "gtracing", "darkecho"];
-  
   const dispatch = useDispatch();
   const brandList = useSelector((state) => state.brands);
   const { loading, error, brands } = brandList;
-  
-  const allBrands = brands.map((brand)=> brand.name)
-  const brandsToDisplay = allBrands.sort();
+
+  const brandsToDisplay = [...brands].sort((a, b) => {
+    const nameA = a.name.toUpperCase();
+    const nameB = b.name.toUpperCase();
+
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
+  });
 
   useEffect(() => {
     dispatch(getBrands());
   }, []);
-
-  // console.log("here are the brands", brands);
 
   return (
     <Box pt="90px">
@@ -56,7 +62,7 @@ const Shop = () => {
         {brandsToDisplay.map((brand, index) => (
           <Box key={index}>
             <Center w="100%" h="550px">
-              <BrandCard brand={brand} />
+              <BrandCard brands={brands[index]} />
             </Center>
           </Box>
         ))}
