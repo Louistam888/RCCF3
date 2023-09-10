@@ -11,15 +11,8 @@ const Shop = () => {
   const { loading, error, brands } = brandList;
 
   const brandsToDisplay = [...brands].sort((a, b) => {
-    const nameA = a.name.toUpperCase();
-    const nameB = b.name.toUpperCase();
-
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
     return 0;
   });
 
@@ -59,10 +52,10 @@ const Shop = () => {
         justifyContent="center"
         mx="5.5%"
       >
-        {brandsToDisplay.map((brand, index) => (
+        {brandsToDisplay.map((brandItem, index) => (
           <Box key={index}>
             <Center w="100%" h="550px">
-              <BrandCard brands={brands[index]} />
+              <BrandCard brandItem={brandItem} />
             </Center>
           </Box>
         ))}
