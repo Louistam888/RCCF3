@@ -47,14 +47,14 @@ const Shop = () => {
         </Flex>
       </Flex>
       <Grid
-        templateColumns="repeat(auto-fit, minmax(280px, 350px))"
-        gap={{ base: "15px", md: "10px", lg: "20px" }}
+        templateColumns="repeat(auto-fit, minmax(280px, 300px))"
+        gap={{ base: "5px", md: "10px", lg: "15px" }}
         justifyContent="center"
         mx="5.5%"
       >
         {brandsToDisplay.map((brandItem, index) => (
           <Box key={index}>
-            <Center w="100%" h="550px">
+            <Center w="100%" h="260px">
               <BrandCard brandItem={brandItem} />
             </Center>
           </Box>

@@ -41,7 +41,7 @@ const ProductCard = ({ product }) => {
       <Stack
         p="2"
         spacing="3px"
-        minW="240px"
+        minW="300px"
         h="550px"
         boxShadow="0 4px 12px rgba(0, 0, 0, 0.5)"
         rounded="lg"
