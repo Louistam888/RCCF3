@@ -16,6 +16,7 @@ import RegistrationScreen from "./screens/RegistrationScreen";
 import ProductsScreen from "./screens/ProductsScreen";
 import ProductScreen from "./screens/ProductScreen";
 import PageNotFound from "./screens/PageNotFound";
+import ProfileScreen from "./screens/ProfileScreen";
 
 const App = () => {
   return (
@@ -33,7 +34,11 @@ const App = () => {
             <Route path="/shop/:brand/:id" element={<ProductScreen />}></Route>
             <Route path="/cart" element={<CartScreen />}></Route>
             <Route path="/login" element={<LoginScreen />}></Route>
-            <Route path="/registration" element={<RegistrationScreen />}></Route>
+            <Route
+              path="/registration"
+              element={<RegistrationScreen />}
+            ></Route>
+            <Route path="/profile" element={<ProfileScreen />}></Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </main>
