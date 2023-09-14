@@ -22,13 +22,10 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
-import {
-  MoonIcon,
-  SunIcon,
-  ChevronDownIcon,
-} from "@chakra-ui/icons";
+import { MoonIcon, SunIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { CgProfile } from "react-icons/cg";
 import { MdLocalShipping, MdLogout } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/actions/userActions.js";
 import Hamburger from "./Hamburger.jsx";
@@ -41,6 +38,7 @@ const links = [
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
+  console.log(isOpen);
   const { colorMode, toggleColorMode } = useColorMode();
   const bgColor = mode("white", "gray.300");
   const fontColorDarkLight = mode("blackAlpha.900", "whiteAlpha.900");
@@ -52,11 +50,15 @@ const Navbar = () => {
   const { userInfo } = user;
   const dispatch = useDispatch();
 
+  //chakra
   const toast = useToast();
+
+  const navigate = useNavigate();
 
   //logout handler function
   const logoutHandler = () => {
     dispatch(logout());
+    navigate("/");
     toast({
       description: "Logged out.",
       status: "success",
@@ -233,7 +235,7 @@ const Navbar = () => {
           {/* HAMBURGER MENU */}
           <IconButton
             size="md"
-            icon= {<Hamburger isOpen={isOpen} />}
+            icon={<Hamburger isOpen={isOpen} />}
             display={{ md: "none" }}
             ml="5px"
             color={fontColorDarkLight}
@@ -253,10 +255,11 @@ const Navbar = () => {
           height="100%"
           px="-10px"
           display={{ md: "none" }}
+          onClick={onToggle}
         >
           <Stack as="nav" spacing="0" display="flex" alignItems="center">
             {links.map((link) => (
-              <NavLink key={link.linkName} path={link.path} onClick={onToggle}>
+              <NavLink key={link.linkName} path={link.path}>
                 <Text>{link.linkName.toUpperCase()}</Text>
               </NavLink>
             ))}
@@ -266,7 +269,7 @@ const Navbar = () => {
               <NavLink path={"/login"}>
                 <Text textTransform="uppercase">Sign in</Text>
               </NavLink>
-              <NavLink path={"/register"}>
+              <NavLink path={"/registration"}>
                 <Text textTransform="uppercase">Sign Up</Text>
               </NavLink>
             </Box>
