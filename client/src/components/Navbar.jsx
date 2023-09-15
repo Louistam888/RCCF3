@@ -184,7 +184,8 @@ const Navbar = () => {
             <>
               <Menu>
                 <MenuButton px="4" py="2" transition="all 0.3s" as={Button}>
-                  {userInfo.name} <ChevronDownIcon />
+                  {userInfo.firstName} 
+                  <ChevronDownIcon />
                 </MenuButton>
                 <MenuList>
                   <MenuItem as={ReactLink} to="/profile">

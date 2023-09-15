@@ -185,8 +185,10 @@ const ProfileScreen = () => {
                   <CardBody>
                     <Stack divider={<StackDivider />} spacing="4px">
                       <Box pt="2px" fontSize="sm">
-                        Registered on
-                        {new Date(userInfo.createdAt).toDateString()}
+                        <Text>
+                          Registered on{" "}
+                          {new Date(userInfo.createdAt).toDateString()}
+                        </Text>
                       </Box>
                     </Stack>
                   </CardBody>
