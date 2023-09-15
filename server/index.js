@@ -16,8 +16,8 @@ const app = express();
 app.use(express.json());
 
 app.use("/api/products", productRoutes);
-app.use("/api/users", userRoutes);
 app.use("/api/brands", brandRoutes);
+app.use("/api/users", userRoutes);
 
 app.use("*", (req, res) => {
   res.status(404).send("Not Found");

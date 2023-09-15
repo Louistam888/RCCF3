@@ -6,6 +6,7 @@ import {
   HStack,
   Heading,
   Text,
+  Alert,
   AlertIcon,
   AlertTitle,
   AlertDescription,
@@ -36,10 +37,27 @@ const ProfileScreen = () => {
   const location = useLocation;
   const toast = useToast();
 
+  useEffect(() => {
+    if (updateSuccess) {
+      toast({
+        description: "Profile saved.",
+        status: "success",
+        isClosable: true,
+      });
+      dispatch(resetUpdateSuccess());
+    }
+  }, [toast, updateSuccess]);
+
   return userInfo ? (
     <Box pt="90px">
       <Formik
-        initialValues={{ firstName: "", lastName: "", email: "", password: "" }}
+        initialValues={{
+          firstName: userInfo.firstName,
+          lastName: userInfo.lastName,
+          email: userInfo.email,
+          password: "",
+          confirmPassword: "",
+        }}
         validationSchema={Yup.object({
           firstName: Yup.string().required("Enter your first name"),
           lastName: Yup.string().required("Enter your last name"),
@@ -62,7 +80,8 @@ const ProfileScreen = () => {
         })}
         onSubmit={(values) => {
           dispatch(
-            register(
+            updateProfile(
+              userInfo._id,
               values.firstName,
               values.lastName,
               values.email,
@@ -72,7 +91,109 @@ const ProfileScreen = () => {
         }}
       >
         {(formik) => (
-          <Box></Box>
+          <Box
+            minH="100vh"
+            maxW={{ base: "3xl", lg: "7xl" }}
+            mx="auto"
+            px={{ base: "4px", md: "8px", lg: "12px" }}
+            py={{ base: "6px", md: "8px", lg: "12px" }}
+          >
+            <Stack
+              direction={{ base: "column", lg: "row" }}
+              align={{ lg: "flex-start" }}
+            >
+              <Stack
+                pr={{ base: "0", md: "10px" }}
+                flex="1.5"
+                mb={{ base: "2xl", md: "none" }}
+              >
+                <Heading fontSize="2xl" fontWeight="extrabold">
+                  Profile
+                </Heading>
+                <Stack spacing="6px">
+                  <Stack spacing="6px" as="form" onSubmit={formik.handleSubmit}>
+                    {error && (
+                      <Alert
+                        status="error"
+                        flexDirection="column"
+                        alignItems="center"
+                        justifyContent="center"
+                        textAlign="center"
+                      >
+                        <AlertIcon />
+                        <AlertTitle>We are sorry!</AlertTitle>
+                        <AlertDescription>{error}</AlertDescription>
+                      </Alert>
+                    )}
+                    <Stack spacing="5px">
+                      <FormControl>
+                        <TextField
+                          type="text"
+                          name="firstName"
+                          placeholder="First name"
+                          label="first name"
+                        />
+                        <TextField
+                          type="text"
+                          name="lastName"
+                          placeholder="Last name"
+                          label="last name"
+                        />
+                        <TextField
+                          type="text"
+                          name="email"
+                          placeholder="email"
+                          label="email"
+                        />
+                        <PasswordTextField
+                          type="password"
+                          name="password"
+                          placeholder="Enter password"
+                          label="Password"
+                        />
+                        <PasswordTextField
+                          type="password"
+                          name="confirmPassword"
+                          placeholder="Confirm your password"
+                          label="Confirm your password"
+                        />
+                      </FormControl>
+                    </Stack>
+                    <Stack spacing="6px">
+                      <Button
+                        size="lg"
+                        fontSize="md"
+                        isLoading={loading}
+                        type="submit"
+                      >
+                        Save
+                      </Button>
+                    </Stack>
+                  </Stack>
+                </Stack>
+              </Stack>
+              <Flex
+                direction="column"
+                alignItems="center"
+                flex="1"
+                _dark={{ bg: "gray.900" }}
+              >
+                <Card>
+                  <CardHeader>
+                    <Heading size="md">User Report</Heading>
+                  </CardHeader>
+                  <CardBody>
+                    <Stack divider={<StackDivider />} spacing="4px">
+                      <Box pt="2px" fontSize="sm">
+                        Registered on
+                        {new Date(userInfo.createdAt).toDateString()}
+                      </Box>
+                    </Stack>
+                  </CardBody>
+                </Card>
+              </Flex>
+            </Stack>
+          </Box>
         )}
       </Formik>
     </Box>

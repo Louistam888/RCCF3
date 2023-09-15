@@ -87,7 +87,8 @@ export const updateProfile =
       };
       const { data } = await axios.put(
         `/api/users/profile/${id}`,
-        { _id: id, firstName, lastName, email, password }.config
+        { _id: id, firstName, lastName, email, password },
+        config
       );
       localStorage.setItem("userInfo", JSON.stringify(data));
       dispatch(updateUserProfile(data));
