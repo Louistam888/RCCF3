@@ -182,7 +182,12 @@ const Navbar = () => {
 
           {userInfo ? (
             <>
-              <Menu display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+              <Menu
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+              >
                 <MenuButton transition="all 0.3s" as={Button} padding="0">
                   <Box width="100%" display="flex" justifyContent="center">
                     <Image
@@ -193,9 +198,6 @@ const Navbar = () => {
                       alt="logged in"
                     />
                   </Box>
-                
-                    {/* <ChevronDownIcon boxSize={4} /> */}
-                
                 </MenuButton>
                 <MenuList>
                   <MenuItem as={ReactLink} to="/profile">
