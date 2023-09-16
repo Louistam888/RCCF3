@@ -9,6 +9,7 @@ import {
   Text,
   useColorMode as mode,
   useToast,
+  LightMode,
 } from "@chakra-ui/react";
 import TextField from "../components/TextField";
 import PasswordTextField from "../components/PasswordTextField";
@@ -30,6 +31,7 @@ const RegistrationScreen = () => {
   const { loading, error, userInfo } = user;
   const redirect = "/shop";
 
+  //chakra
   const toast = useToast();
 
   useEffect(() => {
@@ -149,15 +151,17 @@ const RegistrationScreen = () => {
                   </Stack>
                   <Stack>
                     <Stack spacing="6">
-                      <Button
-                        colorScheme="orange"
-                        size="lg"
-                        fontSize="md"
-                        isLoading={loading}
-                        type="submit"
-                      >
-                        Sign up
-                      </Button>
+                      <LightMode>
+                        <Button
+                          colorScheme="red"
+                          size="lg"
+                          fontSize="md"
+                          isLoading={loading}
+                          type="submit"
+                        >
+                          Sign up
+                        </Button>
+                      </LightMode>
                     </Stack>
                   </Stack>
                 </Stack>

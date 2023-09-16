@@ -182,10 +182,20 @@ const Navbar = () => {
 
           {userInfo ? (
             <>
-              <Menu>
-                <MenuButton px="4" py="2" transition="all 0.3s" as={Button}>
-                  {userInfo.firstName} 
-                  <ChevronDownIcon />
+              <Menu display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+                <MenuButton transition="all 0.3s" as={Button} padding="0">
+                  <Box width="100%" display="flex" justifyContent="center">
+                    <Image
+                      width="20px"
+                      height="20px"
+                      fit="cover"
+                      src="/assets/loggedin.png"
+                      alt="logged in"
+                    />
+                  </Box>
+                
+                    {/* <ChevronDownIcon boxSize={4} /> */}
+                
                 </MenuButton>
                 <MenuList>
                   <MenuItem as={ReactLink} to="/profile">
