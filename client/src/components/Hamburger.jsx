@@ -2,7 +2,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 
 const Hamburger = ({ isOpen }) => {
-  console.log(isOpen);
+
   return (
     <Flex flexDirection="column" justifyContent="center" alignItems="center">
       <Box

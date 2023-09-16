@@ -11,7 +11,7 @@ const ProductsScreen = () => {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.products);
   const { loading, error, products } = productList;
-  const brands = products.map((product) => product.brand);
+  // const brands = products.map((product) => product.brand);
 
   useEffect(() => {
     const lowerCaseBrand = brand.toLowerCase();
@@ -32,14 +32,21 @@ const ProductsScreen = () => {
     });
 
     chairArray.sort((a, b) => {
-      if (a.name > b.name) return 1;
-      if (a.name < b.name) return -1;
+      const cleanNameA = a.name.replace(/,/g, '');
+      const cleanNameB = b.name.replace(/,/g, '');
+    
+      if (cleanNameA > cleanNameB) return 1;
+      if (cleanNameA < cleanNameB) return -1;
       return 0;
     });
+    
 
     isNew.sort((a, b) => {
-      if (a.name > b.name) return -1;
-      if (a.name < b.name) return 1;
+      const cleanNameA = a.name.replace(/,/g, '');
+      const cleanNameB = b.name.replace(/,/g, '');
+    
+      if (cleanNameA > cleanNameB) return 1;
+      if (cleanNameA < cleanNameB) return -1;
       return 0;
     });
 

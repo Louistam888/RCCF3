@@ -6,6 +6,7 @@ import path from "path";
 //ROUTES
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import brandRoutes from "./routes/brandRoutes.js";
 
 dotenv.config();
 connectToDatabase();
@@ -15,6 +16,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/api/products", productRoutes);
+app.use("/api/brands", brandRoutes);
 app.use("/api/users", userRoutes);
 
 app.use("*", (req, res) => {
@@ -24,8 +26,6 @@ app.use("/*", (req, res) => {
   res.status(404).send("Not Found");
 });
 
-
 app.listen(port, () => {
   `Server runs on port ${port}.`;
 });
-

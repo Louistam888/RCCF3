@@ -1,7 +1,18 @@
-import { Box, Flex, Link, useColorModeValue, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Link,
+  useColorModeValue,
+  Stack,
+  Text,
+  Image,
+} from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 
-const BrandCard = ({ brand }) => {
+const BrandCard = ({ brandItem }) => {
+  const brand = brandItem.name;
+  const brandImage = brandItem.image;
+
   const borderColor = useColorModeValue("gray", "white");
   const borderWidth = useColorModeValue("1px", "2px");
 
@@ -16,27 +27,40 @@ const BrandCard = ({ brand }) => {
       <Stack
         p="2"
         spacing="3px"
-        minW="240px"
-        h="550px"
+        minW="300px"
+        h="250px"
         boxShadow="0 4px 12px rgba(0, 0, 0, 0.5)"
         rounded="lg"
         position="relative"
         border={`${borderWidth} solid ${borderColor}`}
         _hover={{ boxShadow: "dark-lg" }}
       >
-        <Flex m="10px" justifyContent="center" alignItems="center" flexDirection="column">
-          <Box
-            fontSize="xl"
-            fontWeight="semiBold"
-            as="h3"
-            lineHeight="25px"
+        <Flex
+          fontSize="xl"
+          fontWeight="semiBold"
+          as="h3"
+          lineHeight="25px"
+          width="100%"
+          height="100%"
+          textAlign="center"
+          minH="50px"
+          mb="12px"
+          flexDirection="column"
+          alignItems="space-between"
+          justifyContent="space-between"
+          pt="50px"
+        >
+          <Image
+            rounded="lg"
             width="100%"
-            textAlign="center"
-            minH="50px"
-            mb="12px"
-          >
-            <Text textTransform="uppercase">{brand}</Text>
-          </Box>
+            h="100px"
+            fit="cover"
+            src={brandImage}
+            alt={brand}
+          />
+          <Text textTransform="uppercase">
+            {brand}
+          </Text>
         </Flex>
       </Stack>
     </Link>
