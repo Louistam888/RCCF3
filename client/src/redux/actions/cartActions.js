@@ -67,3 +67,11 @@ export const updateCartItem = (id, qty) => async (dispatch) => {
     );
   }
 };
+
+export const setExpress = (value) => async (dispatch) => {
+  dispatch(setExpressShipping(value));
+};
+
+export const resetCart = () => (dispatch) => {
+  dispatch(clearCart());
+};
