@@ -82,7 +82,6 @@ const CheckoutOrderSummary = () => {
                 fontSize="15px"
                 colorScheme="green"
               >
-                {" "}
                 Free
               </Badge>
             ) : (
@@ -123,7 +122,7 @@ const CheckoutOrderSummary = () => {
       </Box>
       <Divider bg={mode("gray.400", "gray.300")} />
       <Flex justifyContent="center" my="6px" fontWeight="semibold">
-        <p>or</p>
+        <Text>or</Text>
         <Link as={ReactLink} to="/products" ml="1px">
           Continue Shopping
         </Link>

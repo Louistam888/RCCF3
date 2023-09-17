@@ -34,11 +34,9 @@ const CheckoutItem = ({ cartItem }) => {
           mx="2px"
           spacing="4px"
         >
-          <Text noOfLines="2" maxWidth="150px">
-            <Spacer />
-            <Text>qty: {qty} </Text>
-            <Text>item: {name}</Text>
-          </Text>
+        
+          <Text>qty: {qty} </Text>
+          <Text>item: {name}</Text>
         </Flex>
         <Box>
           <Text fontWeight="bold">${price * qty}</Text>
