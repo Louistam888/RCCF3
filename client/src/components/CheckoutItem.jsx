@@ -36,13 +36,12 @@ const CheckoutItem = ({ cartItem }) => {
         >
           <Text noOfLines="2" maxWidth="150px">
             <Spacer />
-            <Text>
-              item: {name}, qty: {qty}{" "}
-            </Text>
+            <Text>qty: {qty} </Text>
+            <Text>item: {name}</Text>
           </Text>
         </Flex>
         <Box>
-          <Text fontWeight="bold">${price}</Text>
+          <Text fontWeight="bold">${price * qty}</Text>
         </Box>
       </Flex>
       <Divider bg={mode("gray.400", "gray.800")} />

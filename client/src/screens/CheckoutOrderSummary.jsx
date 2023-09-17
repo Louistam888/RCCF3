@@ -7,11 +7,12 @@ import {
   Badge,
   Box,
   Divider,
+  Link,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link as ReactLink } from "react-router-dom";
 import { createOrder } from "../redux/actions/orderActions";
 import { PhoneIcon, EmailIcon, ChatIcon } from "@chakra-ui/icons";
 import CheckoutItem from "../components/CheckoutItem";
@@ -59,6 +60,68 @@ const CheckoutOrderSummary = () => {
       {cart.map((item) => (
         <CheckoutItem key={item.id} cartItem={item} />
       ))}
+      <Stack spacing="6">
+        <Flex justify="space-between">
+          <Text fontWeight="medium" color={colorMode}>
+            Subtotal
+          </Text>
+          <Text fontWeight="medium" color={colorMode}>
+            {subtotal}
+          </Text>
+        </Flex>
+        <Flex justify="space-between">
+          <Text fontWeight="medium" color={colorMode}>
+            Shipping
+          </Text>
+          <Text fontWeight="medium" color={colorMode}>
+            {shipping() === 0 ? (
+              <Badge
+                rounded="full"
+                px="2px"
+                fontSize="15px"
+                colorScheme="green"
+              >
+                {" "}
+                Free
+              </Badge>
+            ) : (
+              `$${shipping()}`
+            )}
+          </Text>
+        </Flex>
+        <Flex justify="space-between">
+          <Text fontSize="lg" fontWeight="semibold">
+            Total
+          </Text>
+          <Text fontSize="xl" fontWeight="extrabold">
+            ${Number(total())}
+          </Text>
+        </Flex>
+      </Stack>
+      <Box alignItems="center">
+        <Text fontSize="sm">Questions or need help?</Text>
+        <Flex justifyContent="center">
+          <Flex align="center">
+            <ChatIcon />
+            <Text m="2px">Live Chat</Text>
+          </Flex>
+          <Flex align="center">
+            <PhoneIcon />
+            <Text m="2px">Call us</Text>
+          </Flex>
+          <Flex align="center">
+            <EmailIcon />
+            <Text m="2px">Email</Text>
+          </Flex>
+        </Flex>
+      </Box>
+      <Divider bg={mode("gray.400", "gray.300")} />
+      <Flex justifyContent="center" my="6px" fontWeight="semibold">
+        <p>or</p>
+        <Link as={ReactLink} to="/products" ml="1px">
+          Continue Shopping
+        </Link>
+      </Flex>
     </Stack>
   );
 };
