@@ -17,6 +17,7 @@ import ProductsScreen from "./screens/ProductsScreen";
 import ProductScreen from "./screens/ProductScreen";
 import PageNotFound from "./screens/PageNotFound";
 import ProfileScreen from "./screens/ProfileScreen";
+import CheckoutScreen from "./screens/CheckoutScreen";
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
               element={<RegistrationScreen />}
             ></Route>
             <Route path="/profile" element={<ProfileScreen />}></Route>
+            <Route path="/checkout" element={<CheckoutScreen />}></Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </main>

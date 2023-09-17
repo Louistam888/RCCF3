@@ -1,7 +1,7 @@
 import express from "express";
-import expressAsyncHandler from "express-async-handler";
-import Order from "../models/Order.js";
-import protectRoute from "../middleWare/authMiddleware.js";
+import asyncHandler from "express-async-handler";
+import Orders from "../models/Orders.js";
+import { protectRoute } from "../middleWare/authMiddleware.js";
 
 const orderRoutes = express.Router();
 
@@ -20,7 +20,7 @@ const createOrder = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("No order items.");
   } else {
-    const order = new Order({
+    const order = new Orders({
       orderItems,
       user: userInfo._id,
       firstName: userInfo.firstName,

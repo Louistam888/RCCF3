@@ -9,12 +9,13 @@ export const setShippingAddressError = (value) => (dispatch) => {
   dispatch(setError(value));
 };
 
-export const createOrder = (order) => async (getState) => {
+export const createOrder = (order) => async (dispatch, getState) => {
   const {
     order: { shippingAddress },
+    user: {userInfo},
   } = getState();
 
-  const prepareOrder = { ...order, shippingAddress };
+  const preparedOrder = { ...order, shippingAddress };
   try {
     const config = {
       headers: {
