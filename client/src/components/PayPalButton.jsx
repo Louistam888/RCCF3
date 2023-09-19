@@ -1,15 +1,17 @@
 import React from "react";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import PAYPAL_CLIENT_ID from "../client_id";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const PayPalButton = ({ total, onPaymentSuccess, onPaymentError }) => {
   const createOrder = () => {
     //replace this url with your srever
-    return fetch("http://localhost:5000/api/order", {
+    return fetch("/my-server/create-paypal-order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      // use the "body" param to optionally pass additional order information
+      // like product ids and quantities
       body: JSON.stringify({
         cart: [
           {
@@ -25,7 +27,7 @@ const PayPalButton = ({ total, onPaymentSuccess, onPaymentError }) => {
 
   const onApprove = (data) => {
     //replace this url with your server
-    return fetch("http://localhost:5000/api/order", {
+    return fetch("/my-server/capture-paypal-order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,8 +47,14 @@ const PayPalButton = ({ total, onPaymentSuccess, onPaymentError }) => {
     onPaymentError(error);
   };
 
+  const initialOptions = {
+    clientId: PAYPAL_CLIENT_ID,
+    currency: "CAD",
+    intent: "capture",
+  };
+
   return (
-    <PayPalScriptProvider options={{ clientId: PAYPAL_CLIENT_ID }}>
+    <PayPalScriptProvider options={initialOptions}>
       <PayPalButtons
         forceReRender={[total()]}
         createOrder={createOrder}

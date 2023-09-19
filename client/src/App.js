@@ -20,33 +20,37 @@ import ProfileScreen from "./screens/ProfileScreen";
 import CheckoutScreen from "./screens/CheckoutScreen";
 
 const App = () => {
+
   return (
-    <ChakraProvider theme={theme}>
-      <Router>
-        <Navbar />
-        <main>
-          <Routes>
-            <Route path="/" element={<LandingScreen />}></Route>
-            <Route path="/*" element={<PageNotFound />} />
-            <Route path="/shop" element={<Shop />}></Route>
-            <Route path="/shop/*" element={<PageNotFound />} />
-            <Route path="/shop/:brand" element={<ProductsScreen />}></Route>
-            <Route path="/shop/:brand/*" element={<PageNotFound />} />
-            <Route path="/shop/:brand/:id" element={<ProductScreen />}></Route>
-            <Route path="/cart" element={<CartScreen />}></Route>
-            <Route path="/login" element={<LoginScreen />}></Route>
-            <Route
-              path="/registration"
-              element={<RegistrationScreen />}
-            ></Route>
-            <Route path="/profile" element={<ProfileScreen />}></Route>
-            <Route path="/checkout" element={<CheckoutScreen />}></Route>
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </main>
-        <Footer />
-      </Router>
-    </ChakraProvider>
+      <ChakraProvider theme={theme}>
+        <Router>
+          <Navbar />
+          <main>
+            <Routes>
+              <Route path="/" element={<LandingScreen />}></Route>
+              <Route path="/*" element={<PageNotFound />} />
+              <Route path="/shop" element={<Shop />}></Route>
+              <Route path="/shop/*" element={<PageNotFound />} />
+              <Route path="/shop/:brand" element={<ProductsScreen />}></Route>
+              <Route path="/shop/:brand/*" element={<PageNotFound />} />
+              <Route
+                path="/shop/:brand/:id"
+                element={<ProductScreen />}
+              ></Route>
+              <Route path="/cart" element={<CartScreen />}></Route>
+              <Route path="/login" element={<LoginScreen />}></Route>
+              <Route
+                path="/registration"
+                element={<RegistrationScreen />}
+              ></Route>
+              <Route path="/profile" element={<ProfileScreen />}></Route>
+              <Route path="/checkout" element={<CheckoutScreen />}></Route>
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </main>
+          <Footer />
+        </Router>
+      </ChakraProvider>
   );
 };
 
