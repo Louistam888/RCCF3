@@ -4,9 +4,11 @@ import {
   Flex,
   Heading,
   VStack,
+  Stack,
   Text,
   Radio,
   RadioGroup,
+  Tooltip,
 } from "@chakra-ui/react";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -16,11 +18,29 @@ import { setExpress } from "../redux/actions/cartActions";
 import { useState } from "react";
 import {
   setShippingAddress,
-  setShippingExpressError,
+  setShippingAddressError,
 } from "../redux/actions/orderActions";
 
 const ShippingInformation = () => {
   const dispatch = useDispatch();
+
+  //formik
+  const [formStateChanged, setFormStateChanged] = useState(false);
+
+  // function
+  const setErrorState = (input, data) => {
+   
+    //dispatches shipping info if the user has filled in all field with at least two characters (input === false),
+    if (!input) {
+      dispatch(setShippingAddress(data));
+    }
+    if ((!formStateChanged && !input) || (formStateChanged && input)) {
+      return;
+    } else {
+      setFormStateChanged(input);
+      dispatch(setShippingAddressError(input));
+    }
+  };
 
   return (
     <Formik
@@ -42,7 +62,15 @@ const ShippingInformation = () => {
     >
       {(formik) => (
         <VStack as="form">
-          <FormControl onChange={() => {}}>
+          <FormControl
+            onChange={() => {
+              //check to ensure all fields are entered and have at least two characters in them
+              Object.keys(formik.errors).length === 0 &&
+              Object.keys(formik.touched).length >= 2
+                ? setErrorState(false, formik.values)
+                : setErrorState(true);
+            }}
+          >
             <TextField
               name="address"
               placeholder="Street Address"
@@ -51,17 +79,53 @@ const ShippingInformation = () => {
             <Flex>
               <Box flex="1" mr="10">
                 <TextField
-                  name="Postal Code"
+                  name="postalCode"
                   placeholder="Postal Code"
                   label="Postal Code"
                 />
               </Box>
               <Box flex="2">
-                <TextField name="City" placeholder="City" label="City" />
+                <TextField name="city" placeholder="City" label="City" />
               </Box>
             </Flex>
-            <TextField name="Country" placeholder="Country" label="Country" />
+            <TextField name="country" placeholder="Country" label="Country" />
           </FormControl>
+          <Box width="100%" height="180px" pr="5px">
+            <Heading fontSize="2xl" fontWeight="extrabold" mb="10px">
+              Shipping Method
+            </Heading>
+            <RadioGroup
+              defaultValue="false"
+              onChange={(event) => {
+                dispatch(setExpress(event));
+              }}
+            >
+              <Stack
+                direction={{ base: "column", lg: "row" }}
+                align={{ lg: "flex-start" }}
+              >
+                <Stack pr="10" spacing={{ base: "8px", md: "10px" }} flex="1.5">
+                  <Box>
+                    <Radio value="true">
+                      <Text fontWeight="bold">Express Shipping $14.99</Text>
+                      <Text>Shipped within 24 hours</Text>
+                    </Radio>
+                  </Box>
+                  <Stack spacing="6px">
+                    <Text>Express</Text>
+                  </Stack>
+                </Stack>
+                <Radio value="false">
+                  <Tooltip label="Free shipping for all orders over $1,000.">
+                    <Box>
+                      <Text fontWeight="bold">Standard Shipping $4.99</Text>
+                      <Text>Shipped within two to three business days</Text>
+                    </Box>
+                  </Tooltip>
+                </Radio>
+              </Stack>
+            </RadioGroup>
+          </Box>
         </VStack>
       )}
     </Formik>

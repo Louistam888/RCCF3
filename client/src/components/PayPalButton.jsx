@@ -1,11 +1,17 @@
-import React from "react";
-import PAYPAL_CLIENT_ID from "../client_id";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  usePayPalScriptReducer,
+} from "@paypal/react-paypal-js";
 
-const PayPalButton = ({ total, onPaymentSuccess, onPaymentError }) => {
-  const createOrder = () => {
-    //replace this url with your srever
-    return fetch("/my-server/create-paypal-order", {
+// This value is from the props in the UI
+const style = { layout: "vertical" };
+
+const createOrder = () => {
+  // replace this url with your server
+  return fetch(
+    "https://react-paypal-js-storybook.fly.dev/api/paypal/create-order",
+    {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -15,19 +21,24 @@ const PayPalButton = ({ total, onPaymentSuccess, onPaymentError }) => {
       body: JSON.stringify({
         cart: [
           {
-            id: "YOUR_PRODUCT_ID",
-            quantity: "YOUR_PRODUCT_QUANTITY",
+            sku: "1blwyeo8",
+            quantity: 2,
           },
         ],
       }),
-    })
-      .then((response) => response.json())
-      .then((order) => order.id);
-  };
-
-  const onApprove = (data) => {
-    //replace this url with your server
-    return fetch("/my-server/capture-paypal-order", {
+    }
+  )
+    .then((response) => response.json())
+    .then((order) => {
+      // Your code here after create the order
+      return order.id;
+    });
+};
+const onApprove = (data) => {
+  // replace this url with your server
+  return fetch(
+    "https://react-paypal-js-storybook.fly.dev/api/paypal/capture-order",
+    {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,33 +46,66 @@ const PayPalButton = ({ total, onPaymentSuccess, onPaymentError }) => {
       body: JSON.stringify({
         orderID: data.orderID,
       }),
-    })
-      .then((response) => response.json())
-      .then((orderData) => {
-        const name = orderData.payer.name.given_name;
-        alert(`Transaction completed by ${name}`);
-      });
-  };
+    }
+  )
+    .then((response) => response.json())
+    .then((orderData) => {
+      // Your code here after capture the order
+    });
+};
 
-  const onError = (error) => {
-    onPaymentError(error);
-  };
-
-  const initialOptions = {
-    clientId: PAYPAL_CLIENT_ID,
-    currency: "CAD",
-    intent: "capture",
-  };
+// Custom component to wrap the PayPalButtons and show loading spinner
+const ButtonWrapper = ({
+  showSpinner,
+  disabledStatus,
+  total,
+  onPaymentSuccess,
+  onPaymentError,
+}) => {
+  const [{ isPending }] = usePayPalScriptReducer();
+  const disabledButton = disabledStatus;
+  console.log("secondDrill", disabledButton)
 
   return (
-    <PayPalScriptProvider options={initialOptions}>
+    <>
+      {showSpinner && isPending && <div className="spinner" />}
       <PayPalButtons
-        forceReRender={[total()]}
+        style={style}
+        disabled={disabledButton}
+        forceReRender={[style]}
+        fundingSource={undefined}
         createOrder={createOrder}
         onApprove={onApprove}
-        onError={onError}
+        onPaymentError={onPaymentError}
+        onPaymentSuccess={onPaymentSuccess}
+        total={total}
       />
-    </PayPalScriptProvider>
+    </>
+  );
+};
+
+const PayPalButton = ({
+  total,
+  onPaymentSuccess,
+  onPaymentError,
+  buttonDisabled,
+}) => {
+  const disabledStatus = buttonDisabled;
+  console.log("firstdrill", disabledStatus)
+  return (
+    <div style={{ maxWidth: "750px", minHeight: "200px" }}>
+      <PayPalScriptProvider
+        options={{ clientId: "test", components: "buttons", currency: "USD" }}
+      >
+        <ButtonWrapper
+          showSpinner={false}
+          disabledStatus={disabledStatus}
+          onPaymentError={onPaymentError}
+          onPaymentSuccess={onPaymentSuccess}
+          total={total}
+        />
+      </PayPalScriptProvider>
+    </div>
   );
 };
 

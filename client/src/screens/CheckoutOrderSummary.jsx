@@ -29,8 +29,9 @@ const CheckoutOrderSummary = () => {
   const { userInfo } = user;
 
   const shippingInfo = useSelector((state) => state.order);
-  const { order, shippingAddress } = cartItems;
+  const { error, shippingAddress } = shippingInfo;
 
+  //state for disabling payPal button 
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const dispatch = useDispatch();
 
@@ -50,6 +51,18 @@ const CheckoutOrderSummary = () => {
   const onPaymentSuccess = () => {
     alert("order success");
   };
+
+  //enables paypal button if all fields are changed, and only if there are no errors
+  useEffect(() => {
+    if (error && shippingAddress && total && expressShipping && shipping && dispatch) {
+      if (!error) {
+        setButtonDisabled(false);
+      } else {
+        setButtonDisabled(true);
+      }
+    }
+  }, [error, shippingAddress, total, expressShipping, shipping, dispatch]);
+  
 
   const onPaymentError = () => {
     alert("order error");
@@ -102,6 +115,7 @@ const CheckoutOrderSummary = () => {
         total={total}
         onPaymentSuccess={onPaymentSuccess}
         onPaymentError={onPaymentError}
+        buttonDisabled={buttonDisabled}
       />
       <Box alignItems="center">
         <Text fontSize="sm">Questions or need help?</Text>
