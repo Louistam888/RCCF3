@@ -31,8 +31,8 @@ const CheckoutOrderSummary = () => {
   const shippingInfo = useSelector((state) => state.order);
   const { error, shippingAddress } = shippingInfo;
 
-  //state for disabling payPal button 
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  //state for disabling payPal button
+  const [buttonDisabled, setButtonDisabled] = useState(true);
   const dispatch = useDispatch();
 
   const shipping = useCallback(
@@ -52,17 +52,15 @@ const CheckoutOrderSummary = () => {
     alert("order success");
   };
 
-  //enables paypal button if all fields are changed, and only if there are no errors
+  //enables paypal button if all fields are changed, and only if there are no errors and as soon as shippingAddress in state.order is modifed with data in all
+
   useEffect(() => {
-    if (error && shippingAddress && total && expressShipping && shipping && dispatch) {
-      if (!error) {
-        setButtonDisabled(false);
-      } else {
-        setButtonDisabled(true);
-      }
+    if (error === false && shippingAddress) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
     }
-  }, [error, shippingAddress, total, expressShipping, shipping, dispatch]);
-  
+  }, [error, shippingAddress]);
 
   const onPaymentError = () => {
     alert("order error");

@@ -38,7 +38,6 @@ const links = [
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
-  console.log(isOpen);
   const { colorMode, toggleColorMode } = useColorMode();
   const bgColor = mode("white", "gray.300");
   const fontColorDarkLight = mode("blackAlpha.900", "whiteAlpha.900");

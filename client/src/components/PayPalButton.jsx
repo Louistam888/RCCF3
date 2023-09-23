@@ -64,7 +64,6 @@ const ButtonWrapper = ({
 }) => {
   const [{ isPending }] = usePayPalScriptReducer();
   const disabledButton = disabledStatus;
-  console.log("secondDrill", disabledButton)
 
   return (
     <>
@@ -91,7 +90,7 @@ const PayPalButton = ({
   buttonDisabled,
 }) => {
   const disabledStatus = buttonDisabled;
-  console.log("firstdrill", disabledStatus)
+
   return (
     <div style={{ maxWidth: "750px", minHeight: "200px" }}>
       <PayPalScriptProvider
