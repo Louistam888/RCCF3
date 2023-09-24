@@ -26,18 +26,17 @@ const ShippingInformation = () => {
 
   //formik
   const [formStateChanged, setFormStateChanged] = useState(false);
-  const [fields, setFields] = useState(0)
-  console.log("fields touched", fields)
 
   // function
   const setErrorState = (errorState, data) => {
-    console.log(errorState, data)
-   
     //dispatches shipping info if the user has filled in all field with at least two characters (errorState === false),
     if (errorState === false) {
       dispatch(setShippingAddress(data));
     }
-    if ((!formStateChanged && !errorState) || (formStateChanged && errorState)) {
+    if (
+      (!formStateChanged && !errorState) ||
+      (formStateChanged && errorState)
+    ) {
       return;
     } else {
       setFormStateChanged(errorState);
@@ -67,9 +66,8 @@ const ShippingInformation = () => {
         <VStack as="form">
           <FormControl
             onChange={
-              //check to ensure all fields are entered and have at least two characters in them
               Object.keys(formik.errors).length === 0 &&
-              Object.keys(formik.touched).length >= 2 
+              Object.keys(formik.touched).length >= 2
                 ? setErrorState(false, formik.values)
                 : setErrorState(true)
             }

@@ -15,8 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link as ReactLink } from "react-router-dom";
 import { createOrder } from "../redux/actions/orderActions";
 import { PhoneIcon, EmailIcon, ChatIcon } from "@chakra-ui/icons";
-import CheckoutItem from "../components/CheckoutItem";
-import PayPalButton from "../components/PayPalButton";
+import CheckoutItem from "./CheckoutItem";
+import PayPalButton from "./PayPalButton";
 
 const CheckoutOrderSummary = () => {
   const colorMode = mode("gray.600", "gray.400");
@@ -35,17 +35,27 @@ const CheckoutOrderSummary = () => {
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const dispatch = useDispatch();
 
-  const shipping = useCallback(
-    () => (expressShipping === "true" ? 14.99 : subtotal <= 1000 ? 4.99 : 0),
-    [expressShipping, subtotal]
-  );
+  const shipping = useCallback(() => {
+    let shippingCost =
+      expressShipping === "true" ? 14.99 : subtotal <= 1000 ? 4.99 : 0;
+    return parseFloat(shippingCost);
+  }, [expressShipping, subtotal]);
+
+  const hst = useCallback(() => {
+    const hstValue = ((Number(subtotal) + Number(shipping())) * 0.13).toFixed(
+      2
+    );
+    return parseFloat(hstValue); // Convert hstValue to a number
+  }, [expressShipping, subtotal, shipping]);
 
   const total = useCallback(
     () =>
       Number(
-        shipping() === 0 ? Number(subtotal) : Number(subtotal) + shipping()
+        shipping() === 0
+          ? Number(subtotal) + hst()
+          : Number(subtotal) + shipping() + hst()
       ).toFixed(2),
-    [shipping, subtotal]
+    [shipping, subtotal, hst]
   );
 
   const onPaymentSuccess = () => {
@@ -78,7 +88,7 @@ const CheckoutOrderSummary = () => {
             Subtotal
           </Text>
           <Text fontWeight="medium" color={colorMode}>
-            {subtotal}
+            ${subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </Text>
         </Flex>
         <Flex justify="space-between">
@@ -101,11 +111,25 @@ const CheckoutOrderSummary = () => {
           </Text>
         </Flex>
         <Flex justify="space-between">
+          <Text fontWeight="medium" color={colorMode} textTransform="upperCase">
+            hst
+          </Text>
+          <Text>
+            $
+            {hst()
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </Text>
+        </Flex>
+        <Flex justify="space-between">
           <Text fontSize="lg" fontWeight="semibold">
             Total
           </Text>
           <Text fontSize="xl" fontWeight="extrabold">
-            ${Number(total())}
+            $
+            {total()
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </Text>
         </Flex>
       </Stack>
