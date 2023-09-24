@@ -27,7 +27,14 @@ const ShippingInformation = () => {
   //formik
   const [formStateChanged, setFormStateChanged] = useState(false);
 
-  // function
+  // function to set error state
+  const handleChange = (errors, touched, values) => {
+    Object.keys(errors).length === 0 &&
+    Object.keys(touched).length >= 2
+      ? setErrorState(false, values)
+      : setErrorState(true);
+  };
+
   const setErrorState = (errorState, data) => {
     //dispatches shipping info if the user has filled in all field with at least two characters (errorState === false),
     if (errorState === false) {
@@ -64,14 +71,7 @@ const ShippingInformation = () => {
     >
       {(formik) => (
         <VStack as="form">
-          <FormControl
-            onChange={
-              Object.keys(formik.errors).length === 0 &&
-              Object.keys(formik.touched).length >= 2
-                ? setErrorState(false, formik.values)
-                : setErrorState(true)
-            }
-          >
+          <FormControl onChange={handleChange(formik.errors, formik.touched, formik.values)}>
             <TextField
               name="address"
               placeholder="Street Address"
@@ -121,7 +121,9 @@ const ShippingInformation = () => {
                     <Box>
                       <Text fontWeight="bold">Standard Shipping $4.99</Text>
                       <Text>Shipped within two to three business days</Text>
-                      <Text fontStyle="italic">(Free for orders over $1,000)</Text>
+                      <Text fontStyle="italic">
+                        (Free for orders over $1,000)
+                      </Text>
                     </Box>
                   </Tooltip>
                 </Radio>
