@@ -8,6 +8,7 @@ import {
   Box,
   Divider,
   Link,
+  Button, 
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useState, useCallback } from "react";
@@ -132,6 +133,11 @@ const CheckoutOrderSummary = () => {
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </Text>
         </Flex>
+      </Stack>
+      <Stack>
+        <Button>
+          Back to cart 
+        </Button>
       </Stack>
       <PayPalButton
         total={total}

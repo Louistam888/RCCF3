@@ -34,12 +34,19 @@ const CheckoutItem = ({ cartItem }) => {
           mx="2px"
           spacing="4px"
         >
-        
-          <Text>qty: {qty} </Text>
-          <Text>item: {name}</Text>
+          <Text>{name}</Text>
+          <Text>
+            Qty: {qty.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+          </Text>
+          <Text>
+            Unit price: $
+            {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+          </Text>
         </Flex>
         <Box>
-          <Text fontWeight="bold">${price * qty}</Text>
+          <Text fontWeight="bold">
+            ${(price * qty).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </Text>
         </Box>
       </Flex>
       <Divider bg={mode("gray.400", "gray.800")} />

@@ -121,6 +121,7 @@ const ShippingInformation = () => {
                     <Box>
                       <Text fontWeight="bold">Standard Shipping $4.99</Text>
                       <Text>Shipped within two to three business days</Text>
+                      <Text fontStyle="italic">(Free for orders over $1,000)</Text>
                     </Box>
                   </Tooltip>
                 </Radio>
