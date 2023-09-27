@@ -29,8 +29,7 @@ const ShippingInformation = () => {
 
   // function to set error state
   const handleChange = (errors, touched, values) => {
-    Object.keys(errors).length === 0 &&
-    Object.keys(touched).length >= 2
+    Object.keys(errors).length === 0 && Object.keys(touched).length >= 2
       ? setErrorState(false, values)
       : setErrorState(true);
   };
@@ -71,7 +70,13 @@ const ShippingInformation = () => {
     >
       {(formik) => (
         <VStack as="form">
-          <FormControl onChange={handleChange(formik.errors, formik.touched, formik.values)}>
+          <FormControl
+            onChange={handleChange(
+              formik.errors,
+              formik.touched,
+              formik.values
+            )}
+          >
             <TextField
               name="address"
               placeholder="Street Address"

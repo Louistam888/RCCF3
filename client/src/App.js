@@ -18,6 +18,7 @@ import ProductScreen from "./screens/ProductScreen";
 import PageNotFound from "./screens/PageNotFound";
 import ProfileScreen from "./screens/ProfileScreen";
 import CheckoutScreen from "./screens/CheckoutScreen";
+import AdminConsoleScreen from "./screens/AdminConsoleScreen";
 
 const App = () => {
 
@@ -45,6 +46,7 @@ const App = () => {
               ></Route>
               <Route path="/profile" element={<ProfileScreen />}></Route>
               <Route path="/checkout" element={<CheckoutScreen />}></Route>
+              <Route path="/adminConsole" element={<AdminConsoleScreen />}></Route>
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </main>

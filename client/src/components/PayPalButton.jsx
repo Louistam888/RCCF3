@@ -3,6 +3,7 @@ import {
   PayPalButtons,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
+import{ useDisclosure} from "@chakra-ui/react"
 
 // This value is from the props in the UI
 const style = { layout: "vertical" };
@@ -90,6 +91,16 @@ const PayPalButton = ({
   buttonDisabled,
 }) => {
   const disabledStatus = buttonDisabled;
+  const {
+    onClose: onErrorClose,
+    onOpen: onErrorOpen,
+    isOpen: isErrorOpen,
+  } = useDisclosure();
+  const {
+    onClose: onSuccessClose,
+    onOpen: onSuccessOpen,
+    isOpen: isSuccessOpen,
+  } = useDisclosure();
 
   return (
     <div style={{ maxWidth: "750px", minHeight: "200px" }}>

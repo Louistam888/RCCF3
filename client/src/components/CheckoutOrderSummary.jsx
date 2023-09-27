@@ -8,19 +8,32 @@ import {
   Box,
   Divider,
   Link,
-  Button, 
+  Button,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as ReactLink } from "react-router-dom";
-import { createOrder } from "../redux/actions/orderActions";
+import { createOrder, resetOrder } from "../redux/actions/orderActions";
+import { resetCart } from "../redux/actions/cartActions";
 import { PhoneIcon, EmailIcon, ChatIcon } from "@chakra-ui/icons";
 import CheckoutItem from "./CheckoutItem";
 import PayPalButton from "./PayPalButton";
+import PaymentSuccessModal from "./PaymentSuccessModal";
+import PaymentErrorModal from "./PaymentErrorModal";
 
 const CheckoutOrderSummary = () => {
   const colorMode = mode("gray.600", "gray.400");
+  const {
+    onClose: onErrorClose,
+    onOpen: onErrorOpen,
+    isOpen: isErrorOpen,
+  } = useDisclosure();
+  const {
+    onClose: onSuccessClose,
+    onOpen: onSuccessOpen,
+    isOpen: isSuccessOpen,
+  } = useDisclosure();
 
   //redux
   const cartItems = useSelector((state) => state.cart);
@@ -59,8 +72,25 @@ const CheckoutOrderSummary = () => {
     [shipping, subtotal, hst]
   );
 
-  const onPaymentSuccess = () => {
-    alert("order success");
+  const onPaymentSuccess = async (data) => {
+    onSuccessOpen();
+    dispatch(
+      createOrder({
+        orderItems: cart,
+        shippingAddress,
+        paymentMethod: data.paymentSource,
+        paymentDetails: data,
+        shippingPrice: shipping(),
+        totalPrice: total(),
+        userInfo,
+      })
+    );
+    dispatch(resetOrder());
+    dispatch(resetCart());
+  };
+
+  const onPaymentError = () => {
+    onErrorOpen();
   };
 
   //enables paypal button if all fields are changed, and only if there are no errors and as soon as shippingAddress in state.order is modifed with data in all
@@ -72,10 +102,6 @@ const CheckoutOrderSummary = () => {
       setButtonDisabled(true);
     }
   }, [error, shippingAddress]);
-
-  const onPaymentError = () => {
-    alert("order error");
-  };
 
   return (
     <Stack spacing="8px" rounded="xl" padding="0" width="full">
@@ -135,9 +161,7 @@ const CheckoutOrderSummary = () => {
         </Flex>
       </Stack>
       <Stack>
-        <Button>
-          Back to cart 
-        </Button>
+        <Button>Back to cart</Button>
       </Stack>
       <PayPalButton
         total={total}
@@ -169,6 +193,16 @@ const CheckoutOrderSummary = () => {
           Continue Shopping
         </Link>
       </Flex>
+      <PaymentErrorModal
+        onClose={onErrorClose}
+        onOpen={onErrorOpen}
+        isOpen={isErrorOpen}
+      />
+      <PaymentSuccessModal
+        onClose={onSuccessClose}
+        onOpen={onSuccessOpen}
+        isOpen={isSuccessOpen}
+      />
     </Stack>
   );
 };

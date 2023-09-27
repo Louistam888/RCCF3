@@ -4,6 +4,7 @@ import cart from "./slices/cart.js";
 import user from "./slices/user.js";
 import brands from "./slices/brands.js";
 import order from "./slices/order.js";
+import admin from "./slices/admin.js";
 
 const reducer = combineReducers({
   products,
@@ -11,6 +12,7 @@ const reducer = combineReducers({
   user,
   brands,
   order,
+  admin,
 });
 
 export default configureStore({
