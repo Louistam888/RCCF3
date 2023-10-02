@@ -53,6 +53,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   }
 };
 
-export const resetErrorAndRemoval = async (dispatch) => {
+
+export const resetErrorAndRemoval = () => async (dispatch) => {
   dispatch(resetError());
 };

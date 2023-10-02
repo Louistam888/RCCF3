@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import TextField from "./TextField";
 import { useDispatch } from "react-redux";
 import { setExpress } from "../redux/actions/cartActions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   setShippingAddress,
   setShippingAddressError,
@@ -25,14 +25,14 @@ const ShippingInformation = () => {
   const dispatch = useDispatch();
 
   //formik
-  const [formStateChanged, setFormStateChanged] = useState(false);
+  const [formStateChanged, setFormStateChanged] = useState(true);
 
   // function to set error state
   const handleChange = (errors, touched, values) => {
     Object.keys(errors).length === 0 && Object.keys(touched).length >= 2
       ? setErrorState(false, values)
       : setErrorState(true);
-  };
+  }
 
   const setErrorState = (errorState, data) => {
     //dispatches shipping info if the user has filled in all field with at least two characters (errorState === false),
@@ -71,7 +71,7 @@ const ShippingInformation = () => {
       {(formik) => (
         <VStack as="form">
           <FormControl
-            onChange={handleChange(
+            onChange={()=>handleChange(
               formik.errors,
               formik.touched,
               formik.values
