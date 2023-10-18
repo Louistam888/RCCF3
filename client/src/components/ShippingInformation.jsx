@@ -22,17 +22,24 @@ import {
 } from "../redux/actions/orderActions";
 
 const ShippingInformation = () => {
+
+  //redux
   const dispatch = useDispatch();
 
   //formik
-  const [formStateChanged, setFormStateChanged] = useState(true);
+  const [formStateChanged, setFormStateChanged] = useState(false);
 
-  // function to set error state
   const handleChange = (errors, touched, values) => {
-    Object.keys(errors).length === 0 && Object.keys(touched).length >= 2
-      ? setErrorState(false, values)
-      : setErrorState(true);
-  }
+    
+    setTimeout(() => {
+      if (Object.keys(errors).length === 0 && Object.keys(touched).length >= 2) {
+        setErrorState(false, values);
+      } else {
+        setErrorState(true);
+      }
+    }, 100);
+  };
+  
 
   const setErrorState = (errorState, data) => {
     //dispatches shipping info if the user has filled in all field with at least two characters (errorState === false),
@@ -71,7 +78,7 @@ const ShippingInformation = () => {
       {(formik) => (
         <VStack as="form">
           <FormControl
-            onChange={()=>handleChange(
+            onChange={handleChange(
               formik.errors,
               formik.touched,
               formik.values

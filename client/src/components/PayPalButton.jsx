@@ -91,16 +91,7 @@ const PayPalButton = ({
   buttonDisabled,
 }) => {
   const disabledStatus = buttonDisabled;
-  const {
-    onClose: onErrorClose,
-    onOpen: onErrorOpen,
-    isOpen: isErrorOpen,
-  } = useDisclosure();
-  const {
-    onClose: onSuccessClose,
-    onOpen: onSuccessOpen,
-    isOpen: isSuccessOpen,
-  } = useDisclosure();
+  const paid = onPaymentSuccess
 
   return (
     <div style={{ maxWidth: "750px", minHeight: "200px" }}>

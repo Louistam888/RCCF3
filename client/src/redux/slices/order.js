@@ -32,4 +32,4 @@ export const orderSlice = createSlice({
 export const { setLoading, setError, shippingAddressAdd, clearOrder } = orderSlice.actions;
 export default orderSlice.reducer;
 
-export const orderSelector = (state) => state.user;
+export const orderSelector = (state) => state.order;

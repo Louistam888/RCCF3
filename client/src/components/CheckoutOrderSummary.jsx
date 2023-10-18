@@ -10,10 +10,11 @@ import {
   Link,
   Button,
   useDisclosure,
+  useToast
 } from "@chakra-ui/react";
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link as ReactLink } from "react-router-dom";
+import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { createOrder, resetOrder } from "../redux/actions/orderActions";
 import { resetCart } from "../redux/actions/cartActions";
 import { PhoneIcon, EmailIcon, ChatIcon } from "@chakra-ui/icons";
@@ -23,17 +24,11 @@ import PaymentSuccessModal from "./PaymentSuccessModal";
 import PaymentErrorModal from "./PaymentErrorModal";
 
 const CheckoutOrderSummary = () => {
+  
+  //chakra
+  const navigate = useNavigate();
+  const toast = useToast();
   const colorMode = mode("gray.600", "gray.400");
-  const {
-    onClose: onErrorClose,
-    onOpen: onErrorOpen,
-    isOpen: isErrorOpen,
-  } = useDisclosure();
-  const {
-    onClose: onSuccessClose,
-    onOpen: onSuccessOpen,
-    isOpen: isSuccessOpen,
-  } = useDisclosure();
 
   //redux
   const cartItems = useSelector((state) => state.cart);
@@ -46,7 +41,7 @@ const CheckoutOrderSummary = () => {
   const { error, shippingAddress } = shippingInfo;
 
   //state for disabling payPal button
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const dispatch = useDispatch();
 
   const shipping = useCallback(() => {
@@ -73,7 +68,7 @@ const CheckoutOrderSummary = () => {
   );
 
   const onPaymentSuccess = async (data) => {
-    onSuccessOpen();
+  
     dispatch(
       createOrder({
         orderItems: cart,
@@ -85,12 +80,21 @@ const CheckoutOrderSummary = () => {
         userInfo,
       })
     );
+
     dispatch(resetOrder());
     dispatch(resetCart());
+    navigate("/orderSuccess");
   };
 
   const onPaymentError = () => {
-    onErrorOpen();
+    
+    toast({
+      description:
+        "Something went wrong during the payment process. Please try again or make sure that your PayPal account balance is enough for this purchase.",
+      status: "error",
+      duration: "600000",
+      isClosable: true,
+    });
   };
 
   //enables paypal button if all fields are changed, and only if there are no errors and as soon as shippingAddress in state.order is modifed with data in all
@@ -193,16 +197,6 @@ const CheckoutOrderSummary = () => {
           Continue Shopping
         </Link>
       </Flex>
-      <PaymentErrorModal
-        onClose={onErrorClose}
-        onOpen={onErrorOpen}
-        isOpen={isErrorOpen}
-      />
-      <PaymentSuccessModal
-        onClose={onSuccessClose}
-        onOpen={onSuccessOpen}
-        isOpen={isSuccessOpen}
-      />
     </Stack>
   );
 };
