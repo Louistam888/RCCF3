@@ -4,6 +4,7 @@ import {
   setLoading,
   setError,
   setProduct,
+  setProductUpdateFlag
 } from "../slices/products.js";
 
 export const getProducts = (brandURL) => async (dispatch) => {
@@ -42,3 +43,4 @@ export const getProduct = (brandURL, id) => async (dispatch) => {
     );
   }
 };
+

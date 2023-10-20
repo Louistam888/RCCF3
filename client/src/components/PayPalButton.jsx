@@ -4,6 +4,10 @@ import {
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
 import{ useDisclosure } from "@chakra-ui/react"
+import PAYPAL_CLIENT_ID from "../client_id"
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
 
 // This value is from the props in the UI
 const style = { layout: "vertical" };
@@ -91,12 +95,11 @@ const PayPalButton = ({
   buttonDisabled,
 }) => {
   const disabledStatus = buttonDisabled;
-  const paid = onPaymentSuccess
-
+  
   return (
     <div style={{ maxWidth: "750px", minHeight: "200px" }}>
       <PayPalScriptProvider
-        options={{ clientId: "test", components: "buttons", currency: "USD" }}
+        options={{ clientId: PAYPAL_CLIENT_ID, components: "buttons", currency: "USD" }}
       >
         <ButtonWrapper
           showSpinner={false}

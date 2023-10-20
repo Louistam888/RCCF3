@@ -28,10 +28,15 @@ export const productsSlice = createSlice({
       state.error = payload;
       state.loading = false;
     },
+    setProductUpdateFlag: (state) => {
+      state.productUpdate = true;
+      state.loading = false;
+    },
   },
 });
 
-export const { setLoading, setError, setProducts, setProduct } = productsSlice.actions;
+export const { setLoading, setError, setProducts, setProduct, setProductUpdateFlag } =
+  productsSlice.actions;
 export default productsSlice.reducer;
 
 export const productsSelector = (state) => state.products;
