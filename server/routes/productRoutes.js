@@ -1,7 +1,7 @@
 import express from "express";
 import Product from "../models/Product.js";
-import asyncHandler from 'express-async-handler';
-import { protectRoute, admin } from '../middleWare/authMiddleWare.js';
+import asyncHandler from "express-async-handler";
+import { protectRoute, admin } from "../middleWare/authMiddleWare.js";
 
 const productRoutes = express.Router();
 
@@ -15,6 +15,8 @@ const getProducts = async (req, res) => {
   } else {
     products = await Product.find({});
   }
+
+  //need condition in here to display all brands if adminconsole.
 
   if (products.length === 0) {
     return res.status(404).json({ error: "No results for this brand." });
@@ -56,7 +58,6 @@ const getProduct = async (req, res) => {
 
 //route to create product
 const createNewProduct = asyncHandler(async (req, res) => {
-  
   const {
     brand,
     name,
@@ -148,7 +149,11 @@ productRoutes.route("/").get(getProducts);
 productRoutes.route("/shop/:brand").get(getProducts);
 productRoutes.route("/shop/:brand/:id").get(getProduct);
 productRoutes.route("/shop/:brand/:id").put(protectRoute, admin, updateProduct);
-productRoutes.route("/shop/:brand/:id").delete(protectRoute, admin, deleteProduct);
-productRoutes.route("/shop/:brand/").post(protectRoute, admin, createNewProduct);
+productRoutes
+  .route("/shop/:brand/:id")
+  .delete(protectRoute, admin, deleteProduct);
+productRoutes
+  .route("/shop/:brand/")
+  .post(protectRoute, admin, createNewProduct);
 
 export default productRoutes;
