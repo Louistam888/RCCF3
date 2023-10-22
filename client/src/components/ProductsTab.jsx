@@ -25,26 +25,31 @@ import {
   AccordionIcon,
   AccordionPanel,
 } from "@chakra-ui/react";
-
 import { useEffect, useRef } from "react";
-import { getProducts, resetProductError } from "../redux/actions/productActions.js";
+import { useLocation} from "react-router-dom";
+import {
+  getProducts,
+  resetProductError,
+} from "../redux/actions/productActions.js";
 import { useDispatch, useSelector } from "react-redux";
 
 const ProductsTab = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
+  const location = useLocation()
+  console.log(location.pathname)
 
   const dispatch = useDispatch();
   const admin = useSelector((state) => state.admin);
   const { error, loading } = admin;
   const productInfo = useSelector((state) => state.products);
   const { products, productUpdate } = productInfo;
-  console.log("here are", productInfo)
+  console.log("here are", products);
 
   const toast = useToast();
 
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getProducts(location.pathname));
     dispatch(resetProductError());
     if (productUpdate) {
       toast({
@@ -111,11 +116,8 @@ const ProductsTab = () => {
               </Tr>
             </Thead>
             <Tbody>
-              
-                    
-              {products.length > 0 && products.map((product) => <p>{product.name}</p>
-                )}
-              
+              {products.length > 0 &&
+                products.map((product) => <p>{product.name}</p>)}
             </Tbody>
           </Table>
         </Box>
