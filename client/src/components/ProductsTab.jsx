@@ -26,19 +26,18 @@ import {
   AccordionPanel,
 } from "@chakra-ui/react";
 import { useEffect, useRef } from "react";
-import { useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   getProducts,
   resetProductError,
 } from "../redux/actions/productActions.js";
 import { useDispatch, useSelector } from "react-redux";
+import ProductTableItem from "./ProductTableItem.jsx";
 
 const ProductsTab = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
-  const location = useLocation()
-  console.log(location.pathname)
-
+  const location = useLocation();
   const dispatch = useDispatch();
   const admin = useSelector((state) => state.admin);
   const { error, loading } = admin;
@@ -116,8 +115,12 @@ const ProductsTab = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {products.length > 0 &&
-                products.map((product) => <p>{product.name}</p>)}
+              <div>
+                {products.length > 0 &&
+                  products.map((product, index) => (
+                    <ProductTableItem key={product._id} product={product} />
+                  ))}
+              </div>
             </Tbody>
           </Table>
         </Box>
