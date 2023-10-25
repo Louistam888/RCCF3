@@ -43,7 +43,9 @@ const ProductsTab = () => {
   const { error, loading } = admin;
   const productInfo = useSelector((state) => state.products);
   const { products, productUpdate } = productInfo;
-  console.log("here are", products);
+  console.log("here are", products[0]);
+  
+  
 
   const toast = useToast();
 
@@ -108,19 +110,16 @@ const ProductsTab = () => {
               <Tr>
                 <Th>Image</Th>
                 <Th>Description</Th>
-                <Th>Brand</Th>
-                <Th>Name</Th>
+                <Th>Brand & Name</Th>
                 <Th>Category and price</Th>
                 <Th>Stock and new tag</Th>
               </Tr>
             </Thead>
-            <Tbody>
-              <div>
-                {products.length > 0 &&
-                  products.map((product, index) => (
-                    <ProductTableItem key={product._id} product={product} />
-                  ))}
-              </div>
+            <Tbody border="2px solid red">
+              {products.length > 0 &&
+                products.map((product, index) => (
+                  <ProductTableItem key={product._id} product={product} />
+                ))}
             </Tbody>
           </Table>
         </Box>
