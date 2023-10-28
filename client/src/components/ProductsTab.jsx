@@ -43,9 +43,6 @@ const ProductsTab = () => {
   const { error, loading } = admin;
   const productInfo = useSelector((state) => state.products);
   const { products, productUpdate } = productInfo;
-  console.log("here are", products[0]);
-  
-  
 
   const toast = useToast();
 
@@ -66,7 +63,7 @@ const ProductsTab = () => {
       {error && (
         <Alert status="error">
           <AlertIcon />
-          <AlertTitle>Opps!</AlertTitle>
+          <AlertTitle>Oops!</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}

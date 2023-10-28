@@ -107,14 +107,12 @@ const ProductTableItem = ({ product }) => {
           </Flex>
         </Td>
         <Td>
-          <Flex
-            direction="column"
-            gap="2"
-            
-          >
-            <Input size="sm"
-            value={stock}
-            onChange={(event) => setStock(event.target.value)}/>
+          <Flex direction="column" gap="2">
+            <Input
+              size="sm"
+              value={stock}
+              onChange={(event) => setStock(event.target.value)}
+            />
           </Flex>
           <FormControl display="flex" alignItems="center">
             <FormLabel htmlFor="isNewFlag" mb="0" fontSize="sm">
@@ -137,12 +135,22 @@ const ProductTableItem = ({ product }) => {
         </Td>
         <Td>
           <VStack>
-            <Button colorScheme='red' w='160px' variant='outline' onClick={openDeleteConfirmBox}>
-              <DeleteIcon mr='5px' />
+            <Button
+              colorScheme="red"
+              w="160px"
+              variant="outline"
+              onClick={openDeleteConfirmBox}
+            >
+              <DeleteIcon mr="5px" />
               Remove Product
             </Button>
-            <Button colorScheme='orange' w='160px' variant='outline' onClick={onSaveProduct}>
-              <MdOutlineDataSaverOn style={{ marginRight: '5px' }} />
+            <Button
+              colorScheme="orange"
+              w="160px"
+              variant="outline"
+              onClick={onSaveProduct}
+            >
+              <MdOutlineDataSaverOn style={{ marginRight: "5px" }} />
               Save Changes
             </Button>
           </VStack>

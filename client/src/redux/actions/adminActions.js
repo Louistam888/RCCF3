@@ -105,6 +105,7 @@ export const updateProduct =
 
 // delete product
 export const deleteProduct = (id) => async (dispatch, getState) => {
+
   const {
     user: { userInfo },
   } = getState();

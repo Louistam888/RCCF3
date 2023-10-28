@@ -104,10 +104,8 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
   //if a product with matching ID is found, delete using findByIdAndDelete and return product array without deleted product
   if (product) {
-    res.json(product);
   } else {
     res.status(404);
-    throw new Error("Product not found.");
   }
 });
 
@@ -151,12 +149,12 @@ const updateProduct = asyncHandler(async (req, res) => {
 productRoutes.route("/").get(getProducts);
 productRoutes.route("/adminConsole").get(getProducts);
 
-
 // productRoutes.route("/shop").get(getProducts);
 productRoutes.route("/shop/:brand").get(getProducts);
 productRoutes.route("/shop/:brand/:id").get(getProduct);
-productRoutes.route("/shop/:brand/:id").put(protectRoute, admin, updateProduct);
-productRoutes.route("/shop/:brand/:id").delete(protectRoute, admin, deleteProduct);
+productRoutes.route("/:id").put(protectRoute, admin, updateProduct);
+productRoutes.route("/:id").delete(protectRoute, admin, deleteProduct);
+//may need to redo 
 productRoutes.route("/shop/:brand/").post(protectRoute, admin, createNewProduct);
 
 export default productRoutes;
