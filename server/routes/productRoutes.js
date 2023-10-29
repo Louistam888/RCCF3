@@ -152,9 +152,9 @@ productRoutes.route("/adminConsole").get(getProducts);
 // productRoutes.route("/shop").get(getProducts);
 productRoutes.route("/shop/:brand").get(getProducts);
 productRoutes.route("/shop/:brand/:id").get(getProduct);
-productRoutes.route("/:id").put(protectRoute, admin, updateProduct);
+productRoutes.route("/").put(protectRoute, admin, updateProduct);
 productRoutes.route("/:id").delete(protectRoute, admin, deleteProduct);
 //may need to redo 
-productRoutes.route("/shop/:brand/").post(protectRoute, admin, createNewProduct);
+productRoutes.route("/").post(protectRoute, admin, createNewProduct);
 
 export default productRoutes;
