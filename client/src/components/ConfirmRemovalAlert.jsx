@@ -24,6 +24,7 @@ const ConfirmRemovalAlert = ({
   return (
     <AlertDialog
       isOpen={isOpen}
+      //cancelRef was set to confirm removal dialog. Least destructive sets cancel and dismiss dialog by pressing enter or space
       leastDestructiveRef={cancelRef}
       onClose={onClose}
     >
@@ -40,7 +41,7 @@ const ConfirmRemovalAlert = ({
               Cancel
             </Button>
             <Button colorScheme="red" onClick={onDeleteItem} ml="3px">
-              Delete {itemToDelete.name}
+              Delete
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

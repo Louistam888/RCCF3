@@ -1,6 +1,5 @@
 import {
   Box,
-  TableContainer,
   Th,
   Tr,
   Table,
@@ -22,10 +21,9 @@ import {
   Accordion,
   AccordionItem,
   AccordionButton,
-  AccordionIcon,
   AccordionPanel,
 } from "@chakra-ui/react";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {
   getProducts,
@@ -33,16 +31,39 @@ import {
 } from "../redux/actions/productActions.js";
 import { useDispatch, useSelector } from "react-redux";
 import ProductTableItem from "./ProductTableItem.jsx";
+import AddNewProduct from "./AddNewProduct.jsx";
 
 const ProductsTab = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef();
   const location = useLocation();
   const dispatch = useDispatch();
   const admin = useSelector((state) => state.admin);
   const { error, loading } = admin;
   const productInfo = useSelector((state) => state.products);
   const { products, productUpdate } = productInfo;
+
+
+  //need a sort function
+  // const sortProducts = (products) => {
+  //   products.sort((a, b) => {
+  //     if (a.brand < b.brand) {
+  //       return -1;
+  //     } else if (a.brand > b.brand) {
+  //       return 1;
+  //     } 
+      
+  //     else 
+  //     {
+  //       if (a.name < b.name) {
+  //         return -1;
+  //       } else if (a.name > b.name) {
+  //         return 1;
+  //       } else {
+  //         return 0;
+  //       }
+  //     }
+  //   });
+  //   return products;
+  // };
 
   const toast = useToast();
 
@@ -97,7 +118,9 @@ const ProductsTab = () => {
               </h2>
               <AccordionPanel pb="4">
                 <Table>
-                  <Tbody>{/* <AddNewProduct /> */}</Tbody>
+                  <Tbody>
+                    <AddNewProduct />
+                  </Tbody>
                 </Table>
               </AccordionPanel>
             </AccordionItem>
@@ -113,6 +136,7 @@ const ProductsTab = () => {
               </Tr>
             </Thead>
             <Tbody border="2px solid red">
+              {/* && stops the map from runningif products.length === 0 */}
               {products.length > 0 &&
                 products.map((product, index) => (
                   <ProductTableItem key={product._id} product={product} />
