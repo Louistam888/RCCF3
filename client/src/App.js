@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import LandingScreen from "./screens/LandingScreen";
 import Footer from "./components/Footer";
 import Shop from "./screens/Shop";
+import About from "./screens/About";
 import CartScreen from "./screens/CartScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegistrationScreen from "./screens/RegistrationScreen";
@@ -29,6 +30,7 @@ const App = () => {
         <main>
           <Routes>
             <Route path="/" element={<LandingScreen />}></Route>
+            <Route path="/about" element={<About />}></Route>
             <Route path="/*" element={<PageNotFound />} />
             <Route path="/shop" element={<Shop />}></Route>
             <Route path="/shop/*" element={<PageNotFound />} />
