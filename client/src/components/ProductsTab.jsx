@@ -137,7 +137,7 @@ const ProductsTab = () => {
               </Tr>
             </Thead>
             <Tbody border="2px solid red">
-              {/* && stops the map from runningif products.length === 0 */}
+              {/* && stops the map from running if products.length === 0 */}
               {products.length > 0 &&
                 products.map((product) => (
                   <ProductTableItem key={product._id} product={product} />

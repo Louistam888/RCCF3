@@ -23,6 +23,8 @@ import ConfirmRemovalAlert from "./ConfirmRemovalAlert.jsx";
 import { setRandomFallback } from "bcryptjs";
 
 const ProductTableItem = ({ product }) => {
+
+  const updateProductProp = updateProduct
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [brand, setBrand] = useState(product.brand);

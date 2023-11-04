@@ -8,6 +8,7 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
+import { setProductUpdateFlag } from "../redux/slices/products";
 
 const ConfirmRemovalAlert = ({
   isOpen,
@@ -19,6 +20,7 @@ const ConfirmRemovalAlert = ({
   const dispatch = useDispatch();
   const onDeleteItem = () => {
     dispatch(deleteAction(itemToDelete._id));
+    dispatch(setProductUpdateFlag())
     onClose();
   };
   return (
