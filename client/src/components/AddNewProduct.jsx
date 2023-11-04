@@ -42,6 +42,14 @@ const AddNewProduct = () => {
         description,
       })
     );
+    setBrand("");
+    setName("");
+    setCategory("");
+    setStock("");
+    setPrice("");
+    setIsNew("");
+    setDescription("");
+    setImage("");
   };
 
   return (

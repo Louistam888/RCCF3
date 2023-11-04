@@ -154,7 +154,8 @@ const ProductTableItem = ({ product }) => {
             </Button>
           </VStack>
         </Td>
-      </Tr>
+        <Td>
+
       <ConfirmRemovalAlert
         isOpen={isOpen}
         onOpen={onOpen}
@@ -162,7 +163,9 @@ const ProductTableItem = ({ product }) => {
         cancelRef={cancelRef}
         itemToDelete={product}
         deleteAction={deleteProduct}
-      />
+        />
+        </Td>
+        </Tr>
     </>
   );
 };

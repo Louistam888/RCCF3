@@ -41,6 +41,7 @@ const ProductsTab = () => {
   const productInfo = useSelector((state) => state.products);
   const { products, productUpdate } = productInfo;
 
+  console.log(productUpdate)
 
   //need a sort function
   // const sortProducts = (products) => {
@@ -138,7 +139,7 @@ const ProductsTab = () => {
             <Tbody border="2px solid red">
               {/* && stops the map from runningif products.length === 0 */}
               {products.length > 0 &&
-                products.map((product, index) => (
+                products.map((product) => (
                   <ProductTableItem key={product._id} product={product} />
                 ))}
             </Tbody>
