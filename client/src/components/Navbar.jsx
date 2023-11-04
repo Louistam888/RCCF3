@@ -24,7 +24,7 @@ import {
 import { Link as ReactLink } from "react-router-dom";
 import { MoonIcon, SunIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { CgProfile } from "react-icons/cg";
-import { MdLocalShipping, MdLogout } from "react-icons/md";
+import { MdLocalShipping, MdLogout, MdOutlineAdminPanelSettings} from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/actions/userActions.js";
@@ -38,7 +38,6 @@ const links = [
 
 const Navbar = () => {
   const { isOpen, onToggle } = useDisclosure();
-  console.log(isOpen);
   const { colorMode, toggleColorMode } = useColorMode();
   const bgColor = mode("white", "gray.300");
   const fontColorDarkLight = mode("blackAlpha.900", "whiteAlpha.900");
@@ -182,7 +181,12 @@ const Navbar = () => {
 
           {userInfo ? (
             <>
-              <Menu display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+              <Menu
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+              >
                 <MenuButton transition="all 0.3s" as={Button} padding="0">
                   <Box width="100%" display="flex" justifyContent="center">
                     <Image
@@ -193,9 +197,6 @@ const Navbar = () => {
                       alt="logged in"
                     />
                   </Box>
-                
-                    {/* <ChevronDownIcon boxSize={4} /> */}
-                
                 </MenuButton>
                 <MenuList>
                   <MenuItem as={ReactLink} to="/profile">
@@ -206,6 +207,15 @@ const Navbar = () => {
                     <CgProfile />
                     <Text ml="2">Orders</Text>
                   </MenuItem>
+                  {userInfo.isAdmin === "true" && (
+                    <>
+                      <MenuDivider />
+                      <MenuItem as={ReactLink} to={"/adminConsole"}>
+                        <MdOutlineAdminPanelSettings />
+                        <Text ml="2px">Admin Console</Text>
+                      </MenuItem>
+                    </>
+                  )}
                   <MenuDivider />
                   <MenuItem onClick={logoutHandler}>
                     <MdLogout />

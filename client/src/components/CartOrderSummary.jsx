@@ -51,14 +51,46 @@ const CartOrderSummary = () => {
             )}
           </Text>
         </Flex>
-        <Flex fontSize="lg" fontWeight="semibold">
-          $
-          {subtotal <= 1000
-            ? (Number(subtotal) + Number(standardShipping))
-                .toFixed(2)
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            : subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+        <Flex justify="space-between">
+          <Text
+            fontWeight="medium"
+            color={mode("gray.600", "gray.400")}
+            textTransform="upperCase"
+          >
+            hst
+          </Text>
+          <Text fontWeight="medium">
+            $
+            {subtotal <= 1000
+              ? ((Number(subtotal) + Number(standardShipping)) * 0.13)
+                  .toFixed(2)
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              : (subtotal * 0.13)
+                  .toFixed(2)
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </Text>
+        </Flex>
+        <Flex
+          fontSize="lg"
+          fontWeight="semibold"
+          textTransform="upperCase"
+          justify="space-between"
+        >
+          <Text textTransform="upperCase">Total</Text>
+          <Text>
+            ${" "}
+            {subtotal <= 1000
+              ? ((Number(subtotal) + Number(standardShipping)) * 1.13)
+                  .toFixed(2)
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              : (subtotal * 1.13)
+                  .toFixed(2)
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </Text>
         </Flex>
       </Stack>
       <Button

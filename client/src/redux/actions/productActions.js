@@ -4,6 +4,8 @@ import {
   setLoading,
   setError,
   setProduct,
+  setProductUpdateFlag,
+  resetError,
 } from "../slices/products.js";
 
 export const getProducts = (brandURL) => async (dispatch) => {
@@ -41,4 +43,8 @@ export const getProduct = (brandURL, id) => async (dispatch) => {
       )
     );
   }
+};
+
+export const resetProductError = () => async (dispatch) => {
+  dispatch(resetError());
 };

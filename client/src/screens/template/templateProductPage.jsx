@@ -95,7 +95,7 @@ const TemplateProductPage = () => {
   return (
     <Box pt="90px">
       <Flex h={{ base: "180px", md: "250px" }} overflow="hidden" position="relative" mb={{ base: "20px", sm: "50px" }}>
-        <Image src="/assets/brandPhotos/brandBanner.jpg" w="100%" />
+        <Image src="/assets/brandBanner.jpg" w="100%" />
         <Flex position="absolute" justifyContent="center" alignItems="center" w="100%" h="100%" className="fadeIn">
           <Heading fontSize={{ base: "5xl", sm: "7xl" }} textTransform="uppercase" color="whiteAlpha.900">
             AKRacing

@@ -17,6 +17,9 @@ import ProductsScreen from "./screens/ProductsScreen";
 import ProductScreen from "./screens/ProductScreen";
 import PageNotFound from "./screens/PageNotFound";
 import ProfileScreen from "./screens/ProfileScreen";
+import CheckoutScreen from "./screens/CheckoutScreen";
+import AdminConsoleScreen from "./screens/AdminConsoleScreen";
+import OrderSuccessScreen from "./screens/OrderSuccessScreen";
 
 const App = () => {
   return (
@@ -34,11 +37,18 @@ const App = () => {
             <Route path="/shop/:brand/:id" element={<ProductScreen />}></Route>
             <Route path="/cart" element={<CartScreen />}></Route>
             <Route path="/login" element={<LoginScreen />}></Route>
+            <Route path="/orderSuccess" element={<OrderSuccessScreen />} />
+
             <Route
               path="/registration"
               element={<RegistrationScreen />}
             ></Route>
             <Route path="/profile" element={<ProfileScreen />}></Route>
+            <Route path="/checkout" element={<CheckoutScreen />}></Route>
+            <Route
+              path="/adminConsole"
+              element={<AdminConsoleScreen />}
+            ></Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </main>
