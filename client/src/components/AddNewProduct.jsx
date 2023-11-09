@@ -52,6 +52,17 @@ const AddNewProduct = () => {
     setImage("");
   };
 
+  const convertImage = (uploadedFile) => {
+    const file = uploadedFile.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setImage(reader.result);
+    };
+
+    reader.readAsDataURL(file);
+  };
+
   return (
     <Tr>
       <Td>
@@ -59,8 +70,12 @@ const AddNewProduct = () => {
         <Tooltip label={"Name of image"} fontSize="sm">
           <Input
             size="sm"
-            value={image}
-            onChange={(event) => setImage(event.target.value)}
+            type="file"
+            // value={image}
+            // onChange={(event) => setImage(event.target.value)}
+            onChange={(event) => {
+              convertImage(event.target);
+            }}
             placeholder="i.e. Sukida Gaming Chair"
           />
         </Tooltip>
