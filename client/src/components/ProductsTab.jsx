@@ -111,10 +111,10 @@ const ProductsTab = () => {
         </Wrap>
       ) : (
         <Box>
-          <Accordion allowToggle={true}>
+          <Accordion allowToggle={true} border="2px solid black">
             <AccordionItem>
               <h2>
-                <AccordionButton border="2px solid black">
+                <AccordionButton>
                   <Box flex="1" textAlign="center">
                     <Box>
                       <Text mr="8px" fontWeight="bold">
