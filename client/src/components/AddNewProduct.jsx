@@ -87,7 +87,7 @@ const AddNewProduct = () => {
           />
         </Td>
 
-        {/* NEED OPTION TO CREATE NEW BRAND  */}
+        {/* NEED AN OPTION TO CREATE NEW BRAND  */}
         <Td>
           <Text fontSize="sm">Brand</Text>
           <Input
