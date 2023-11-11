@@ -33,6 +33,15 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductTableItem from "./ProductTableItem.jsx";
 import AddNewProduct from "./AddNewProduct.jsx";
 
+export const convertImage = (uploadedFile, setterFunction) => {
+  const file = uploadedFile.files[0];
+  const reader = new FileReader();
+  reader.onload = () => {
+    setterFunction(reader.result);
+  };
+  reader.readAsDataURL(file);
+};
+
 const ProductsTab = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -41,8 +50,7 @@ const ProductsTab = () => {
   const productInfo = useSelector((state) => state.products);
   const { products, productUpdate } = productInfo;
 
-  console.log(productUpdate)
-
+  const toast = useToast();
   //need a sort function
   // const sortProducts = (products) => {
   //   products.sort((a, b) => {
@@ -66,7 +74,6 @@ const ProductsTab = () => {
   //   return products;
   // };
 
-  const toast = useToast();
 
   useEffect(() => {
     dispatch(getProducts(location.pathname));
