@@ -107,8 +107,8 @@ const ProductsTab = () => {
           <Accordion allowToggle={true}>
             <AccordionItem>
               <h2>
-                <AccordionButton>
-                  <Box flex="1" textAlign="right">
+                <AccordionButton border="2px solid black">
+                  <Box flex="1" textAlign="center">
                     <Box>
                       <Text mr="8px" fontWeight="bold">
                         Add new product

@@ -28,6 +28,7 @@ const AddNewProduct = () => {
   const [isNew, setIsNew] = useState(true);
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [fileName, setFileName] = useState("")
 
   const createNewProduct = () => {
     dispatch(
@@ -55,30 +56,26 @@ const AddNewProduct = () => {
   const convertImage = (uploadedFile) => {
     const file = uploadedFile.files[0];
     const reader = new FileReader();
-
     reader.onload = () => {
       setImage(reader.result);
     };
-
     reader.readAsDataURL(file);
   };
 
   return (
     <Tr>
       <Td>
-        <Text fontSize="sm">Image File Name</Text>
+        <Text fontSize="sm">Upload Image</Text>
         <Tooltip label={"Name of image"} fontSize="sm">
           <Input
             size="sm"
             type="file"
-            // value={image}
-            // onChange={(event) => setImage(event.target.value)}
             onChange={(event) => {
               convertImage(event.target);
-            }}
-            placeholder="i.e. Sukida Gaming Chair"
+            }}            
           />
         </Tooltip>
+        <Text>{fileName.name}</Text>
       </Td>
       <Td>
         <Text fontSize="sm">Description</Text>
