@@ -20,7 +20,7 @@ const ConfirmRemovalAlert = ({
   const dispatch = useDispatch();
   const onDeleteItem = () => {
     dispatch(deleteAction(itemToDelete._id));
-    dispatch(setProductUpdateFlag())
+    dispatch(setProductUpdateFlag()) // dispatches change of redux state flag for product update to true as it is in child component 
     onClose();
   };
   return (

@@ -21,10 +21,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProduct, deleteProduct } from "../redux/actions/adminActions.js";
 import ConfirmRemovalAlert from "./ConfirmRemovalAlert.jsx";
 import { setRandomFallback } from "bcryptjs";
+import { convertImage } from "./ProductsTab.jsx";
 
 const ProductTableItem = ({ product }) => {
-
-  const updateProductProp = updateProduct
+  const updateProductProp = updateProduct();
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [brand, setBrand] = useState(product.brand);
@@ -63,12 +63,14 @@ const ProductTableItem = ({ product }) => {
         <Td>
           <Input
             size="sm"
-            value={image}
-            onChange={(event) => setImage(event.target.value)}
+            type="file"
+            onChange={(event) => {
+              convertImage(event.target, setImage);
+            }}
+            w="220px"
           />
-          <Tooltip label={product.image} fontSize="sm">
-            <Image src={product.image} boxSize="150px" fit="contain" />
-          </Tooltip>
+
+          <Image src={image} boxSize="150px" fit="contain" />
         </Td>
         <Td>
           <Textarea
@@ -157,17 +159,16 @@ const ProductTableItem = ({ product }) => {
           </VStack>
         </Td>
         <Td>
-
-      <ConfirmRemovalAlert
-        isOpen={isOpen}
-        onOpen={onOpen}
-        onClose={onClose}
-        cancelRef={cancelRef}
-        itemToDelete={product}
-        deleteAction={deleteProduct}
-        />
+          <ConfirmRemovalAlert
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+            cancelRef={cancelRef}
+            itemToDelete={product}
+            deleteAction={deleteProduct}
+          />
         </Td>
-        </Tr>
+      </Tr>
     </>
   );
 };
