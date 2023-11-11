@@ -14,7 +14,9 @@ connectToDatabase();
 const port = process.env.PORT || 5000;
 
 const app = express();
-app.use(express.json());
+app.use(express.json({
+  limit: '10mb'
+}));
 
 //names after/api/ must match mongoDB collection names
 app.use("/api/products", productRoutes);
