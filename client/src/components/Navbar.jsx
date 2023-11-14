@@ -24,7 +24,11 @@ import {
 import { Link as ReactLink } from "react-router-dom";
 import { MoonIcon, SunIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { CgProfile } from "react-icons/cg";
-import { MdLocalShipping, MdLogout, MdOutlineAdminPanelSettings} from "react-icons/md";
+import {
+  MdLocalShipping,
+  MdLogout,
+  MdOutlineAdminPanelSettings,
+} from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/actions/userActions.js";
@@ -65,6 +69,20 @@ const Navbar = () => {
     });
   };
 
+  //function to loop through menu items 
+  const MenuItems = ({links}) => {
+    return (
+      links.map((link) => (
+        <NavLink key={link.linkName} path={link.path}>
+          <Text fontSize={{ md: "1rem", lg: "1.2rem" }}>
+            {link.linkName.toUpperCase()}
+          </Text>
+        </NavLink>
+      ))
+    )
+  };
+
+  //navLink components for the menu
   const NavLink = ({ path, children }) => {
     return (
       <Link
@@ -150,13 +168,7 @@ const Navbar = () => {
             mr={{ base: "0", lg: "5%" }}
           >
             <Flex>
-              {links.map((link) => (
-                <NavLink key={link.linkName} path={link.path}>
-                  <Text fontSize={{ md: "1rem", lg: "1.2rem" }}>
-                    {link.linkName.toUpperCase()}
-                  </Text>
-                </NavLink>
-              ))}
+              <MenuItems links={links}/>
             </Flex>
           </HStack>
         </Flex>
@@ -279,11 +291,7 @@ const Navbar = () => {
           onClick={onToggle}
         >
           <Stack as="nav" spacing="0" display="flex" alignItems="center">
-            {links.map((link) => (
-              <NavLink key={link.linkName} path={link.path}>
-                <Text>{link.linkName.toUpperCase()}</Text>
-              </NavLink>
-            ))}
+             <MenuItems links={links}/>
 
             {/* THESE ARE ONLY RENDERED IN HAMBURGER MENU BELOW 480PX VW */}
             <Box display={{ base: "relative", sm: "none" }}>

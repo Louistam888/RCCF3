@@ -22,6 +22,7 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
+  TableContainer,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -58,9 +59,9 @@ const ProductsTab = () => {
   //       return -1;
   //     } else if (a.brand > b.brand) {
   //       return 1;
-  //     } 
-      
-  //     else 
+  //     }
+
+  //     else
   //     {
   //       if (a.name < b.name) {
   //         return -1;
@@ -73,7 +74,6 @@ const ProductsTab = () => {
   //   });
   //   return products;
   // };
-
 
   useEffect(() => {
     dispatch(getProducts(location.pathname));
@@ -113,18 +113,18 @@ const ProductsTab = () => {
         <Box>
           <Accordion allowToggle={true} border="2px solid black">
             <AccordionItem>
-              <h2>
-                <AccordionButton>
-                  <Box flex="1" textAlign="center">
-                    <Box>
-                      <Text mr="8px" fontWeight="bold">
-                        Add new product
-                      </Text>
-                    </Box>
+              <AccordionButton>
+                <Box flex="1" textAlign="center">
+                  <Box>
+                    <Text mr="8px" fontWeight="bold">
+                      Add new product
+                    </Text>
                   </Box>
-                </AccordionButton>
-              </h2>
+                </Box>
+              </AccordionButton>
+
               <AccordionPanel pb="4">
+                {/* remove table css */}
                 <Table>
                   <Tbody>
                     <AddNewProduct />
@@ -133,7 +133,8 @@ const ProductsTab = () => {
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
-          <Table variant="simple" size="lg">
+
+          <Table variant="simple" size="auto">
             <Thead>
               <Tr>
                 <Th>Image</Th>
@@ -145,7 +146,9 @@ const ProductsTab = () => {
             </Thead>
             <Tbody border="2px solid red">
               {/* && stops the map from running if products.length === 0 */}
-              {products.length > 0 &&
+
+              {products &&
+                products.length > 0 &&
                 products.map((product) => (
                   <ProductTableItem key={product._id} product={product} />
                 ))}
