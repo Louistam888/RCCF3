@@ -60,7 +60,18 @@ export const resetErrorAndRemoval = () => async (dispatch) => {
 
 //update product
 export const updateProduct =
-  (brand, name, category, stock, price, id, productIsNew, description, image) =>
+  (
+    brand,
+    name,
+    category,
+    stock,
+    price,
+    id,
+    productIsNew,
+    description,
+    image,
+    toast
+  ) =>
   async (dispatch, getState) => {
     const {
       user: { userInfo },
@@ -100,12 +111,16 @@ export const updateProduct =
             : "Product could not be updated"
         )
       );
+      toast({
+        description: "Sorry, update failed",
+        status: "error",
+        isClosable: true,
+      });
     }
   };
 
 // delete product
-export const deleteProduct = (id) => async (dispatch, getState) => {
-
+export const deleteProduct = (id, toast) => async (dispatch, getState) => {
   const {
     user: { userInfo },
   } = getState();
@@ -118,9 +133,10 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.delete(`api/products/${id}`, config);
-    dispatch(setProducts(data));
-    dispatch(setProductUpdateFlag());
-    dispatch(resetError());
+      dispatch(setProducts(data));
+      dispatch(setProductUpdateFlag());
+      dispatch(resetError());
+      
   } catch (error) {
     dispatch(
       setError(
@@ -131,6 +147,11 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
           : "Product could not be deleted"
       )
     );
+    toast({
+      description: "Sorry, delete failed",
+      status: "error",
+      isClosable: true,
+    });
   }
 };
 

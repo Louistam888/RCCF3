@@ -33,12 +33,20 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import ProductTableItem from "./ProductTableItem.jsx";
 import AddNewProduct from "./AddNewProduct.jsx";
+import { getBrands } from "../redux/actions/brandActions.js";
 
-export const convertImage = (uploadedFile, setterFunction) => {
+export const convertImage = (uploadedFile, setterFunction, toast) => {
   const file = uploadedFile.files[0];
   const reader = new FileReader();
   reader.onload = () => {
     setterFunction(reader.result);
+  };
+  reader.onerror = (error) => {
+    toast({
+      description: `Upload failed ${error}`,
+      status: "error",
+      isClosable: true,
+    });
   };
   reader.readAsDataURL(file);
 };
@@ -50,6 +58,9 @@ const ProductsTab = () => {
   const { error, loading } = admin;
   const productInfo = useSelector((state) => state.products);
   const { products, productUpdate } = productInfo;
+  
+  const brandList = useSelector((state) => state.brands);
+  const { brands } = brandList;
 
   const toast = useToast();
   //need a sort function
@@ -80,12 +91,16 @@ const ProductsTab = () => {
     dispatch(resetProductError());
     if (productUpdate) {
       toast({
-        description: "Product updated.",
+        description: "Changes saved",
         status: "success",
         isClosable: true,
       });
     }
   }, [dispatch, toast, productUpdate]);
+
+  useEffect(() => {
+    dispatch(getBrands());
+  }, []);
 
   return (
     <Box>
@@ -123,7 +138,7 @@ const ProductsTab = () => {
                 </Box>
               </AccordionButton>
               <AccordionPanel pb="4">
-                <AddNewProduct />
+                <AddNewProduct brands={brands}/>
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
@@ -143,7 +158,7 @@ const ProductsTab = () => {
                 {products &&
                   products.length > 0 &&
                   products.map((product) => (
-                    <ProductTableItem key={product._id} product={product} />
+                    <ProductTableItem key={product._id} product={product} brands={brands}/>
                   ))}
               </Tbody>
             </Table>

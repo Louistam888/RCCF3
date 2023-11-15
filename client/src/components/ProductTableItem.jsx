@@ -13,17 +13,20 @@ import {
   Switch,
   Badge,
   useDisclosure,
+  useToast,
+  Select,
 } from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import { MdOutlineDataSaverOn } from "react-icons/md";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { updateProduct, deleteProduct } from "../redux/actions/adminActions.js";
+import { useDispatch } from "react-redux";
+import { updateProduct } from "../redux/actions/adminActions.js";
 import ConfirmRemovalAlert from "./ConfirmRemovalAlert.jsx";
 import { setRandomFallback } from "bcryptjs";
 import { convertImage } from "./ProductsTab.jsx";
 
-const ProductTableItem = ({ product }) => {
+const ProductTableItem = ({ product, brands }) => {
+
   const updateProductProp = updateProduct();
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -35,7 +38,9 @@ const ProductTableItem = ({ product }) => {
   const [isNew, setIsNew] = useState(product.isNew);
   const [description, setDescription] = useState(product.description);
   const [image, setImage] = useState(product.image);
+
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const onSaveProduct = () => {
     dispatch(
@@ -48,7 +53,8 @@ const ProductTableItem = ({ product }) => {
         product._id,
         isNew,
         description,
-        image
+        image,
+        toast
       )
     );
   };
@@ -83,11 +89,17 @@ const ProductTableItem = ({ product }) => {
         </Td>
         <Td>
           <Flex direction="column" gap="2">
-            <Input
-              size="sm"
-              value={brand}
+            <Select
+              placeholder={brand}
               onChange={(event) => setBrand(event.target.value)}
-            />
+              cursor="pointer"
+            >
+              {brands.map((item) => (
+                <option key={item.name} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
+            </Select>
             <Input
               size="sm"
               value={name}
@@ -165,7 +177,6 @@ const ProductTableItem = ({ product }) => {
             onClose={onClose}
             cancelRef={cancelRef}
             itemToDelete={product}
-            deleteAction={deleteProduct}
           />
         </Td>
       </Tr>

@@ -14,6 +14,7 @@ import {
   Image,
   Flex,
   Box,
+  useToast
 } from "@chakra-ui/react";
 
 import { useState } from "react";
@@ -33,6 +34,7 @@ const AddNewProduct = () => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("/assets/RCCF.png");
   const [fileName, setFileName] = useState("");
+  const toast = useToast();
 
   const createNewProduct = () => {
     dispatch(
@@ -52,9 +54,9 @@ const AddNewProduct = () => {
     setCategory("");
     setStock("");
     setPrice("");
-    setIsNew("");
+    setIsNew(true);
     setDescription("");
-    setImage("");
+    setImage("/assets/RCCF.png");
     setFileName("");
   };
 
@@ -67,7 +69,7 @@ const AddNewProduct = () => {
             size="sm"
             type="file"
             onChange={(event) => {
-              convertImage(event.target, setImage);
+              convertImage(event.target, setImage, toast);
             }}
           />
         </Tooltip>
