@@ -127,27 +127,27 @@ const ProductsTab = () => {
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
-
-          <Table variant="simple" size="auto">
-            <Thead>
-              <Tr>
-                <Th>Image</Th>
-                <Th>Description</Th>
-                <Th>Brand & Name</Th>
-                <Th>Category and price</Th>
-                <Th>Stock and new tag</Th>
-              </Tr>
-            </Thead>
-            <Tbody border="2px solid red">
-              {/* && stops the map from running if products.length === 0 */}
-
-              {products &&
-                products.length > 0 &&
-                products.map((product) => (
-                  <ProductTableItem key={product._id} product={product} />
-                ))}
-            </Tbody>
-          </Table>
+          <TableContainer>
+            <Table variant="simple" size="auto">
+              <Thead>
+                <Tr>
+                  <Th>Image</Th>
+                  <Th>Description</Th>
+                  <Th>Brand & Name</Th>
+                  <Th>Category and price</Th>
+                  <Th>Stock and new tag</Th>
+                </Tr>
+              </Thead>
+              <Tbody border="2px solid red">
+                {/* && stops the map from running if products.length === 0 */}
+                {products &&
+                  products.length > 0 &&
+                  products.map((product) => (
+                    <ProductTableItem key={product._id} product={product} />
+                  ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
         </Box>
       )}
     </Box>
