@@ -122,14 +122,8 @@ const ProductsTab = () => {
                   </Box>
                 </Box>
               </AccordionButton>
-
               <AccordionPanel pb="4">
-                {/* remove table css */}
-                <Table>
-                  <Tbody>
-                    <AddNewProduct />
-                  </Tbody>
-                </Table>
+                <AddNewProduct />
               </AccordionPanel>
             </AccordionItem>
           </Accordion>

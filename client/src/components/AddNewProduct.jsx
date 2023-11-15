@@ -59,8 +59,8 @@ const AddNewProduct = () => {
   };
 
   return (
-    <Tr>
-      <Td border="2px solid red">
+    <Box>
+      <Box>
         <Text fontSize="sm">Upload Image</Text>
         <Tooltip label={"Name of image"} fontSize="sm">
           <Input
@@ -77,15 +77,15 @@ const AddNewProduct = () => {
         <Text fontSize="sm">Description</Text>
         <Textarea
           value={description}
-          w="270px"
+          w="100%"
           height="120px"
           onChange={(event) => setDescription(event.target.value)}
           placeholder="Description"
           size="sm"
         />
-      </Td>
+      </Box>
 
-      <Td border="2px solid blue">
+      <Box >
         <Text fontSize="sm">Brand</Text>
         <Input
           size="sm"
@@ -116,9 +116,9 @@ const AddNewProduct = () => {
           placeholder="Price"
           type="number"
         />
-      </Td>
+      </Box>
 
-      <Td border="2px solid">
+      <Box>
         <Text fontSize="sm">Stock</Text>
         <Input
           size="sm"
@@ -127,7 +127,7 @@ const AddNewProduct = () => {
           placeholder="#"
           type="number"
         />
-        <Text fontSize="sm">Is New?</Text>
+        
         <FormControl display="flex" alignItems="center">
           <FormLabel htmlFor="isNewFlag" mb="0" fontSize="sm">
             Enable
@@ -148,8 +148,8 @@ const AddNewProduct = () => {
             isChecked={isNew}
           />
         </FormControl>
-      </Td>
-      <Td>
+      </Box>
+      <Box>
         <VStack>
           <Button
             variant="outline"
@@ -160,8 +160,8 @@ const AddNewProduct = () => {
             <MdDriveFolderUpload /> <Text ml="2">Save</Text>
           </Button>
         </VStack>
-      </Td>
-    </Tr>
+      </Box>
+    </Box>
   );
 };
 
