@@ -35,22 +35,6 @@ import ProductTableItem from "./ProductTableItem.jsx";
 import AddNewProduct from "./AddNewProduct.jsx";
 import { getBrands } from "../redux/actions/brandActions.js";
 
-export const convertImage = (uploadedFile, setterFunction, toast) => {
-  const file = uploadedFile.files[0];
-  const reader = new FileReader();
-  reader.onload = () => {
-    setterFunction(reader.result);
-  };
-  reader.onerror = (error) => {
-    toast({
-      description: `Upload failed ${error}`,
-      status: "error",
-      isClosable: true,
-    });
-  };
-  reader.readAsDataURL(file);
-};
-
 const ProductsTab = () => {
   const location = useLocation();
   const dispatch = useDispatch();

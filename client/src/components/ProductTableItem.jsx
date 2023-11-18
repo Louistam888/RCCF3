@@ -15,7 +15,6 @@ import {
   useDisclosure,
   useToast,
   Select,
-  Text,
 } from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import { MdOutlineDataSaverOn } from "react-icons/md";
@@ -23,8 +22,7 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { useDispatch } from "react-redux";
 import { updateProduct } from "../redux/actions/adminActions.js";
 import ConfirmRemovalAlert from "./ConfirmRemovalAlert.jsx";
-import { setRandomFallback } from "bcryptjs";
-import { convertImage } from "./ProductsTab.jsx";
+import { convertImage } from "../screens/AdminConsoleScreen.jsx";
 
 const ProductTableItem = ({ product, brands }) => {
   const updateProductProp = updateProduct();
