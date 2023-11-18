@@ -63,28 +63,21 @@ const ProductsTab = () => {
   const { brands } = brandList;
 
   const toast = useToast();
-  //need a sort function
-  // const sortProducts = (products) => {
-  //   products.sort((a, b) => {
-  //     if (a.brand < b.brand) {
-  //       return -1;
-  //     } else if (a.brand > b.brand) {
-  //       return 1;
-  //     }
 
-  //     else
-  //     {
-  //       if (a.name < b.name) {
-  //         return -1;
-  //       } else if (a.name > b.name) {
-  //         return 1;
-  //       } else {
-  //         return 0;
-  //       }
-  //     }
-  //   });
-  //   return products;
-  // };
+  //sort brands alphabetically to display 
+  const sortedProducts = (array, key) => {
+    const newArray = [...array];
+    return newArray.sort((a, b) => {
+      if (a.brand < b.brand) {
+        return -1;
+      } else if (a.brand > b.brand) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  };
+  const sortedproductsArray = sortedProducts(products)
 
   useEffect(() => {
     dispatch(getProducts(location.pathname));
@@ -153,13 +146,11 @@ const ProductsTab = () => {
                   <Th>Stock and new tag</Th>
                 </Tr>
               </Thead>
-              <Tbody border="2px solid red" >
+              <Tbody border="2px solid red">
                 {/* && stops the map from running if products.length === 0 */}
-                {products &&
-                  products.length > 0 &&
-                  products
-                    .slice()
-                    .sort((a, b) => a.name.localeCompare(b.name))
+                {sortedproductsArray &&
+                  sortedproductsArray.length > 0 &&
+                  sortedproductsArray
                     .map((product) => (
                       <ProductTableItem
                         key={product._id}
