@@ -15,6 +15,7 @@ import {
   useDisclosure,
   useToast,
   Select,
+  Text,
 } from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import { MdOutlineDataSaverOn } from "react-icons/md";
@@ -26,7 +27,6 @@ import { setRandomFallback } from "bcryptjs";
 import { convertImage } from "./ProductsTab.jsx";
 
 const ProductTableItem = ({ product, brands }) => {
-
   const updateProductProp = updateProduct();
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -93,6 +93,9 @@ const ProductTableItem = ({ product, brands }) => {
               placeholder={brand}
               onChange={(event) => setBrand(event.target.value)}
               cursor="pointer"
+              fontFamily="sans-serif"
+              size="sm"
+              textTransform="capitalize"
             >
               {brands.map((item) => (
                 <option key={item.name} value={item.name}>
@@ -122,31 +125,31 @@ const ProductTableItem = ({ product, brands }) => {
           </Flex>
         </Td>
         <Td>
-          <Flex direction="column" gap="2">
+          <Flex direction="column" gap="4">
             <Input
               size="sm"
               value={stock}
               onChange={(event) => setStock(event.target.value)}
             />
+            <FormControl display="flex" alignItems="center">
+              <FormLabel htmlFor="isNewFlag" mb="0" fontSize="sm">
+                <Badge
+                  rounded="full"
+                  px="1"
+                  mx="1"
+                  fontSize="16px"
+                  colorScheme="green"
+                >
+                  New
+                </Badge>
+              </FormLabel>
+              <Switch
+                id="isNewFlag"
+                onChange={() => setIsNew(!isNew)}
+                isChecked={isNew}
+              />
+            </FormControl>
           </Flex>
-          <FormControl display="flex" alignItems="center">
-            <FormLabel htmlFor="isNewFlag" mb="0" fontSize="sm">
-              <Badge
-                rounded="full"
-                px="1"
-                mx="1"
-                fontSize="16px"
-                colorScheme="green"
-              >
-                New
-              </Badge>
-            </FormLabel>
-            <Switch
-              id="isNewFlag"
-              onChange={() => setIsNew(!isNew)}
-              isChecked={isNew}
-            />
-          </FormControl>
         </Td>
         <Td>
           <VStack>

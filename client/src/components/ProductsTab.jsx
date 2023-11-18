@@ -58,7 +58,7 @@ const ProductsTab = () => {
   const { error, loading } = admin;
   const productInfo = useSelector((state) => state.products);
   const { products, productUpdate } = productInfo;
-  
+
   const brandList = useSelector((state) => state.brands);
   const { brands } = brandList;
 
@@ -138,7 +138,7 @@ const ProductsTab = () => {
                 </Box>
               </AccordionButton>
               <AccordionPanel pb="4">
-                <AddNewProduct brands={brands}/>
+                <AddNewProduct brands={brands} />
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
@@ -153,13 +153,20 @@ const ProductsTab = () => {
                   <Th>Stock and new tag</Th>
                 </Tr>
               </Thead>
-              <Tbody border="2px solid red">
+              <Tbody border="2px solid red" >
                 {/* && stops the map from running if products.length === 0 */}
                 {products &&
                   products.length > 0 &&
-                  products.map((product) => (
-                    <ProductTableItem key={product._id} product={product} brands={brands}/>
-                  ))}
+                  products
+                    .slice()
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((product) => (
+                      <ProductTableItem
+                        key={product._id}
+                        product={product}
+                        brands={brands}
+                      />
+                    ))}
               </Tbody>
             </Table>
           </TableContainer>

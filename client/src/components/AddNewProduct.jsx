@@ -14,7 +14,8 @@ import {
   Image,
   Flex,
   Box,
-  useToast
+  useToast,
+  Select,
 } from "@chakra-ui/react";
 
 import { useState } from "react";
@@ -23,7 +24,7 @@ import { useDispatch } from "react-redux";
 import { uploadProduct } from "../redux/actions/adminActions.js";
 import { convertImage } from "./ProductsTab.jsx";
 
-const AddNewProduct = () => {
+const AddNewProduct = ({ brands }) => {
   const dispatch = useDispatch();
   const [brand, setBrand] = useState("");
   const [name, setName] = useState("");
@@ -87,14 +88,25 @@ const AddNewProduct = () => {
         />
       </Box>
 
-      <Box >
+      <Box>
         <Text fontSize="sm">Brand</Text>
-        <Input
-          size="sm"
-          value={brand}
+        <Select
+          placeholder={brand}
           onChange={(event) => setBrand(event.target.value)}
-          placeholder="Brand of chair"
-        />
+          cursor="pointer"
+          fontFamily="sans-serif"
+          size="sm"
+          textTransform="capitalize"
+        >
+          {brands
+            .slice()
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((item) => (
+              <option key={item.name} value={item.name}>
+                {item.name}
+              </option>
+            ))}
+        </Select>
         <Text fontSize="sm">Name</Text>
         <Input
           size="sm"
@@ -129,7 +141,7 @@ const AddNewProduct = () => {
           placeholder="#"
           type="number"
         />
-        
+
         <FormControl display="flex" alignItems="center">
           <FormLabel htmlFor="isNewFlag" mb="0" fontSize="sm">
             Enable
