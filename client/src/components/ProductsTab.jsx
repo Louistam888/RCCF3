@@ -49,7 +49,7 @@ const ProductsTab = () => {
   const toast = useToast();
 
   //sort brands alphabetically to display 
-  const sortedProducts = (array, key) => {
+  const sortedProducts = (array) => {
     const newArray = [...array];
     return newArray.sort((a, b) => {
       if (a.brand < b.brand) {
@@ -61,7 +61,7 @@ const ProductsTab = () => {
       }
     });
   };
-  const sortedproductsArray = sortedProducts(products)
+  const sortedProductsArray = sortedProducts(products)
 
   useEffect(() => {
     dispatch(getProducts(location.pathname));
@@ -132,9 +132,9 @@ const ProductsTab = () => {
               </Thead>
               <Tbody border="2px solid red">
                 {/* && stops the map from running if products.length === 0 */}
-                {sortedproductsArray &&
-                  sortedproductsArray.length > 0 &&
-                  sortedproductsArray
+                {sortedProductsArray &&
+                  sortedProductsArray.length > 0 &&
+                  sortedProductsArray
                     .map((product) => (
                       <ProductTableItem
                         key={product._id}
