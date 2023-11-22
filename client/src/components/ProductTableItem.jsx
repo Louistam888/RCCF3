@@ -64,7 +64,7 @@ const ProductTableItem = ({ product, brands }) => {
   return (
     <>
       <Tr border="2px solid black">
-        <Td>
+        <Td p="10px">
           <Input
             size="sm"
             type="file"
@@ -74,7 +74,7 @@ const ProductTableItem = ({ product, brands }) => {
             w="220px"
           />
 
-          <Image src={image} boxSize="150px" fit="contain" />
+          <Image src={image} boxSize="150px" fit="contain" border="2px solid black"/>
         </Td>
         <Td>
           <Textarea
@@ -105,6 +105,7 @@ const ProductTableItem = ({ product, brands }) => {
               size="sm"
               value={name}
               onChange={(event) => setName(event.target.value)}
+              type="text"
             />
           </Flex>
         </Td>
@@ -114,11 +115,13 @@ const ProductTableItem = ({ product, brands }) => {
               size="sm"
               value={category}
               onChange={(event) => setCategory(event.target.value)}
+              type="text"
             />
             <Input
               size="sm"
               value={price}
               onChange={(event) => setPrice(event.target.value)}
+              type="number"
             />
           </Flex>
         </Td>
@@ -128,6 +131,7 @@ const ProductTableItem = ({ product, brands }) => {
               size="sm"
               value={stock}
               onChange={(event) => setStock(event.target.value)}
+              type="number"
             />
             <FormControl display="flex" alignItems="center">
               <FormLabel htmlFor="isNewFlag" mb="0" fontSize="sm">

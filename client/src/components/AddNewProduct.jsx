@@ -89,9 +89,9 @@ const AddNewProduct = ({ brands }) => {
       </Box>
 
       <Box>
-        <Text fontSize="sm">Brand</Text>
+        <Text fontSize="sm">Select brand (or create new brand in Brands tab)</Text>
         <Select
-          placeholder={brand}
+          placeholder="Choose one"
           onChange={(event) => setBrand(event.target.value)}
           cursor="pointer"
           fontFamily="sans-serif"

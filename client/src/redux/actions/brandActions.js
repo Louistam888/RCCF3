@@ -19,3 +19,7 @@ export const getBrands = () => async (dispatch) => {
     );
   }
 };
+
+// export const resetBrandError = () => async (dispatch) => {
+//   dispatch(resetError());
+// };

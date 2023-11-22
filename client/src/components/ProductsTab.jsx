@@ -24,7 +24,7 @@ import {
   AccordionPanel,
   TableContainer,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import {
   getProducts,
@@ -48,7 +48,9 @@ const ProductsTab = () => {
 
   const toast = useToast();
 
-  //sort brands alphabetically to display 
+  const [sortedProductsArray, setSortedProductsArray] = useState([]);
+
+  //sort brands alphabetically to display
   const sortedProducts = (array) => {
     const newArray = [...array];
     return newArray.sort((a, b) => {
@@ -61,7 +63,12 @@ const ProductsTab = () => {
       }
     });
   };
-  const sortedProductsArray = sortedProducts(products)
+
+  useEffect(() => {
+    if (products.length > 0) {
+      setSortedProductsArray(sortedProducts(products));
+    }
+  }, [products.length]);
 
   useEffect(() => {
     dispatch(getProducts(location.pathname));
@@ -134,14 +141,13 @@ const ProductsTab = () => {
                 {/* && stops the map from running if products.length === 0 */}
                 {sortedProductsArray &&
                   sortedProductsArray.length > 0 &&
-                  sortedProductsArray
-                    .map((product) => (
-                      <ProductTableItem
-                        key={product._id}
-                        product={product}
-                        brands={brands}
-                      />
-                    ))}
+                  sortedProductsArray.map((product) => (
+                    <ProductTableItem
+                      key={product._id}
+                      product={product}
+                      brands={brands}
+                    />
+                  ))}
               </Tbody>
             </Table>
           </TableContainer>

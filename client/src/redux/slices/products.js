@@ -34,7 +34,6 @@ export const productsSlice = createSlice({
       state.error = null;
       state.productUpdate = false;
     },
-    
     setProductUpdateFlag: (state) => {
       state.productUpdate = true;
       state.loading = false;

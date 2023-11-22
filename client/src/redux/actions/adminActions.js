@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getUsers, userDelete, resetError, setError } from "../slices/admin";
 import { setProducts, setProductUpdateFlag } from "../slices/products";
+import { setBrands, setBrandUpdateFlag } from "../slices/brands";
 
 export const getAllUsers = () => async (dispatch, getState) => {
   const {
@@ -133,10 +134,9 @@ export const deleteProduct = (id, toast) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.delete(`api/products/${id}`, config);
-      dispatch(setProducts(data));
-      dispatch(setProductUpdateFlag());
-      dispatch(resetError());
-      
+    dispatch(setProducts(data));
+    dispatch(setProductUpdateFlag());
+    dispatch(resetError());
   } catch (error) {
     dispatch(
       setError(
@@ -183,3 +183,47 @@ export const uploadProduct = (newProduct) => async (dispatch, getState) => {
     );
   }
 };
+
+//update brand
+export const updateBrand =
+  (brandName, id, image, toast) => async (dispatch, getState) => {
+    const {
+      user: { userInfo },
+    } = getState();
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.put(
+        `api/brands`,
+        {
+          brandName,
+          id,
+          image,
+          toast
+        },
+        config
+        );
+        dispatch(setBrands(data));
+      // dispatch(setBrandUpdateFlag()); 
+    } catch (error) {
+      dispatch(
+        setError(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+            ? error.message
+            : "Brand could not be updated"
+        )
+      );
+      toast({
+        description: "Sorry, update failed",
+        status: "error",
+        isClosable: true,
+      });
+    }
+  };

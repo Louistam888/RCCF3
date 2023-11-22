@@ -24,16 +24,12 @@ import {
   AccordionPanel,
   TableContainer,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import {
-  getProducts,
-  resetProductError,
-} from "../redux/actions/productActions.js";
 import { useDispatch, useSelector } from "react-redux";
-import ProductTableItem from "./ProductTableItem.jsx";
+import BrandTableItem from "./BrandTableItem.jsx";
 import AddNewProduct from "./AddNewProduct.jsx";
-import { getBrands } from "../redux/actions/brandActions.js";
+import { getBrands, resetBrandError } from "../redux/actions/brandActions.js";
 import { convertImage } from "../screens/AdminConsoleScreen.jsx";
 
 const BrandsTab = () => {
@@ -41,9 +37,11 @@ const BrandsTab = () => {
   const admin = useSelector((state) => state.admin);
   const { error, loading } = admin;
   const brandsList = useSelector((state) => state.brands);
-  const { brands } = brandsList;
-
+  const products = useSelector((state) => state.products);
+  const { brands, brandUpdate} = brandsList;
   const toast = useToast();
+
+  const [sortedBrandsArray, setSortedBrandsArray] = useState([]);
 
   //sort brands alphabetically to display
   const sortedBrands = (array) => {
@@ -59,7 +57,23 @@ const BrandsTab = () => {
     });
   };
 
-  const sortedBrandsArray = sortedBrands(brands);
+  useEffect(() => {
+    if (brands.length > 0) {
+      setSortedBrandsArray(sortedBrands(brands));
+    }
+  }, [brands.length]);
+
+  useEffect(() => {
+    dispatch(getBrands());
+    // dispatch(resetBrandError());
+    if (brandUpdate) {
+      toast({
+        description: "Changes saved",
+        status: "success",
+        isClosable: true,
+      });
+    }
+  }, [dispatch, toast]);
 
   useEffect(() => {
     dispatch(getBrands());
@@ -101,7 +115,7 @@ const BrandsTab = () => {
                 </Box>
               </AccordionButton>
               <AccordionPanel pb="4">
-                <AddNewProduct brands={brands} />
+                {/* <AddNewProduct brands={brands} /> */}
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
@@ -109,23 +123,20 @@ const BrandsTab = () => {
             <Table variant="simple" size="auto">
               <Thead>
                 <Tr>
-                  <Th>Image</Th>
-                  <Th>Description</Th>
-                  <Th>Brand & Name</Th>
-                  <Th>Category and price</Th>
-                  <Th>Stock and new tag</Th>
+                  <Th>Brand Image</Th>
+                  <Th>Edit Brand Name</Th>
                 </Tr>
               </Thead>
               <Tbody border="2px solid red">
                 {/* && stops the map from running if products.length === 0 */}
                 {sortedBrandsArray &&
                   sortedBrandsArray.length > 0 &&
-                  sortedBrandsArray.map((product) => (
-                    //remove and replace with product table item
-                    <ProductTableItem
-                      key={product._id}
-                      product={product}
-                      brands={brands}
+                  sortedBrandsArray.map((brand, index, sortedBrandsArray) => (
+                    <BrandTableItem
+                      key={index}
+                      brand={brand}
+                      sortedBrandsArray={sortedBrandsArray}
+                      products={products}
                     />
                   ))}
               </Tbody>
