@@ -30,7 +30,9 @@ import { useDispatch, useSelector } from "react-redux";
 import BrandTableItem from "./BrandTableItem.jsx";
 import AddNewProduct from "./AddNewProduct.jsx";
 import { getBrands, resetBrandError } from "../redux/actions/brandActions.js";
+import { setBrandUpdateFlag } from "../redux/slices/brands.js";
 import { convertImage } from "../screens/AdminConsoleScreen.jsx";
+import { updateBrand } from "../redux/actions/adminActions.js";
 
 const BrandsTab = () => {
   const dispatch = useDispatch();
@@ -73,7 +75,7 @@ const BrandsTab = () => {
         isClosable: true,
       });
     }
-  }, [dispatch, toast]);
+  }, [dispatch, toast, brandUpdate]);
 
   useEffect(() => {
     dispatch(getBrands());
@@ -135,8 +137,8 @@ const BrandsTab = () => {
                     <BrandTableItem
                       key={index}
                       brand={brand}
-                      sortedBrandsArray={sortedBrandsArray}
                       products={products}
+                      setBrandUpdateFlag={setBrandUpdateFlag}
                     />
                   ))}
               </Tbody>

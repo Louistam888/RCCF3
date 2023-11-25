@@ -34,7 +34,7 @@ export const brandsSlice = createSlice({
       state.brandUpdate = false;
     },
     setBrandUpdateFlag: (state) => {
-      state.BrandUpdate = true;
+      state.brandUpdate = true;
       state.loading = false;
     },
   },

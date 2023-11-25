@@ -25,13 +25,13 @@ import { updateBrand, updateProduct } from "../redux/actions/adminActions.js";
 import ConfirmRemovalAlert from "./ConfirmRemovalAlert.jsx";
 import { convertImage } from "../screens/AdminConsoleScreen.jsx";
 
-const BrandTableItem = ({ brand, products }) => {
+const BrandTableItem = ({ brand, products, setBrandUpdateFlag }) => {
   const updateProductProp = updateProduct();
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const productsArray = products.products;
- 
+
   const [brandName, setBrandName] = useState(brand.name);
   const [image, setImage] = useState(brand.image);
   const dispatch = useDispatch();
@@ -54,6 +54,7 @@ const BrandTableItem = ({ brand, products }) => {
 
   const onSaveBrand = () => {
     dispatch(updateBrand(brandName, brand._id, image, toast));
+    dispatch(setBrandUpdateFlag(true));
   };
 
   const openDeleteConfirmBox = () => {
@@ -108,7 +109,7 @@ const BrandTableItem = ({ brand, products }) => {
               colorScheme="orange"
               w="160px"
               variant="outline"
-                onClick={onSaveBrand}
+              onClick={onSaveBrand}
             >
               <MdOutlineDataSaverOn style={{ marginRight: "5px" }} />
               Save Changes

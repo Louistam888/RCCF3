@@ -87,9 +87,10 @@ const AddNewProduct = ({ brands }) => {
           size="sm"
         />
       </Box>
-
       <Box>
-        <Text fontSize="sm">Select brand (or create new brand in Brands tab)</Text>
+        <Text fontSize="sm">
+          Select brand (or create new brand in Brands tab)
+        </Text>
         <Select
           placeholder="Choose one"
           onChange={(event) => setBrand(event.target.value)}
@@ -98,14 +99,20 @@ const AddNewProduct = ({ brands }) => {
           size="sm"
           textTransform="capitalize"
         >
-          {brands
-            .slice()
-            .sort((a, b) => a.name.localeCompare(b.name))
-            .map((item) => (
-              <option key={item.name} value={item.name}>
-                {item.name}
-              </option>
-            ))}
+          {brands.length > 0 ? (
+            brands
+              .slice()
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((item) => (
+                <option key={item.name} value={item.name}>
+                  {item.name}
+                </option>
+              ))
+          ) : (
+            <option value="" disabled>
+              No brands available
+            </option>
+          )}
         </Select>
         <Text fontSize="sm">Name</Text>
         <Input

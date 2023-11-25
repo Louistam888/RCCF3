@@ -35,6 +35,7 @@ import ProductTableItem from "./ProductTableItem.jsx";
 import AddNewProduct from "./AddNewProduct.jsx";
 import { getBrands } from "../redux/actions/brandActions.js";
 
+
 const ProductsTab = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -44,11 +45,16 @@ const ProductsTab = () => {
   const { products, productUpdate } = productInfo;
 
   const brandList = useSelector((state) => state.brands);
-  const { brands } = brandList;
+  const { brands, brandUpdate } = brandList;
+
+  const [sortedProductsArray, setSortedProductsArray] = useState([]);
 
   const toast = useToast();
 
-  const [sortedProductsArray, setSortedProductsArray] = useState([]);
+  //FUNCTIONS TO LOAD BRANDS
+  useEffect(() => {
+    dispatch(getBrands());
+  }, []);
 
   //sort brands alphabetically to display
   const sortedProducts = (array) => {
@@ -68,6 +74,8 @@ const ProductsTab = () => {
     if (products.length > 0) {
       setSortedProductsArray(sortedProducts(products));
     }
+
+    //need additional condition for if there are no products
   }, [products.length]);
 
   useEffect(() => {
@@ -81,10 +89,6 @@ const ProductsTab = () => {
       });
     }
   }, [dispatch, toast, productUpdate]);
-
-  useEffect(() => {
-    dispatch(getBrands());
-  }, []);
 
   return (
     <Box>
@@ -139,15 +143,21 @@ const ProductsTab = () => {
               </Thead>
               <Tbody border="2px solid red">
                 {/* && stops the map from running if products.length === 0 */}
-                {sortedProductsArray &&
-                  sortedProductsArray.length > 0 &&
+                {sortedProductsArray && sortedProductsArray.length > 0 ? (
                   sortedProductsArray.map((product) => (
                     <ProductTableItem
                       key={product._id}
                       product={product}
                       brands={brands}
                     />
-                  ))}
+                  ))
+                ) : (
+                  <Tr>
+                    <Td>
+                      <Text>No products to display</Text>
+                    </Td>
+                  </Tr>
+                )}
               </Tbody>
             </Table>
           </TableContainer>

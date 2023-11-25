@@ -15,6 +15,8 @@ import {
   useDisclosure,
   useToast,
   Select,
+  Box,
+  Text,
 } from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import { MdOutlineDataSaverOn } from "react-icons/md";
@@ -74,7 +76,12 @@ const ProductTableItem = ({ product, brands }) => {
             w="220px"
           />
 
-          <Image src={image} boxSize="150px" fit="contain" border="2px solid black"/>
+          <Image
+            src={image}
+            boxSize="150px"
+            fit="contain"
+            border="2px solid black"
+          />
         </Td>
         <Td>
           <Textarea
@@ -95,11 +102,15 @@ const ProductTableItem = ({ product, brands }) => {
               size="sm"
               textTransform="capitalize"
             >
-              {brands.map((item) => (
-                <option key={item.name} value={item.name}>
-                  {item.name}
-                </option>
-              ))}
+              {brands.length > 0 ? (
+                brands.map((item) => (
+                  <option key={item.name} value={item.name}>
+                    {item.name}
+                  </option>
+                ))
+              ) : (
+                <Text>No brands</Text>
+              )}
             </Select>
             <Input
               size="sm"
