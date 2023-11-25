@@ -17,7 +17,7 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MdOutlineDataSaverOn } from "react-icons/md";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useDispatch } from "react-redux";
@@ -25,12 +25,11 @@ import { updateBrand, updateProduct } from "../redux/actions/adminActions.js";
 import ConfirmRemovalAlert from "./ConfirmRemovalAlert.jsx";
 import { convertImage } from "../screens/AdminConsoleScreen.jsx";
 
-const BrandTableItem = ({ brand, products, setBrandUpdateFlag }) => {
+const BrandTableItem = ({ brand, productList, setBrandUpdateFlag }) => {
   const updateProductProp = updateProduct();
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const productsArray = products.products;
+  const { products, productUpdate } = productList;
 
   const [brandName, setBrandName] = useState(brand.name);
   const [image, setImage] = useState(brand.image);
@@ -38,23 +37,32 @@ const BrandTableItem = ({ brand, products, setBrandUpdateFlag }) => {
   const toast = useToast();
 
   const brandCounter = (array, key, value) => {
-    return array.reduce((count, object) => {
-      if (object[key] === value) {
-        return count + 1;
-      }
-      return count;
-    }, 0);
+    if (Array.isArray(array)) {
+      return array.reduce((count, object) => {
+        if (object[key] === value) {
+          return count + 1;
+        }
+        return count;
+      }, 0);
+    }
+
+    return 0;
   };
 
-  const numberOfProductsUnderBrand = brandCounter(
-    productsArray,
-    "brand",
-    brandName
+  const numberOfProductsUnderBrand = brandCounter(products, "brand", brandName);
+
+  const [productsUnderBrand, setProductsUnderBrand] = useState(
+    numberOfProductsUnderBrand
   );
+
+  useEffect(() => {
+    setProductsUnderBrand(numberOfProductsUnderBrand);
+  }, [products]);
 
   const onSaveBrand = () => {
     dispatch(updateBrand(brandName, brand._id, image, toast));
     dispatch(setBrandUpdateFlag(true));
+    setProductsUnderBrand(numberOfProductsUnderBrand);
   };
 
   const openDeleteConfirmBox = () => {
@@ -91,7 +99,7 @@ const BrandTableItem = ({ brand, products, setBrandUpdateFlag }) => {
               onChange={(event) => setBrandName(event.target.value)}
             />
           </Flex>
-          <Text>Product(s) under this brand: {numberOfProductsUnderBrand}</Text>
+          <Text>Product(s) under this brand: {productsUnderBrand}</Text>
         </Td>
 
         <Td>

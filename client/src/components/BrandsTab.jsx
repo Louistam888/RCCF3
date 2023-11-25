@@ -137,7 +137,7 @@ const BrandsTab = () => {
                     <BrandTableItem
                       key={index}
                       brand={brand}
-                      products={products}
+                      productList={products}
                       setBrandUpdateFlag={setBrandUpdateFlag}
                     />
                   ))}
