@@ -109,7 +109,9 @@ const ProductTableItem = ({ product, brands }) => {
                   </option>
                 ))
               ) : (
-                <Text>No brands</Text>
+                <option value="" disabled>
+                  No brands available
+                </option>
               )}
             </Select>
             <Input
