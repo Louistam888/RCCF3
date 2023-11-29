@@ -209,7 +209,7 @@ export const updateBrand =
         config
         );
         dispatch(setBrands(data));
-      // dispatch(setBrandUpdateFlag()); 
+      dispatch(setBrandUpdateFlag()); 
     } catch (error) {
       dispatch(
         setError(
@@ -227,3 +227,32 @@ export const updateBrand =
       });
     }
   };
+
+  //upload product
+export const uploadBrand = (newBrand) => async (dispatch, getState) => {
+  const {
+    user: { userInfo },
+  } = getState();
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.post(`api/brands`, newBrand, config);
+    dispatch(setBrands(data));
+    dispatch(setBrandUpdateFlag());
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : "Brand could not be uploaded"
+      )
+    );
+  }
+};

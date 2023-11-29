@@ -40,7 +40,7 @@ export const brandsSlice = createSlice({
   },
 });
 
-export const { setLoading, setBrands, setBrand, setError, setBrandUpdateFlag } =
+export const { setLoading, setBrands, setBrand, setError, setBrandUpdateFlag, resetError } =
   brandsSlice.actions;
 export default brandsSlice.reducer;
 

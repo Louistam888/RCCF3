@@ -33,6 +33,7 @@ import { getBrands, resetBrandError } from "../redux/actions/brandActions.js";
 import { setBrandUpdateFlag } from "../redux/slices/brands.js";
 import { convertImage } from "../screens/AdminConsoleScreen.jsx";
 import { updateBrand } from "../redux/actions/adminActions.js";
+import AddNewBrand from "./AddNewBrand.jsx";
 
 const BrandsTab = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const BrandsTab = () => {
   const brandsList = useSelector((state) => state.brands);
   const products = useSelector((state) => state.products);
   const { brands, brandUpdate} = brandsList;
+
   const toast = useToast();
 
   const [sortedBrandsArray, setSortedBrandsArray] = useState([]);
@@ -48,6 +50,7 @@ const BrandsTab = () => {
   //sort brands alphabetically to display
   const sortedBrands = (array) => {
     const newArray = [...array];
+  
     return newArray.sort((a, b) => {
       if (a.name < b.name) {
         return -1;
@@ -60,14 +63,14 @@ const BrandsTab = () => {
   };
 
   useEffect(() => {
-    if (brands.length > 0) {
+    if ( brands && brands.length > 0) {
       setSortedBrandsArray(sortedBrands(brands));
     }
   }, [brands.length]);
 
   useEffect(() => {
     dispatch(getBrands());
-    // dispatch(resetBrandError());
+    dispatch(resetBrandError());
     if (brandUpdate) {
       toast({
         description: "Changes saved",
@@ -111,13 +114,13 @@ const BrandsTab = () => {
                 <Box flex="1" textAlign="center">
                   <Box>
                     <Text mr="8px" fontWeight="bold">
-                      Add new product
+                      Add New Brand
                     </Text>
                   </Box>
                 </Box>
               </AccordionButton>
               <AccordionPanel pb="4">
-                {/* <AddNewProduct brands={brands} /> */}
+                <AddNewBrand/>
               </AccordionPanel>
             </AccordionItem>
           </Accordion>

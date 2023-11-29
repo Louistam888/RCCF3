@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setLoading, setError, setBrands } from "../slices/brands";
+import { setLoading, setError, setBrands, resetError } from "../slices/brands.js";
 
 export const getBrands = () => async (dispatch) => {
   dispatch(setLoading(true));
@@ -20,6 +20,6 @@ export const getBrands = () => async (dispatch) => {
   }
 };
 
-// export const resetBrandError = () => async (dispatch) => {
-//   dispatch(resetError());
-// };
+export const resetBrandError = () => async (dispatch) => {
+  dispatch(resetError());
+};

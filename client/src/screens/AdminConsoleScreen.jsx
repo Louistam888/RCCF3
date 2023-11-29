@@ -66,7 +66,7 @@ const AdminConsoleScreen = () => {
                 <BrandsTab />
               </TabPanel>
               <TabPanel>
-                <ProductsTab convertImage={convertImage} />
+                <ProductsTab />
               </TabPanel>
             </TabPanels>
           </Tabs>
