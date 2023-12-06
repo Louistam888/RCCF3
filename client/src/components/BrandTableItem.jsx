@@ -125,13 +125,14 @@ const BrandTableItem = ({ brand, productList, setBrandUpdateFlag }) => {
           </VStack>
         </Td>
         <Td>
-          {/* <ConfirmRemovalAlert
+          <ConfirmRemovalAlert
             isOpen={isOpen}
             onOpen={onOpen}
             onClose={onClose}
             cancelRef={cancelRef}
-            itemToDelete={product}
-          /> */}
+            itemToDelete={brand}
+            itemType={"brand"}
+          />
         </Td>
       </Tr>
     </>

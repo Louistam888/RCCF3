@@ -195,6 +195,7 @@ const ProductTableItem = ({ product, brands }) => {
             onClose={onClose}
             cancelRef={cancelRef}
             itemToDelete={product}
+            itemType={"product"}
           />
         </Td>
       </Tr>

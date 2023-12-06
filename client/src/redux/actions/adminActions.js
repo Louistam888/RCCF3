@@ -228,7 +228,7 @@ export const updateBrand =
     }
   };
 
-  //upload product
+//upload brand
 export const uploadBrand = (newBrand) => async (dispatch, getState) => {
   const {
     user: { userInfo },
@@ -254,5 +254,42 @@ export const uploadBrand = (newBrand) => async (dispatch, getState) => {
           : "Brand could not be uploaded"
       )
     );
+  }
+};
+
+//delete brand 
+export const deleteBrand = (id, toast) => async (dispatch, getState) => {
+  const {
+    user: { userInfo },
+  } = getState();
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.delete(`api/brands/${id}`, config);
+
+    console.log(data)
+    dispatch(setBrands(data));
+    dispatch(setBrandUpdateFlag());
+    dispatch(resetError());
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : "Brand could not be deleted"
+      )
+    );
+    toast({
+      description: "Sorry, delete failed",
+      status: "error",
+      isClosable: true,
+    });
   }
 };

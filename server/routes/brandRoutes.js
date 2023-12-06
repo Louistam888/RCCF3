@@ -64,8 +64,19 @@ const createNewBrand = asyncHandler(async (req, res) => {
   }
 });
 
+//DELETE BRAND 
+
+const deleteBrand = asyncHandler(async(req,res)=> {
+  const brand = await Brand.findByIdAndDelete(req.params.id)
+  if (brand) {
+  } else {
+    res.status(404)
+  }
+})
+
 brandRoutes.route("/").put(protectRoute, admin, updateBrand);
 brandRoutes.route("/").post(protectRoute, admin, createNewBrand);
+brandRoutes.route("/:id").delete(protectRoute, admin, deleteBrand);
 brandRoutes.route("/shop").get(getBrands);
 
 export default brandRoutes;

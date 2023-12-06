@@ -6,25 +6,31 @@ import {
   AlertDialogBody,
   AlertDialogHeader,
   AlertDialogOverlay,
-  useToast 
+  useToast,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { setProductUpdateFlag } from "../redux/slices/products";
-import { deleteProduct } from "../redux/actions/adminActions";
+import { deleteProduct, deleteBrand } from "../redux/actions/adminActions";
+import { setBrandUpdateFlag } from "../redux/slices/brands";
 
-const ConfirmRemovalAlert = ({
-  isOpen,
-  onClose,
-  cancelRef,
-  itemToDelete,
-}) => {
+const ConfirmRemovalAlert = ({ isOpen, onClose, cancelRef, itemToDelete, itemType }) => {
+  console.log(itemToDelete)
+
   const dispatch = useDispatch();
-  const toast = useToast()
+  const toast = useToast();
   const onDeleteItem = () => {
-    dispatch(deleteProduct(itemToDelete._id, toast)); // delete action is deleteproduct in redux passed as prop from productTableItem 
-    dispatch(setProductUpdateFlag()) 
-    // dispatches change of redux state flag for product update to true as it is in child component 
-    onClose();
+
+    if (itemType === "product") {
+      dispatch(deleteProduct(itemToDelete._id, toast)); // delete action is deleteproduct in redux passed as prop from productTableItem
+      dispatch(setProductUpdateFlag());
+      // dispatches change of redux state flag for product update to true as it is in child component
+      onClose();
+    } else if (itemType === "brand") {
+
+      dispatch(deleteBrand(itemToDelete._id, toast));
+      dispatch(setBrandUpdateFlag())
+      onClose()
+    }
   };
   return (
     <AlertDialog
