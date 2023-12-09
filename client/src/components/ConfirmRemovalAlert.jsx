@@ -14,7 +14,6 @@ import { deleteProduct, deleteBrand } from "../redux/actions/adminActions";
 import { setBrandUpdateFlag } from "../redux/slices/brands";
 
 const ConfirmRemovalAlert = ({ isOpen, onClose, cancelRef, itemToDelete, itemType }) => {
-  console.log(itemToDelete)
 
   const dispatch = useDispatch();
   const toast = useToast();

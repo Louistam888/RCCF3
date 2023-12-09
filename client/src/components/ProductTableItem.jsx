@@ -27,6 +27,8 @@ import ConfirmRemovalAlert from "./ConfirmRemovalAlert.jsx";
 import { convertImage } from "../screens/AdminConsoleScreen.jsx";
 
 const ProductTableItem = ({ product, brands }) => {
+
+  console.log(product.productIsNew)
   const updateProductProp = updateProduct();
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -35,7 +37,7 @@ const ProductTableItem = ({ product, brands }) => {
   const [category, setCategory] = useState(product.category);
   const [stock, setStock] = useState(product.stock);
   const [price, setPrice] = useState(product.price);
-  const [isNew, setIsNew] = useState(product.isNew);
+  const [isNew, setIsNew] = useState(product.productIsNew);
   const [description, setDescription] = useState(product.description);
   const [image, setImage] = useState(product.image);
 

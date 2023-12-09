@@ -65,6 +65,7 @@ const BrandsTab = () => {
     if ( brands && brands.length > 0) {
       setSortedBrandsArray(sortedBrands(brands));
     }
+
   }, [brands.length]);
 
   useEffect(() => {
@@ -135,7 +136,7 @@ const BrandsTab = () => {
                 {/* && stops the map from running if products.length === 0 */}
                 {sortedBrandsArray &&
                   sortedBrandsArray.length > 0 &&
-                  sortedBrandsArray.map((brand, index, sortedBrandsArray) => (
+                  sortedBrandsArray.map((brand, index) => (
                     <BrandTableItem
                       key={index}
                       brand={brand}
