@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getUsers, userDelete, resetError, setError } from "../slices/admin";
 import { setProducts, setProductUpdateFlag } from "../slices/products";
+import { setBrands, setBrandUpdateFlag } from "../slices/brands";
 
 export const getAllUsers = () => async (dispatch, getState) => {
   const {
@@ -60,7 +61,18 @@ export const resetErrorAndRemoval = () => async (dispatch) => {
 
 //update product
 export const updateProduct =
-  (brand, name, category, stock, price, id, productIsNew, description, image) =>
+  (
+    brand,
+    name,
+    category,
+    stock,
+    price,
+    id,
+    productIsNew,
+    description,
+    image,
+    toast
+  ) =>
   async (dispatch, getState) => {
     const {
       user: { userInfo },
@@ -100,12 +112,16 @@ export const updateProduct =
             : "Product could not be updated"
         )
       );
+      toast({
+        description: "Sorry, update failed",
+        status: "error",
+        isClosable: true,
+      });
     }
   };
 
 // delete product
-export const deleteProduct = (id) => async (dispatch, getState) => {
-
+export const deleteProduct = (id, toast) => async (dispatch, getState) => {
   const {
     user: { userInfo },
   } = getState();
@@ -131,6 +147,11 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
           : "Product could not be deleted"
       )
     );
+    toast({
+      description: "Sorry, delete failed",
+      status: "error",
+      isClosable: true,
+    });
   }
 };
 
@@ -160,5 +181,113 @@ export const uploadProduct = (newProduct) => async (dispatch, getState) => {
           : "Product could not be uploaded"
       )
     );
+  }
+};
+
+//update brand
+export const updateBrand =
+  (brandName, id, image, toast) => async (dispatch, getState) => {
+    const {
+      user: { userInfo },
+    } = getState();
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.put(
+        `api/brands`,
+        {
+          brandName,
+          id,
+          image,
+          toast,
+        },
+        config
+      );
+      dispatch(setBrands(data));
+      dispatch(setBrandUpdateFlag());
+    } catch (error) {
+      dispatch(
+        setError(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+            ? error.message
+            : "Brand could not be updated"
+        )
+      );
+      toast({
+        description: "Sorry, update failed",
+        status: "error",
+        isClosable: true,
+      });
+    }
+  };
+
+//upload brand
+export const uploadBrand = (newBrand) => async (dispatch, getState) => {
+  const {
+    user: { userInfo },
+  } = getState();
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.post(`api/brands`, newBrand, config);
+    dispatch(setBrands(data));
+    dispatch(setBrandUpdateFlag());
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : "Brand could not be uploaded"
+      )
+    );
+  }
+};
+
+//delete brand
+export const deleteBrand = (id, toast) => async (dispatch, getState) => {
+  const {
+    user: { userInfo },
+  } = getState();
+
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.delete(`api/brands/${id}`, config);
+    dispatch(setBrands(data));
+    dispatch(setBrandUpdateFlag());
+    dispatch(resetError());
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : "Brand could not be deleted"
+      )
+    );
+    toast({
+      description: "Sorry, delete failed",
+      status: "error",
+      isClosable: true,
+    });
   }
 };

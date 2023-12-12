@@ -11,7 +11,24 @@ import {
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import UsersTab from "../components/UsersTab";
+import BrandsTab from "../components/BrandsTab";
 import ProductsTab from "../components/ProductsTab";
+
+export const convertImage = (uploadedFile, setterFunction, toast) => {
+  const file = uploadedFile.files[0];
+  const reader = new FileReader();
+  reader.onload = () => {
+    setterFunction(reader.result);
+  };
+  reader.onerror = (error) => {
+    toast({
+      description: `Upload failed ${error}`,
+      status: "error",
+      isClosable: true,
+    });
+  };
+  reader.readAsDataURL(file);
+};
 
 const AdminConsoleScreen = () => {
   const user = useSelector((state) => state.user);
@@ -36,6 +53,7 @@ const AdminConsoleScreen = () => {
           <Tabs>
             <TabList>
               <Tab>Users</Tab>
+              <Tab>Brands</Tab>
               <Tab>Products</Tab>
               <Tab>Reviews</Tab>
               <Tab>Orders</Tab>
@@ -43,6 +61,9 @@ const AdminConsoleScreen = () => {
             <TabPanels>
               <TabPanel>
                 <UsersTab />
+              </TabPanel>
+              <TabPanel>
+                <BrandsTab />
               </TabPanel>
               <TabPanel>
                 <ProductsTab />

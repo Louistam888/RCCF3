@@ -4,7 +4,6 @@ import {
   setLoading,
   setError,
   setProduct,
-  setProductUpdateFlag,
   resetError,
 } from "../slices/products.js";
 

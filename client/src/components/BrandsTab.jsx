@@ -25,44 +25,32 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import {
-  getProducts,
-  resetProductError,
-} from "../redux/actions/productActions.js";
 import { useDispatch, useSelector } from "react-redux";
-import ProductTableItem from "./ProductTableItem.jsx";
-import AddNewProduct from "./AddNewProduct.jsx";
-import { getBrands } from "../redux/actions/brandActions.js";
+import BrandTableItem from "./BrandTableItem.jsx";
+import { getBrands, resetBrandError } from "../redux/actions/brandActions.js";
+import { setBrandUpdateFlag } from "../redux/slices/brands.js";
+import AddNewBrand from "./AddNewBrand.jsx";
 
-
-const ProductsTab = () => {
-  const location = useLocation();
+const BrandsTab = () => {
   const dispatch = useDispatch();
   const admin = useSelector((state) => state.admin);
   const { error, loading } = admin;
-  const productInfo = useSelector((state) => state.products);
-  const { products, productUpdate } = productInfo;
+  const brandsList = useSelector((state) => state.brands);
+  const products = useSelector((state) => state.products);
+  const { brands, brandUpdate } = brandsList;
 
-  const brandList = useSelector((state) => state.brands);
-  const { brands, brandUpdate } = brandList;
-
-  const [sortedProductsArray, setSortedProductsArray] = useState([]);
+  const [sortedBrandsArray, setSortedBrandsArray] = useState([]);
 
   const toast = useToast();
 
-  //FUNCTIONS TO LOAD BRANDS
-  useEffect(() => {
-    dispatch(getBrands());
-  }, []);
-
   //sort brands alphabetically to display
-  const sortedProducts = (array) => {
+  const sortedBrands = (array) => {
     const newArray = [...array];
+
     return newArray.sort((a, b) => {
-      if (a.brand < b.brand) {
+      if (a.name < b.name) {
         return -1;
-      } else if (a.brand > b.brand) {
+      } else if (a.name > b.name) {
         return 1;
       } else {
         return 0;
@@ -71,23 +59,25 @@ const ProductsTab = () => {
   };
 
   useEffect(() => {
-    if (products.length > 0) {
-      setSortedProductsArray(sortedProducts(products));
+    if (brands.length > 0) {
+      setSortedBrandsArray(sortedBrands(brands));
     }
     //need additional condition for if there are no products
-  }, [products.length]);
+  }, [brands.length]);
+
+  console.log(sortedBrandsArray);
 
   useEffect(() => {
-    dispatch(getProducts(location.pathname));
-    dispatch(resetProductError());
-    if (productUpdate) {
+    dispatch(getBrands());
+    dispatch(resetBrandError());
+    if (brandUpdate) {
       toast({
         description: "Changes saved",
         status: "success",
         isClosable: true,
       });
     }
-  }, [dispatch, toast, productUpdate]);
+  }, [dispatch, toast, brandUpdate]);
 
   return (
     <Box>
@@ -119,13 +109,13 @@ const ProductsTab = () => {
                 <Box flex="1" textAlign="center">
                   <Box>
                     <Text mr="8px" fontWeight="bold">
-                      Add new product
+                      Add New Brand
                     </Text>
                   </Box>
                 </Box>
               </AccordionButton>
               <AccordionPanel pb="4">
-                <AddNewProduct brands={brands} />
+                <AddNewBrand />
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
@@ -133,30 +123,31 @@ const ProductsTab = () => {
             <Table variant="simple" size="auto">
               <Thead>
                 <Tr>
-                  <Th>Image</Th>
-                  <Th>Description</Th>
-                  <Th>Brand & Name</Th>
-                  <Th>Category and price</Th>
-                  <Th>Stock and new tag</Th>
+                  <Th>Brand Image</Th>
+                  <Th>Edit Brand Name</Th>
                 </Tr>
               </Thead>
               <Tbody border="2px solid red">
                 {/* && stops the map from running if products.length === 0 */}
-                {sortedProductsArray && sortedProductsArray.length > 0 ? (
-                  sortedProductsArray.map((product) => (
-                    <ProductTableItem
-                      key={product._id}
-                      product={product}
-                      brands={brands}
+                {sortedBrandsArray && sortedBrandsArray.length > 0 ? (
+                  sortedBrandsArray.map((brand) => (
+                    <BrandTableItem
+                      key={brand._id}
+                      brand={brand}
+                      productList={products}
+                      setBrandUpdateFlag={setBrandUpdateFlag}
+                      brandUpdate={brandUpdate}
                     />
                   ))
                 ) : (
                   <Tr>
                     <Td>
-                      <Text>No products to display</Text>
+                      <Text>No brands to display</Text>
                     </Td>
                   </Tr>
                 )}
+
+                {/* need condition for if there are no brands */}
               </Tbody>
             </Table>
           </TableContainer>
@@ -166,4 +157,4 @@ const ProductsTab = () => {
   );
 };
 
-export default ProductsTab;
+export default BrandsTab;
