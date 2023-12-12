@@ -27,11 +27,8 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BrandTableItem from "./BrandTableItem.jsx";
-import AddNewProduct from "./AddNewProduct.jsx";
 import { getBrands, resetBrandError } from "../redux/actions/brandActions.js";
 import { setBrandUpdateFlag } from "../redux/slices/brands.js";
-import { convertImage } from "../screens/AdminConsoleScreen.jsx";
-import { updateBrand } from "../redux/actions/adminActions.js";
 import AddNewBrand from "./AddNewBrand.jsx";
 
 const BrandsTab = () => {
@@ -40,16 +37,14 @@ const BrandsTab = () => {
   const { error, loading } = admin;
   const brandsList = useSelector((state) => state.brands);
   const products = useSelector((state) => state.products);
-  const { brands, brandUpdate} = brandsList;
+  const { brands, brandUpdate } = brandsList;
 
   const toast = useToast();
-
-  const [sortedBrandsArray, setSortedBrandsArray] = useState([]);
 
   //sort brands alphabetically to display
   const sortedBrands = (array) => {
     const newArray = [...array];
-  
+
     return newArray.sort((a, b) => {
       if (a.name < b.name) {
         return -1;
@@ -61,12 +56,11 @@ const BrandsTab = () => {
     });
   };
 
-  useEffect(() => {
-    if ( brands && brands.length > 0) {
-      setSortedBrandsArray(sortedBrands(brands));
-    }
+  let sortedBrandsArray = []
 
-  }, [brands.length]);
+  if (brands) {
+    sortedBrandsArray = sortedBrands(brands)
+  }
 
   useEffect(() => {
     dispatch(getBrands());
@@ -79,10 +73,6 @@ const BrandsTab = () => {
       });
     }
   }, [dispatch, toast, brandUpdate]);
-
-  useEffect(() => {
-    dispatch(getBrands());
-  }, []);
 
   return (
     <Box>
@@ -120,7 +110,7 @@ const BrandsTab = () => {
                 </Box>
               </AccordionButton>
               <AccordionPanel pb="4">
-                <AddNewBrand/>
+                <AddNewBrand />
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
@@ -134,9 +124,9 @@ const BrandsTab = () => {
               </Thead>
               <Tbody border="2px solid red">
                 {/* && stops the map from running if products.length === 0 */}
-                {sortedBrandsArray &&
-                  sortedBrandsArray.length > 0 &&
-                  sortedBrandsArray.map((brand, index) => (
+                {brands &&
+                  brands.length > 0 &&
+                  brands.map((brand, index) => (
                     <BrandTableItem
                       key={index}
                       brand={brand}

@@ -204,12 +204,12 @@ export const updateBrand =
           brandName,
           id,
           image,
-          toast
+          toast,
         },
         config
-        );
-        dispatch(setBrands(data));
-      dispatch(setBrandUpdateFlag()); 
+      );
+      dispatch(setBrands(data));
+      dispatch(setBrandUpdateFlag());
     } catch (error) {
       dispatch(
         setError(
@@ -257,7 +257,7 @@ export const uploadBrand = (newBrand) => async (dispatch, getState) => {
   }
 };
 
-//delete brand 
+//delete brand
 export const deleteBrand = (id, toast) => async (dispatch, getState) => {
   const {
     user: { userInfo },
@@ -271,8 +271,6 @@ export const deleteBrand = (id, toast) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.delete(`api/brands/${id}`, config);
-
-    console.log(data)
     dispatch(setBrands(data));
     dispatch(setBrandUpdateFlag());
     dispatch(resetError());

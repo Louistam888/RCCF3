@@ -28,7 +28,6 @@ import { convertImage } from "../screens/AdminConsoleScreen.jsx";
 
 const ProductTableItem = ({ product, brands }) => {
 
-  console.log(product.productIsNew)
   const updateProductProp = updateProduct();
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();

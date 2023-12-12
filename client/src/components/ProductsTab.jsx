@@ -74,7 +74,6 @@ const ProductsTab = () => {
     if (products.length > 0) {
       setSortedProductsArray(sortedProducts(products));
     }
-
     //need additional condition for if there are no products
   }, [products.length]);
 
