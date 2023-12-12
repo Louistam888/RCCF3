@@ -39,6 +39,8 @@ const BrandsTab = () => {
   const products = useSelector((state) => state.products);
   const { brands, brandUpdate } = brandsList;
 
+  const [sortedBrandsArray, setSortedBrandsArray] = useState([]);
+
   const toast = useToast();
 
   //sort brands alphabetically to display
@@ -56,11 +58,14 @@ const BrandsTab = () => {
     });
   };
 
-  let sortedBrandsArray = []
+  useEffect(() => {
+    if (brands.length > 0) {
+      setSortedBrandsArray(sortedBrands(brands));
+    }
+    //need additional condition for if there are no products
+  }, [brands.length]);
 
-  if (brands) {
-    sortedBrandsArray = sortedBrands(brands)
-  }
+  console.log(sortedBrandsArray);
 
   useEffect(() => {
     dispatch(getBrands());
@@ -124,16 +129,25 @@ const BrandsTab = () => {
               </Thead>
               <Tbody border="2px solid red">
                 {/* && stops the map from running if products.length === 0 */}
-                {brands &&
-                  brands.length > 0 &&
-                  brands.map((brand, index) => (
+                {sortedBrandsArray && sortedBrandsArray.length > 0 ? (
+                  sortedBrandsArray.map((brand) => (
                     <BrandTableItem
-                      key={index}
+                      key={brand._id}
                       brand={brand}
                       productList={products}
                       setBrandUpdateFlag={setBrandUpdateFlag}
+                      brandUpdate={brandUpdate}
                     />
-                  ))}
+                  ))
+                ) : (
+                  <Tr>
+                    <Td>
+                      <Text>No brands to display</Text>
+                    </Td>
+                  </Tr>
+                )}
+
+                {/* need condition for if there are no brands */}
               </Tbody>
             </Table>
           </TableContainer>

@@ -27,7 +27,7 @@ const ConfirmRemovalAlert = ({ isOpen, onClose, cancelRef, itemToDelete, itemTyp
     } else if (itemType === "brand") {
 
       dispatch(deleteBrand(itemToDelete._id, toast));
-      dispatch(setBrandUpdateFlag())
+      dispatch(setBrandUpdateFlag(true))
       onClose()
     }
   };
