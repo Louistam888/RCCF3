@@ -312,6 +312,7 @@ export const removeReview =
       };
       const { data } = await axios.put(
         `api/products/${productId}/${reviewId}`,
+        {},
         config
       );
       dispatch(setProducts(data));

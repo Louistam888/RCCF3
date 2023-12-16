@@ -12,6 +12,7 @@ export const getProducts = (brandURL) => async (dispatch) => {
   try {
     const { data } = await axios.get(`/api/products/shop/${brandURL}`);
     dispatch(setProducts(data));
+    //add condition for if it is adminconsolescreen run without brandurl
   } catch (error) {
     dispatch(
       setError(

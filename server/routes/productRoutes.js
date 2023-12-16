@@ -144,30 +144,68 @@ const updateProduct = asyncHandler(async (req, res) => {
   }
 });
 
-//remove reviews
-const removeProductReview = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.productId);
-  const updatedReviews = product.reviews.filter(
-    (rev) => rev._id.valueOf() !== req.params.reviewId
-  ); //return all reviews that don't match
+// remove reviews
+// const removeProductReview = asyncHandler(async (req, res) => {
+//   const product = await Product.findById(req.params.productId);
+//   const updatedReviews = product.reviews.filter(
+//     (rev) => rev._id.valueOf() !== req.params.reviewId
+//   ); //return all reviews that don't match
 
-  if (product) {
+//   if (product) {
+//     product.reviews = updatedReviews;
+//     product.numberOfReviews = product.reviews.length; //find average of all reviews
+
+//     if (product.numberOfReviews > 0) {
+//       product.rating = product.reviews.reduce(
+//         (acc, item) => item.rating + acc,
+//         0
+//       );
+//     } else {
+//       product.rating = 1; // if there are not reviews
+//     }
+//     await product.save();
+//     res.status(201).json({ message: "Review remvoved" });
+//   } else {
+//     res.status(404);
+//     throw new Error("Product not found");
+//   }
+// });
+
+const removeProductReview = asyncHandler(async (req, res) => {
+  try {
+    const productId = req.params.productId;
+    const reviewId = req.params.reviewId;
+
+    console.log('Removing review. Product ID:', productId, 'Review ID:', reviewId);
+
+    const product = await Product.findById(productId);
+    console.log('Retrieved product:', product);
+
+    if (!product) {
+      console.error('Product not found for ID:', productId);
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    const updatedReviews = product.reviews.filter((rev) => rev._id.valueOf() !== reviewId);
+    console.log('Updated reviews:', updatedReviews);
+
+    // Update the product with the filtered reviews
     product.reviews = updatedReviews;
-    product.numberOfReviews = product.reviews.length; //find average of all reviews
+    product.numberOfReviews = product.reviews.length;
 
     if (product.numberOfReviews > 0) {
-      product.rating = product.reviews.reduce(
-        (acc, item) => item.rating + acc,
-        0
-      );
+      product.rating = product.reviews.reduce((acc, item) => item.rating + acc, 0);
     } else {
-      product.rating = 1; // if there are not reviews
+      product.rating = 1;
     }
+
     await product.save();
-    res.status(201).json({ message: "Review remvoved" });
-  } else {
-    res.status(404);
-    throw new Error("Product not found");
+    console.log('Product updated successfully:', product);
+
+    res.status(201).json({ message: 'Review removed' });
+  } catch (error) {
+    console.error('Error in removeProductReview:', error);
+    res.status(500).json({ error: 'An unexpected error occurred' });
   }
 });
 
@@ -182,7 +220,7 @@ productRoutes.route("/:id").delete(protectRoute, admin, deleteProduct);
 //may need to redo
 productRoutes.route("/").post(protectRoute, admin, createNewProduct);
 productRoutes
-  .route("/shop/:brand/:productId/:reviewId")
+  .route("/:productId/:reviewId")
   .put(protectRoute, admin, removeProductReview);
 
 export default productRoutes;

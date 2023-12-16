@@ -27,10 +27,11 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeReview } from "../redux/actions/adminActions.js";
 import {
-  getProduct,
+  getProducts,
   resetProductError,
 } from "../redux/actions/productActions.js";
 
@@ -40,10 +41,11 @@ const ReviewsTab = () => {
   const { error, loading } = admin;
   const productInfo = useSelector((state) => state.products);
   const { products, reviewRemoval } = productInfo;
+ 
   const toast = useToast();
 
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getProducts("adminConsole"));
     dispatch(resetProductError());
     if (reviewRemoval) {
       toast({
@@ -54,10 +56,14 @@ const ReviewsTab = () => {
     }
   }, [toast, dispatch, reviewRemoval, loading]);
 
-  const onRemoveReview = (productId, reviewId) => {
-    dispatch(removeReview(productId, reviewId));
+  const onRemoveReview = (productId, reviewId, index) => {
+    dispatch(removeReview(productId, reviewId, index));
   };
 
+  // if (products && products.length > 0 ) {
+
+  //   console.log(products[1].reviews[0]._id)
+  // }
   return (
     <Box>
       {error && (
@@ -82,8 +88,69 @@ const ReviewsTab = () => {
         </Wrap>
       ) : (
         <Box>
-
-          dafdf
+          {products.length > 0 &&
+            products.map((product) => (
+              <Box key={product._id}>
+                <Accordion allowToggle>
+                  <AccordionItem>
+                    <AccordionButton>
+                      <Box flex="1">
+                        <Flex>
+                          <Text mr="8px" fontWeight="bold">
+                            ({product.name} {product.reviews.length} Reviews)
+                          </Text>
+                        </Flex>
+                      </Box>
+                    </AccordionButton>
+                    <AccordionPanel pb="4px">
+                      <TableContainer>
+                        <Table size="sm">
+                          <Thead>
+                            <Tr>
+                              <Th>Username</Th>
+                              <Th>Rating</Th>
+                              <Th>Title</Th>
+                              <Th>Comment</Th>
+                              <Th>Created</Th>
+                            </Tr>
+                          </Thead>
+                          <Tbody>
+                            {product.reviews.map((review, index) => (
+                              <Tr key={review._id}>
+                                <Td>{review.name}</Td>
+                                <Td>{review.rating}</Td>
+                                <Td>{review.title}</Td>
+                                <Td>
+                                  <Textarea
+                                    isDisabled
+                                    value={review.comment}
+                                    size="sm"
+                                  />
+                                </Td>
+                                <Td>
+                                  {new Date(review.createdAt).toDateString()}
+                                </Td>
+                                <Td>
+                                  <Button
+                                    variant="outline"
+                                    colorScheme="red"
+                                    onClick={() =>
+                                      onRemoveReview(product._id, review._id, index)
+                                    }
+                                  >
+                                    Remove Review
+                                  </Button>
+                                </Td>
+                              </Tr>
+                            ))}
+                          </Tbody>
+                        </Table>
+                      </TableContainer>
+                    </AccordionPanel>
+                  </AccordionItem>
+                </Accordion>
+              </Box>
+            ))}
         </Box>
       )}
     </Box>
