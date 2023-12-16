@@ -176,18 +176,14 @@ const removeProductReview = asyncHandler(async (req, res) => {
     const productId = req.params.productId;
     const reviewId = req.params.reviewId;
 
-    console.log('Removing review. Product ID:', productId, 'Review ID:', reviewId);
-
     const product = await Product.findById(productId);
     console.log('Retrieved product:', product);
 
     if (!product) {
-      console.error('Product not found for ID:', productId);
       return res.status(404).json({ error: 'Product not found' });
     }
 
     const updatedReviews = product.reviews.filter((rev) => rev._id.valueOf() !== reviewId);
-    console.log('Updated reviews:', updatedReviews);
 
     // Update the product with the filtered reviews
     product.reviews = updatedReviews;
@@ -200,11 +196,9 @@ const removeProductReview = asyncHandler(async (req, res) => {
     }
 
     await product.save();
-    console.log('Product updated successfully:', product);
 
     res.status(201).json({ message: 'Review removed' });
   } catch (error) {
-    console.error('Error in removeProductReview:', error);
     res.status(500).json({ error: 'An unexpected error occurred' });
   }
 });
