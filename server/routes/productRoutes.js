@@ -1,25 +1,24 @@
 import express from "express";
 import Product from "../models/Product.js";
-import asyncHandler from 'express-async-handler';
-import { protectRoute, admin } from '../middleWare/authMiddleWare.js';
+import asyncHandler from "express-async-handler";
+import { protectRoute, admin } from "../middleWare/authMiddleWare.js";
 
 const productRoutes = express.Router();
 
 const getProducts = async (req, res) => {
-
   const brandRaw = req.params.brand;
   const brand = brandRaw.toLowerCase();
   let products;
 
   if (brand === "adminconsole") {
-    products = await Product.find({})
+    products = await Product.find({});
   } else if (brand) {
     products = await Product.find({ brand }); //retrieve all brands that match
   } else {
     products = await Product.find({});
   }
 
-//need condition in here to display all brands if adminconsole. 
+  //need condition in here to display all brands if adminconsole.
 
   if (products.length === 0) {
     return res.status(404).json({ error: "No results for this brand." });
@@ -61,7 +60,6 @@ const getProduct = async (req, res) => {
 
 //route to create product
 const createNewProduct = asyncHandler(async (req, res) => {
-  
   const {
     brand,
     name,
@@ -146,6 +144,33 @@ const updateProduct = asyncHandler(async (req, res) => {
   }
 });
 
+//remove reviews
+const removeProductReview = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.productId);
+  const updatedReviews = product.reviews.filter(
+    (rev) => rev._id.valueOf() !== req.params.reviewId
+  ); //return all reviews that don't match
+
+  if (product) {
+    product.reviews = updatedReviews;
+    product.numberOfReviews = product.reviews.length; //find average of all reviews
+
+    if (product.numberOfReviews > 0) {
+      product.rating = product.reviews.reduce(
+        (acc, item) => item.rating + acc,
+        0
+      );
+    } else {
+      product.rating = 1; // if there are not reviews
+    }
+    await product.save();
+    res.status(201).json({ message: "Review remvoved" });
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
+
 productRoutes.route("/").get(getProducts);
 productRoutes.route("/adminConsole").get(getProducts);
 
@@ -154,7 +179,10 @@ productRoutes.route("/shop/:brand").get(getProducts);
 productRoutes.route("/shop/:brand/:id").get(getProduct);
 productRoutes.route("/").put(protectRoute, admin, updateProduct);
 productRoutes.route("/:id").delete(protectRoute, admin, deleteProduct);
-//may need to redo 
+//may need to redo
 productRoutes.route("/").post(protectRoute, admin, createNewProduct);
+productRoutes
+  .route("/shop/:brand/:productId/:reviewId")
+  .put(protectRoute, admin, removeProductReview);
 
 export default productRoutes;

@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import UsersTab from "../components/UsersTab";
 import BrandsTab from "../components/BrandsTab";
 import ProductsTab from "../components/ProductsTab";
+import ReviewsTab from "../components/ReviewsTab";
 
 export const convertImage = (uploadedFile, setterFunction, toast) => {
   const file = uploadedFile.files[0];
@@ -67,6 +68,9 @@ const AdminConsoleScreen = () => {
               </TabPanel>
               <TabPanel>
                 <ProductsTab />
+              </TabPanel>
+              <TabPanel>
+                <ReviewsTab />
               </TabPanel>
             </TabPanels>
           </Tabs>
