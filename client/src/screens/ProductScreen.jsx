@@ -13,6 +13,8 @@ import {
   useColorModeValue as mode,
   useColorMode,
   useToast,
+  Wrap,
+  Input
 } from "@chakra-ui/react";
 // import { getProduct } from "../redux/actions/productActions.js";
 import PageNotFound from "./PageNotFound";
@@ -23,16 +25,29 @@ import { getProduct } from "../redux/actions/productActions.js";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { addCartItem } from "../redux/actions/cartActions";
+import {
+  createProductReview,
+  resetProductError,
+} from "../redux/actions/productActions";
+import { StarIcon } from "@chakra-ui/icons";
 
 const ProductScreen = () => {
+  let { brand, id } = useParams();
+
   //state for add quantity
   const [amount, setAmount] = useState(1);
+  const [comment, setComment] = useState("");
+  const [rating, setRating] = useState(1);
+  const [title, setTitle] = useState("");
+  const [reviewBoxOpen, setReviewBoxOpen] = useState(false);
 
   //redux
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
-  const { loading, error, product } = products;
-  let { brand, id } = useParams();
+  const { loading, error, product, reviewSend } = products;
+
+  const user = useSelector((state) => state.user);
+  const userInfo = user;
 
   //chakra
   const buttonBg = mode("gray.300");
@@ -64,7 +79,26 @@ const ProductScreen = () => {
 
   useEffect(() => {
     dispatch(getProduct(brand, id));
-  }, [dispatch, brand, id]);
+    if (reviewSend) {
+      toast({
+        description: "Review saved",
+        status: "success",
+        isClosable: true,
+      });
+      dispatch(resetProductError());
+      setReviewBoxOpen(false);
+    }
+  }, [dispatch, brand, id, reviewSend]);
+
+  const hasUserReviewed = () => {
+    product.reviews.some((item) => item.user === userInfo._id);
+  };
+
+  const onSubmit = () => {
+    dispatch(
+      createProductReview(product._id, userInfo._id, comment, rating, title)
+    );
+  };
 
   if (product) {
     const { brand, name, image, price, description, stock, reviews } = product;
@@ -224,6 +258,105 @@ const ProductScreen = () => {
                     </Button>
                   </Box>
                 </Flex>
+                <Flex>
+                  {userInfo && (
+                    <>
+                      <Tooltip
+                        label={
+                          hasUserReviewed()
+                            ? "You already reviewed this product "
+                            : ""
+                        }
+                        fontSize="md"
+                      >
+                        <Button
+                          isDisabled={hasUserReviewed()}
+                          w="140px"
+                          onClick={() => setReviewBoxOpen(!reviewBoxOpen)}
+                        >
+                          Write a review
+                        </Button>
+                      </Tooltip>
+                      {reviewBoxOpen && (
+                        <Flex>
+                          <Wrap>
+                            <Flex>
+                              <Button
+                                variant="outline"
+                                onClick={() => setRating(1)}
+                              >
+                                <StarIcon color="orange.500" />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                onClick={() => setRating(2)}
+                              >
+                                <StarIcon
+                                  color={
+                                    rating >= 2 ? "orange.500" : "gray.200"
+                                  }
+                                />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                onClick={() => setRating(3)}
+                              >
+                                <StarIcon
+                                  color={
+                                    rating >= 3 ? "orange.500" : "gray.200"
+                                  }
+                                />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                onClick={() => setRating(4)}
+                              >
+                                <StarIcon
+                                  color={
+                                    rating >= 4 ? "orange.500" : "gray.200"
+                                  }
+                                />
+                              </Button>
+                              <Button
+                                variant="outline"
+                                onClick={() => setRating(5)}
+                              >
+                                <StarIcon
+                                  color={
+                                    rating >= 5 ? "orange.500" : "gray.200"
+                                  }
+                                />
+                              </Button>
+                            </Flex>
+                          </Wrap>
+                          <Input
+                            onChange={(event) => setTitle(event.target.value)}
+                            placeholder="Review title (optional)"
+                          />
+                          <Flex>
+                            <Textarea
+                              onChange={(event) =>
+                                setComment(event.target.value)
+                              }
+                              placeholder={`The ${product.name} is...`}
+                            />
+                          </Flex>
+                          <Button w="140px" onClick={() => onSubmit()}>
+                            Publish review
+                          </Button>
+                        </Flex>
+                      )}
+                    </>
+                  )}
+                </Flex>
+                <Text
+                  fontWeight="bold"
+                  textTransform="uppercase"
+                  textAlign="center"
+                  mt="10px"
+                >
+                  reviews
+                </Text>
               </Flex>
 
               {/* RIGHT DIV */}
