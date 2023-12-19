@@ -48,6 +48,7 @@ const ProductScreen = () => {
 
   const user = useSelector((state) => state.user);
   const userInfo = user;
+  console.log(userInfo);
 
   //chakra
   const buttonBg = mode("gray.300");
@@ -271,8 +272,9 @@ const ProductScreen = () => {
                   justifyContent="center"
                   direction="column"
                   alignItems="center"
+                  mb="30px"
                 >
-                  {userInfo && (
+                  {userInfo.userInfo ? (
                     <>
                       <Tooltip
                         label={
@@ -286,6 +288,7 @@ const ProductScreen = () => {
                           isDisabled={hasUserReviewed()}
                           w="140px"
                           onClick={() => setReviewBoxOpen(!reviewBoxOpen)}
+                          mt="50px"
                         >
                           Write a review
                         </Button>
@@ -343,7 +346,7 @@ const ProductScreen = () => {
                             onChange={(event) => setTitle(event.target.value)}
                             placeholder="Review title (optional)"
                           />
-                          <Flex>
+                          <Flex w="100%">
                             <Textarea
                               onChange={(event) =>
                                 setComment(event.target.value)
@@ -357,55 +360,85 @@ const ProductScreen = () => {
                         </Flex>
                       )}
                     </>
+                  ) : (
+                    <Text>Log in or create an account to leave a review</Text>
                   )}
                 </Flex>
-                <Text
-                  fontWeight="bold"
-                  textTransform="uppercase"
-                  textAlign="center"
-                  mt="10px"
-                >
-                  reviews
-                </Text>
-                <Text>
-                  {product.reviews.length === 0
-                    ? "There are no reviews for this product yet"
-                    : product.reviews.map((review) => (
-                        <Box key={review._id}>
-                          <Flex spacing="2px" alignItems="center">
-                            <StarIcon color="orange.500" />
-                            <StarIcon
-                              color={
-                                review.rating >= 2 ? "orange.500" : "gray.200"
-                              }
-                            />
-                            <StarIcon
-                              color={
-                                review.rating >= 3 ? "orange.500" : "gray.200"
-                              }
-                            />
-                            <StarIcon
-                              color={
-                                review.rating >= 4 ? "orange.500" : "gray.200"
-                              }
-                            />
-                            <StarIcon
-                              color={
-                                review.rating >= 5 ? "orange.500" : "gray.200"
-                              }
-                            />
-                            <Text fontWeight="semibold" ml="4px">
-                              {review.title && review.title}
-                            </Text>
-                          </Flex>
-                          <Box py="12px">{review.comment}</Box>
-                          <Text fontSize="sm" color="gray.400">
-                            by {review.name},{" "}
-                            {new Date(review.createdAt).toDateString()}
-                          </Text>
-                        </Box>
-                      ))}
-                </Text>
+
+                {/* Existing reviews */}
+                <Box>
+                  <Text
+                    fontWeight="bold"
+                    textTransform="uppercase"
+                    textAlign="center"
+                    my="5px"
+                    pb="10px"
+                    borderBottom="2px solid black"
+                  >
+                    reviews
+                  </Text>
+                  <Flex
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Box my="30px" py="5px" w={{ base: "100%", lg: "800px" }}>
+                      {product.reviews.length === 0
+                        ? "There are no reviews for this product yet"
+                        : product.reviews.map((review) => (
+                            <Flex
+                              direction="column"
+                              key={review._id}
+                              px="30px"
+                              py="10px"
+                            >
+                              <Flex spacing="2px">
+                                <StarIcon color="orange.500" />
+                                <StarIcon
+                                  color={
+                                    review.rating >= 2
+                                      ? "orange.500"
+                                      : "gray.200"
+                                  }
+                                />
+                                <StarIcon
+                                  color={
+                                    review.rating >= 3
+                                      ? "orange.500"
+                                      : "gray.200"
+                                  }
+                                />
+                                <StarIcon
+                                  color={
+                                    review.rating >= 4
+                                      ? "orange.500"
+                                      : "gray.200"
+                                  }
+                                />
+                                <StarIcon
+                                  color={
+                                    review.rating >= 5
+                                      ? "orange.500"
+                                      : "gray.200"
+                                  }
+                                />
+
+                                <Text fontSize="sm" ml="3px">
+                                  by {review.name}
+                                </Text>
+                              </Flex>
+                              <Text fontSize="sm">
+                                {new Date(review.createdAt).toDateString()}
+                              </Text>
+                              <Text fontWeight="semibold">
+                                {review.title && review.title}
+                              </Text>
+                              <Box py="3px">{review.comment}</Box>
+                            </Flex>
+                          ))}
+                    </Box>
+                  </Flex>
+                </Box>
               </Flex>
 
               {/* RIGHT DIV */}

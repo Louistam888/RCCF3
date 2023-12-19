@@ -36,7 +36,7 @@ const AdminConsoleScreen = () => {
   const { userInfo } = user;
   const location = useLocation();
 
-  return userInfo && userInfo.isAdmin === "true" ? (
+  return userInfo && userInfo.isAdmin === true ? (
     <Box px="20px" pb="20px" pt="90px">
       <Stack
         direction={{ base: "column", lg: "row" }}
@@ -78,7 +78,8 @@ const AdminConsoleScreen = () => {
       </Stack>
     </Box>
   ) : (
-    <Navigate to="/login" replace={true} state={{ from: location }} />
+    // <Navigate to="/login" replace={true} state={{ from: location }} />
+    null
   );
 };
 
