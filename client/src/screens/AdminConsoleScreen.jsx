@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import UsersTab from "../components/UsersTab";
 import BrandsTab from "../components/BrandsTab";
 import ProductsTab from "../components/ProductsTab";
+import ReviewsTab from "../components/ReviewsTab";
 
 export const convertImage = (uploadedFile, setterFunction, toast) => {
   const file = uploadedFile.files[0];
@@ -35,7 +36,7 @@ const AdminConsoleScreen = () => {
   const { userInfo } = user;
   const location = useLocation();
 
-  return userInfo && userInfo.isAdmin === "true" ? (
+  return userInfo && userInfo.isAdmin === true ? (
     <Box px="20px" pb="20px" pt="90px">
       <Stack
         direction={{ base: "column", lg: "row" }}
@@ -68,13 +69,17 @@ const AdminConsoleScreen = () => {
               <TabPanel>
                 <ProductsTab />
               </TabPanel>
+              <TabPanel>
+                <ReviewsTab />
+              </TabPanel>
             </TabPanels>
           </Tabs>
         </Stack>
       </Stack>
     </Box>
   ) : (
-    <Navigate to="/login" replace={true} state={{ from: location }} />
+    // <Navigate to="/login" replace={true} state={{ from: location }} />
+    null
   );
 };
 

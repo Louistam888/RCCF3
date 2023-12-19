@@ -10,25 +10,35 @@ import {
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { setProductUpdateFlag } from "../redux/slices/products";
-import { deleteProduct, deleteBrand } from "../redux/actions/adminActions";
+import {
+  deleteProduct,
+  deleteBrand,
+  deleteUser,
+} from "../redux/actions/adminActions";
+
 import { setBrandUpdateFlag } from "../redux/slices/brands";
 
-const ConfirmRemovalAlert = ({ isOpen, onClose, cancelRef, itemToDelete, itemType }) => {
-
+const ConfirmRemovalAlert = ({
+  isOpen,
+  onClose,
+  cancelRef,
+  itemToDelete,
+  itemType,
+}) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const onDeleteItem = () => {
-
     if (itemType === "product") {
       dispatch(deleteProduct(itemToDelete._id, toast)); // delete action is deleteproduct in redux passed as prop from productTableItem
       dispatch(setProductUpdateFlag());
       // dispatches change of redux state flag for product update to true as it is in child component
       onClose();
     } else if (itemType === "brand") {
-
       dispatch(deleteBrand(itemToDelete._id, toast));
-      dispatch(setBrandUpdateFlag(true))
-      onClose()
+      dispatch(setBrandUpdateFlag(true));
+      onClose();
+    } else if (itemType === "user") {
+      dispatch(deleteUser(itemToDelete._id));
     }
   };
   return (

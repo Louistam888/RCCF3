@@ -60,9 +60,9 @@ const ProductsScreen = () => {
   const chairArray = sortByNew(products);
 
   return (
-    <Box pt="90px">
+    <Box >
       {loading ? (
-        <Flex w="100%" h="calc(100vh - 90px)" justifyContent="center" alignItems="center">
+        <Flex w="100%" h="calc(100vh - 90px)" justifyContent="center" alignItems="center" pt="90px">
           <Spinner
             mt="50px"
             thickness="20px"
@@ -77,7 +77,7 @@ const ProductsScreen = () => {
           <PageNotFound error={error} />
         </>
       ) : (
-        <Box>
+        <Box pt="90px">
           <Flex
             h={{ base: "180px", md: "250px" }}
             overflow="hidden"

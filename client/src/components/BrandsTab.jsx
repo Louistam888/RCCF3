@@ -65,8 +65,6 @@ const BrandsTab = () => {
     //need additional condition for if there are no products
   }, [brands.length]);
 
-  console.log(sortedBrandsArray);
-
   useEffect(() => {
     dispatch(getBrands());
     dispatch(resetBrandError());

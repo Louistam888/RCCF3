@@ -23,7 +23,6 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllUsers,
-  deleteUser,
   resetErrorAndRemoval,
 } from "../redux/actions/adminActions";
 import ConfirmRemovalAlert from "./ConfirmRemovalAlert";
@@ -40,6 +39,7 @@ const UsersTab = () => {
   const user = useSelector((state) => state.user);
   const { error, loading, userRemoval, userList } = admin;
   const { userInfo } = user;
+
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -105,15 +105,15 @@ const UsersTab = () => {
                       <Td>{user.email}</Td>
                       <Td>{new Date(user.createdAt).toDateString()}</Td>
                       <Td>
-                        {user.isAdmin === true ? <CheckCircleIcon /> : ""}{" "}
+                        {user.isAdmin === true ? <CheckCircleIcon /> : null}
                       </Td>
                       <Td>
                         <Button
-                          disabled={user._id === userInfo._id}
+                          isDisabled={user._id === userInfo._id}
                           variant="outline"
                           onClick={() => openDeleteConfirmBox(user)}
                         >
-                          <DeleteIcon mr="5px" /> Delete User
+                          <DeleteIcon mr="5px" /> Delete User 
                         </Button>
                       </Td>
                     </Tr>
@@ -127,7 +127,7 @@ const UsersTab = () => {
             onClose={onClose}
             cancelRef={cancelRef}
             itemToDelete={userToDelete}
-            deleteAction={deleteUser}
+            itemType={"user"}
           />
         </Box>
       )}

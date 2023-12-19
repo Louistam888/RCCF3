@@ -13,6 +13,8 @@ import {
   useColorModeValue as mode,
   useColorMode,
   useToast,
+  Wrap,
+  Input,
 } from "@chakra-ui/react";
 // import { getProduct } from "../redux/actions/productActions.js";
 import PageNotFound from "./PageNotFound";
@@ -23,16 +25,30 @@ import { getProduct } from "../redux/actions/productActions.js";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { addCartItem } from "../redux/actions/cartActions";
+import {
+  createProductReview,
+  resetProductError,
+} from "../redux/actions/productActions";
+import { StarIcon } from "@chakra-ui/icons";
 
 const ProductScreen = () => {
+  let { brand, id } = useParams();
+
   //state for add quantity
   const [amount, setAmount] = useState(1);
+  const [comment, setComment] = useState("");
+  const [rating, setRating] = useState(1);
+  const [title, setTitle] = useState("");
+  const [reviewBoxOpen, setReviewBoxOpen] = useState(false);
 
   //redux
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
-  const { loading, error, product } = products;
-  let { brand, id } = useParams();
+  const { loading, error, product, reviewSend } = products;
+
+  const user = useSelector((state) => state.user);
+  const userInfo = user;
+  console.log(userInfo);
 
   //chakra
   const buttonBg = mode("gray.300");
@@ -64,7 +80,33 @@ const ProductScreen = () => {
 
   useEffect(() => {
     dispatch(getProduct(brand, id));
-  }, [dispatch, brand, id]);
+    if (reviewSend) {
+      toast({
+        description: "Review saved",
+        status: "success",
+        isClosable: true,
+      });
+      dispatch(resetProductError());
+      setReviewBoxOpen(false);
+    }
+  }, [dispatch, brand, id, reviewSend]);
+
+  const hasUserReviewed = () => {
+    product.reviews.some((item) => item.user === userInfo.userInfo._id);
+  };
+
+  const onSubmit = () => {
+    dispatch(
+      createProductReview(
+        product._id,
+        userInfo.userInfo._id,
+        comment,
+        rating,
+        title,
+        brand
+      )
+    );
+  };
 
   if (product) {
     const { brand, name, image, price, description, stock, reviews } = product;
@@ -224,6 +266,179 @@ const ProductScreen = () => {
                     </Button>
                   </Box>
                 </Flex>
+
+                {/* REVIEW SECTION */}
+                <Flex
+                  justifyContent="center"
+                  direction="column"
+                  alignItems="center"
+                  mb="30px"
+                >
+                  {userInfo.userInfo ? (
+                    <>
+                      <Tooltip
+                        label={
+                          hasUserReviewed()
+                            ? "You already reviewed this product "
+                            : ""
+                        }
+                        fontSize="md"
+                      >
+                        <Button
+                          isDisabled={hasUserReviewed()}
+                          w="140px"
+                          onClick={() => setReviewBoxOpen(!reviewBoxOpen)}
+                          mt="50px"
+                        >
+                          Write a review
+                        </Button>
+                      </Tooltip>
+                      {reviewBoxOpen && (
+                        <Flex
+                          border="2px solid black"
+                          direction="column"
+                          w="100%"
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          <Flex>
+                            <Button
+                              variant="outline"
+                              onClick={() => setRating(1)}
+                            >
+                              <StarIcon color="orange.500" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={() => setRating(2)}
+                            >
+                              <StarIcon
+                                color={rating >= 2 ? "orange.500" : "gray.200"}
+                              />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={() => setRating(3)}
+                            >
+                              <StarIcon
+                                color={rating >= 3 ? "orange.500" : "gray.200"}
+                              />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={() => setRating(4)}
+                            >
+                              <StarIcon
+                                color={rating >= 4 ? "orange.500" : "gray.200"}
+                              />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={() => setRating(5)}
+                            >
+                              <StarIcon
+                                color={rating >= 5 ? "orange.500" : "gray.200"}
+                              />
+                            </Button>
+                          </Flex>
+
+                          <Input
+                            onChange={(event) => setTitle(event.target.value)}
+                            placeholder="Review title (optional)"
+                          />
+                          <Flex w="100%">
+                            <Textarea
+                              onChange={(event) =>
+                                setComment(event.target.value)
+                              }
+                              placeholder={`The ${product.name} is...`}
+                            />
+                          </Flex>
+                          <Button w="140px" onClick={() => onSubmit()}>
+                            Publish review
+                          </Button>
+                        </Flex>
+                      )}
+                    </>
+                  ) : (
+                    <Text>Log in or create an account to leave a review</Text>
+                  )}
+                </Flex>
+
+                {/* Existing reviews */}
+                <Box>
+                  <Text
+                    fontWeight="bold"
+                    textTransform="uppercase"
+                    textAlign="center"
+                    my="5px"
+                    pb="10px"
+                    borderBottom="2px solid black"
+                  >
+                    reviews
+                  </Text>
+                  <Flex
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Box my="30px" py="5px" w={{ base: "100%", lg: "800px" }}>
+                      {product.reviews.length === 0
+                        ? "There are no reviews for this product yet"
+                        : product.reviews.map((review) => (
+                            <Flex
+                              direction="column"
+                              key={review._id}
+                              px="30px"
+                              py="10px"
+                            >
+                              <Flex spacing="2px">
+                                <StarIcon color="orange.500" />
+                                <StarIcon
+                                  color={
+                                    review.rating >= 2
+                                      ? "orange.500"
+                                      : "gray.200"
+                                  }
+                                />
+                                <StarIcon
+                                  color={
+                                    review.rating >= 3
+                                      ? "orange.500"
+                                      : "gray.200"
+                                  }
+                                />
+                                <StarIcon
+                                  color={
+                                    review.rating >= 4
+                                      ? "orange.500"
+                                      : "gray.200"
+                                  }
+                                />
+                                <StarIcon
+                                  color={
+                                    review.rating >= 5
+                                      ? "orange.500"
+                                      : "gray.200"
+                                  }
+                                />
+
+                                <Text fontSize="sm" ml="3px">
+                                  by {review.name}
+                                </Text>
+                              </Flex>
+                              <Text fontSize="sm">
+                                {new Date(review.createdAt).toDateString()}
+                              </Text>
+                              <Text fontWeight="semibold">
+                                {review.title && review.title}
+                              </Text>
+                              <Box py="3px">{review.comment}</Box>
+                            </Flex>
+                          ))}
+                    </Box>
+                  </Flex>
+                </Box>
               </Flex>
 
               {/* RIGHT DIV */}

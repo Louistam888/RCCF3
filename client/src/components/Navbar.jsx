@@ -51,6 +51,7 @@ const Navbar = () => {
   //redux
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
+
   const dispatch = useDispatch();
 
   //chakra
@@ -219,7 +220,7 @@ const Navbar = () => {
                     <CgProfile />
                     <Text ml="2">Orders</Text>
                   </MenuItem>
-                  {userInfo.isAdmin === "true" && (
+                  {userInfo.isAdmin === true && (
                     <>
                       <MenuDivider />
                       <MenuItem as={ReactLink} to={"/adminConsole"}>
