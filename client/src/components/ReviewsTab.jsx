@@ -60,10 +60,6 @@ const ReviewsTab = () => {
     dispatch(removeReview(productId, reviewId, index));
   };
 
-  // if (products && products.length > 0 ) {
-
-  //   console.log(products[1].reviews[0]._id)
-  // }
   return (
     <Box>
       {error && (

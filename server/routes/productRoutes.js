@@ -1,6 +1,7 @@
 import express from "express";
 import Product from "../models/Product.js";
 import asyncHandler from "express-async-handler";
+import User from "../models/User.js";
 import { protectRoute, admin } from "../middleWare/authMiddleWare.js";
 
 const productRoutes = express.Router();
@@ -17,8 +18,6 @@ const getProducts = async (req, res) => {
   } else {
     products = await Product.find({});
   }
-
-  //need condition in here to display all brands if adminconsole.
 
   if (products.length === 0) {
     return res.status(404).json({ error: "No results for this brand." });
@@ -144,32 +143,49 @@ const updateProduct = asyncHandler(async (req, res) => {
   }
 });
 
-// remove reviews
-// const removeProductReview = asyncHandler(async (req, res) => {
-//   const product = await Product.findById(req.params.productId);
-//   const updatedReviews = product.reviews.filter(
-//     (rev) => rev._id.valueOf() !== req.params.reviewId
-//   ); //return all reviews that don't match
+//create reviews
+const createProductReview = asyncHandler(async (req, res) => {
+  const { rating, comment, userId, title } = req.body;
+  const { brand, productId } = req.params; 
 
-//   if (product) {
-//     product.reviews = updatedReviews;
-//     product.numberOfReviews = product.reviews.length; //find average of all reviews
+  const product = await Product.findOne({ brand, _id: productId });
 
-//     if (product.numberOfReviews > 0) {
-//       product.rating = product.reviews.reduce(
-//         (acc, item) => item.rating + acc,
-//         0
-//       );
-//     } else {
-//       product.rating = 1; // if there are not reviews
-//     }
-//     await product.save();
-//     res.status(201).json({ message: "Review remvoved" });
-//   } else {
-//     res.status(404);
-//     throw new Error("Product not found");
-//   }
-// });
+  const user = await User.findById(userId);
+
+
+  if (product) {
+    const alreadyReviewed = product.reviews.find(
+      (rev) => rev.user.toString() === user._id.toString()
+    );
+
+    if (alreadyReviewed) {
+      res.status(400);
+      throw new Error("Product already reviewed.");
+    }
+
+    const review = {
+      name: user.firstName + " " + user.lastName,
+      rating: Number(rating),
+      comment,
+      title,
+      user: user._id,
+    };
+
+    product.reviews.push(review);
+
+    product.numberOfReviews = product.reviews.length;
+    product.rating =
+      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+      product.reviews.length;
+    await product.save();
+    res.status(201).json({ message: "Review has been saved." });
+  } else {
+    res.status(404);
+    throw new Error("Product not found.");
+  }
+});
+
+//remove reviews
 
 const removeProductReview = asyncHandler(async (req, res) => {
   try {
@@ -177,29 +193,33 @@ const removeProductReview = asyncHandler(async (req, res) => {
     const reviewId = req.params.reviewId;
 
     const product = await Product.findById(productId);
-    console.log('Retrieved product:', product);
-
+    
     if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+      return res.status(404).json({ error: "Product not found" });
     }
 
-    const updatedReviews = product.reviews.filter((rev) => rev._id.valueOf() !== reviewId);
+    const updatedReviews = product.reviews.filter(
+      (rev) => rev._id.valueOf() !== reviewId
+    );
 
     // Update the product with the filtered reviews
     product.reviews = updatedReviews;
     product.numberOfReviews = product.reviews.length;
 
     if (product.numberOfReviews > 0) {
-      product.rating = product.reviews.reduce((acc, item) => item.rating + acc, 0);
+      product.rating = product.reviews.reduce(
+        (acc, item) => item.rating + acc,
+        0
+      );
     } else {
       product.rating = 1;
     }
 
     await product.save();
 
-    res.status(201).json({ message: 'Review removed' });
+    res.status(201).json({ message: "Review removed" });
   } catch (error) {
-    res.status(500).json({ error: 'An unexpected error occurred' });
+    res.status(500).json({ error: "An unexpected error occurred" });
   }
 });
 
@@ -213,6 +233,9 @@ productRoutes.route("/").put(protectRoute, admin, updateProduct);
 productRoutes.route("/:id").delete(protectRoute, admin, deleteProduct);
 //may need to redo
 productRoutes.route("/").post(protectRoute, admin, createNewProduct);
+productRoutes
+  .route("/reviews/:brand/:productId")
+  .post(protectRoute, admin, createProductReview);
 productRoutes
   .route("/:productId/:reviewId")
   .put(protectRoute, admin, removeProductReview);

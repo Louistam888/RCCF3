@@ -14,7 +14,7 @@ import {
   useColorMode,
   useToast,
   Wrap,
-  Input
+  Input,
 } from "@chakra-ui/react";
 // import { getProduct } from "../redux/actions/productActions.js";
 import PageNotFound from "./PageNotFound";
@@ -48,6 +48,7 @@ const ProductScreen = () => {
 
   const user = useSelector((state) => state.user);
   const userInfo = user;
+ 
 
   //chakra
   const buttonBg = mode("gray.300");
@@ -91,12 +92,12 @@ const ProductScreen = () => {
   }, [dispatch, brand, id, reviewSend]);
 
   const hasUserReviewed = () => {
-    product.reviews.some((item) => item.user === userInfo._id);
+    product.reviews.some((item) => item.user === userInfo.userInfo._id);
   };
 
   const onSubmit = () => {
     dispatch(
-      createProductReview(product._id, userInfo._id, comment, rating, title)
+      createProductReview(product._id, userInfo.userInfo._id, comment, rating, title, brand)
     );
   };
 
@@ -258,7 +259,13 @@ const ProductScreen = () => {
                     </Button>
                   </Box>
                 </Flex>
-                <Flex>
+
+                {/* REVIEW SECTION */}
+                <Flex
+                  justifyContent="center"
+                  direction="column"
+                  alignItems="center"
+                >
                   {userInfo && (
                     <>
                       <Tooltip
@@ -278,57 +285,54 @@ const ProductScreen = () => {
                         </Button>
                       </Tooltip>
                       {reviewBoxOpen && (
-                        <Flex>
-                          <Wrap>
-                            <Flex>
-                              <Button
-                                variant="outline"
-                                onClick={() => setRating(1)}
-                              >
-                                <StarIcon color="orange.500" />
-                              </Button>
-                              <Button
-                                variant="outline"
-                                onClick={() => setRating(2)}
-                              >
-                                <StarIcon
-                                  color={
-                                    rating >= 2 ? "orange.500" : "gray.200"
-                                  }
-                                />
-                              </Button>
-                              <Button
-                                variant="outline"
-                                onClick={() => setRating(3)}
-                              >
-                                <StarIcon
-                                  color={
-                                    rating >= 3 ? "orange.500" : "gray.200"
-                                  }
-                                />
-                              </Button>
-                              <Button
-                                variant="outline"
-                                onClick={() => setRating(4)}
-                              >
-                                <StarIcon
-                                  color={
-                                    rating >= 4 ? "orange.500" : "gray.200"
-                                  }
-                                />
-                              </Button>
-                              <Button
-                                variant="outline"
-                                onClick={() => setRating(5)}
-                              >
-                                <StarIcon
-                                  color={
-                                    rating >= 5 ? "orange.500" : "gray.200"
-                                  }
-                                />
-                              </Button>
-                            </Flex>
-                          </Wrap>
+                        <Flex
+                          border="2px solid black"
+                          direction="column"
+                          w="100%"
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          <Flex>
+                            <Button
+                              variant="outline"
+                              onClick={() => setRating(1)}
+                            >
+                              <StarIcon color="orange.500" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={() => setRating(2)}
+                            >
+                              <StarIcon
+                                color={rating >= 2 ? "orange.500" : "gray.200"}
+                              />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={() => setRating(3)}
+                            >
+                              <StarIcon
+                                color={rating >= 3 ? "orange.500" : "gray.200"}
+                              />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={() => setRating(4)}
+                            >
+                              <StarIcon
+                                color={rating >= 4 ? "orange.500" : "gray.200"}
+                              />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={() => setRating(5)}
+                            >
+                              <StarIcon
+                                color={rating >= 5 ? "orange.500" : "gray.200"}
+                              />
+                            </Button>
+                          </Flex>
+
                           <Input
                             onChange={(event) => setTitle(event.target.value)}
                             placeholder="Review title (optional)"
