@@ -48,7 +48,6 @@ const ProductScreen = () => {
 
   const user = useSelector((state) => state.user);
   const userInfo = user;
- 
 
   //chakra
   const buttonBg = mode("gray.300");
@@ -97,7 +96,14 @@ const ProductScreen = () => {
 
   const onSubmit = () => {
     dispatch(
-      createProductReview(product._id, userInfo.userInfo._id, comment, rating, title, brand)
+      createProductReview(
+        product._id,
+        userInfo.userInfo._id,
+        comment,
+        rating,
+        title,
+        brand
+      )
     );
   };
 
@@ -360,6 +366,45 @@ const ProductScreen = () => {
                   mt="10px"
                 >
                   reviews
+                </Text>
+                <Text>
+                  {product.reviews.length === 0
+                    ? "There are no reviews for this product yet"
+                    : product.reviews.map((review) => (
+                        <Box key={review._id}>
+                          <Flex spacing="2px" alignItems="center">
+                            <StarIcon color="orange.500" />
+                            <StarIcon
+                              color={
+                                review.rating >= 2 ? "orange.500" : "gray.200"
+                              }
+                            />
+                            <StarIcon
+                              color={
+                                review.rating >= 3 ? "orange.500" : "gray.200"
+                              }
+                            />
+                            <StarIcon
+                              color={
+                                review.rating >= 4 ? "orange.500" : "gray.200"
+                              }
+                            />
+                            <StarIcon
+                              color={
+                                review.rating >= 5 ? "orange.500" : "gray.200"
+                              }
+                            />
+                            <Text fontWeight="semibold" ml="4px">
+                              {review.title && review.title}
+                            </Text>
+                          </Flex>
+                          <Box py="12px">{review.comment}</Box>
+                          <Text fontSize="sm" color="gray.400">
+                            by {review.name},{" "}
+                            {new Date(review.createdAt).toDateString()}
+                          </Text>
+                        </Box>
+                      ))}
                 </Text>
               </Flex>
 
