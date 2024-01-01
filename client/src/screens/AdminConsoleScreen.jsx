@@ -14,6 +14,7 @@ import UsersTab from "../components/UsersTab";
 import BrandsTab from "../components/BrandsTab";
 import ProductsTab from "../components/ProductsTab";
 import ReviewsTab from "../components/ReviewsTab";
+import OrdersTab from "../components/Orders.Tab";
 
 export const convertImage = (uploadedFile, setterFunction, toast) => {
   const file = uploadedFile.files[0];
@@ -71,6 +72,9 @@ const AdminConsoleScreen = () => {
               </TabPanel>
               <TabPanel>
                 <ReviewsTab />
+              </TabPanel>
+              <TabPanel>
+                <OrdersTab />
               </TabPanel>
             </TabPanels>
           </Tabs>

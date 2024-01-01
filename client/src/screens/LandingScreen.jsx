@@ -1,4 +1,4 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import StatsCounter from "../components/StatsCounter";
 
 const LandingScreen = () => {
@@ -49,6 +49,38 @@ const LandingScreen = () => {
       <Flex>
         <StatsCounter />
       </Flex>
+
+      {/* INTRO SECTION */}
+      <Box mx="30px" mt="20px">
+        <Heading textTransform="uppercase" textAlign="center" lineHeight="30px" fontWeight="semibold">
+          We carry the best brands in canada
+        </Heading>
+        <Text mt="10px" fontSize="xl">
+          Your back should hurt from carrying your team. Not from sitting. An
+          ergonomically-designed professional gaming chair will do wonders for
+          your neck and back as you lead your clan to victory. Whether you are a
+          professional or semi-professional gamer, we've got a chair to take
+          your raids to the next level!
+        </Text>
+      </Box>
+
+
+      {/* DELIVERY SECTION */}
+
+      <Box mx="30px" mt="20px">
+        <Heading textTransform="uppercase" textAlign="center" lineHeight="30px" fontWeight="semibold">
+          We carry the best brands in canada
+        </Heading>
+        <Text mt="10px" fontSize="xl">
+          Your back should hurt from carrying your team. Not from sitting. An
+          ergonomically-designed professional gaming chair will do wonders for
+          your neck and back as you lead your clan to victory. Whether you are a
+          professional or semi-professional gamer, we've got a chair to take
+          your raids to the next level!
+        </Text>
+      </Box>
+      
+
     </Box>
   );
 };
