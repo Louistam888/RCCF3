@@ -71,7 +71,7 @@ const LandingScreen = () => {
 
       {/* DELIVERY SECTION */}
 
-      <Box mx="30px" my="50px">
+      <Box mx={{ base: "0", lg: "30px" }} my="50px">
         <Flex
           direction={{ base: "column", lg: "row" }}
           alignItems="center"
@@ -92,12 +92,19 @@ const LandingScreen = () => {
             display={{ base: "none", lg: "block" }}
           ></Box>
 
-          <Box w={{ base: "100%", lg: "50%" }} mr={{ base: 0, lg: "30px" }}>
+          <Flex
+            w={{ base: "100%", lg: "50%" }}
+            mr={{ base: 0, lg: "30px" }}
+            p={{ base: "30px", lg: "0" }}
+            direction="column"
+            justifyContent="center"
+          >
             <Heading
               textTransform="uppercase"
               lineHeight="30px"
               fontWeight="semibold"
-              textAlign="left"
+              textAlign={{ base: "center", lg: "left" }}
+              mb="10px"
             >
               We offer free delivery!
             </Heading>
@@ -109,7 +116,7 @@ const LandingScreen = () => {
               are logging in from. Let us take care of all the heavy lifting.
               You just focus on practicing those "360 no scopes."
             </Text>
-          </Box>
+          </Flex>
         </Flex>
       </Box>
     </Box>
