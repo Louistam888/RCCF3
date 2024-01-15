@@ -191,7 +191,6 @@ const Navbar = () => {
               alignSelf="center"
             />
           </Flex>
-
           {userInfo ? (
             <>
               <Menu

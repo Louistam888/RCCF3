@@ -6,7 +6,7 @@ import ScrollTrigger from "react-scroll-trigger";
 const StatsCounter = () => {
   const [counterOn, setCounterOn] = useState(false);
   return (
-    <Flex px={10} w="100%" justifyContent="center" textAlign="center" py="30px" backgroundColor="blackAlpha.500">
+    <Flex px={10} w="100%" justifyContent="center" textAlign="center" py="30px" >
       <ScrollTrigger onEnter={() => setCounterOn(true)} onExit={() => setCounterOn(false)}>
         <Flex justifyContent="center" alignItems="center" w="100vw" flexDirection={{ base: "column", sm: "row" }}>
           <Flex

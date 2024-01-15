@@ -4,7 +4,7 @@ import { FaInstagram, FaFacebook, FaYoutube } from "react-icons/fa";
 const Footer = () => {
  
   return (
-    <Box px={{ base: "5px", sm: "10px" }} ml="30px" mr="30px" mt="20px" mb="30px">
+    <Box px={{ base: "5px", sm: "10px" }} mx="30px" mt="20px" mb="30px">
       <hr />
       <Flex
         flexDirection={{ base: "column", md: "row" }}
