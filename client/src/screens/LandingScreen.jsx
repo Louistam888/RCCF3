@@ -122,7 +122,20 @@ const LandingScreen = () => {
       </Box>
 
       {/* EMAIL CONTACT FORM */}
-      <Email />
+      <Flex direction="column" mx="30px" my="50px">
+        <Heading
+          textTransform="uppercase"
+          lineHeight="30px"
+          fontWeight="semibold"
+          textAlign="center"
+          mb="10px"
+          justifyContent="center"
+          alignItems="center"
+        >
+          contact us
+        </Heading>
+        <Email />
+      </Flex>
     </Box>
   );
 };

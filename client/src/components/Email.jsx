@@ -30,7 +30,7 @@ const Email = () => {
     resetForm();
   };
   return (
-    <Box p={4}>
+    <Box p="30px">
       <Formik
         initialValues={{ firstName: "", lastName: "", email: "", comments: "" }}
         validationSchema={validationSchema}
