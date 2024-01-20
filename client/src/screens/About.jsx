@@ -50,10 +50,12 @@ const About = () => {
           <Box
             h="300px"
             w={{ base: "100%", lg: "40%" }}
-            backgroundImage={`url("assets/greenchair.jpg")`}
-            backgroundCover="cover"
-            backgroundPosition="center center"
-            backgroundRepeat="no repeat"
+            style={{
+              backgroundImage: `url("assets/greenchair.jpg")`,
+              backgroundSize: "cover",
+              backgroundPosition: "center center",
+              backgroundRepeat: "no-repeat",
+            }}
           ></Box>
 
           <Flex
