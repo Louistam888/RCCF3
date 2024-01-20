@@ -14,17 +14,17 @@ connectToDatabase();
 const port = process.env.PORT || 5000;
 
 const app = express();
-app.use(express.json({
-  limit: '10mb'
-}));
-
-//email
+app.use(
+  express.json({
+    limit: "10mb",
+  })
+);
 
 //names after/api/ must match mongoDB collection names
 app.use("/api/products", productRoutes);
 app.use("/api/brands", brandRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/order", orderRoutes)
+app.use("/api/order", orderRoutes);
 
 app.use("*", (req, res) => {
   res.status(404).send("Not Found");
