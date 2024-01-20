@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
 import StatsCounter from "../components/StatsCounter";
+import Email from "../components/Email";
 
 const LandingScreen = () => {
   return (
@@ -119,6 +120,22 @@ const LandingScreen = () => {
           </Flex>
         </Flex>
       </Box>
+
+      {/* EMAIL CONTACT FORM */}
+      <Flex direction="column" mx="30px" my="50px">
+        <Heading
+          textTransform="uppercase"
+          lineHeight="30px"
+          fontWeight="semibold"
+          textAlign="center"
+          mb="10px"
+          justifyContent="center"
+          alignItems="center"
+        >
+          contact us
+        </Heading>
+        <Email />
+      </Flex>
     </Box>
   );
 };

@@ -18,6 +18,8 @@ app.use(express.json({
   limit: '10mb'
 }));
 
+//email
+
 //names after/api/ must match mongoDB collection names
 app.use("/api/products", productRoutes);
 app.use("/api/brands", brandRoutes);

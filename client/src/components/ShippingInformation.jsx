@@ -22,24 +22,25 @@ import {
 } from "../redux/actions/orderActions";
 
 const ShippingInformation = () => {
-
   //redux
   const dispatch = useDispatch();
 
   //formik
   const [formStateChanged, setFormStateChanged] = useState(false);
+  console.log("formstate", formStateChanged);
 
   const handleChange = (errors, touched, values) => {
-    
     setTimeout(() => {
-      if (Object.keys(errors).length === 0 && Object.keys(touched).length >= 2) {
-        setErrorState(false, values);
+      if (
+        Object.keys(errors).length === 0 &&
+        Object.keys(touched).length >= 2
+      ) {
+        setErrorState(false, values);   
       } else {
         setErrorState(true);
       }
     }, 100);
   };
-  
 
   const setErrorState = (errorState, data) => {
     //dispatches shipping info if the user has filled in all field with at least two characters (errorState === false),
@@ -83,7 +84,7 @@ const ShippingInformation = () => {
               formik.touched,
               formik.values
             )}
-          >
+          >        
             <TextField
               name="address"
               placeholder="Street Address"
