@@ -22,6 +22,11 @@ import CheckoutScreen from "./screens/CheckoutScreen";
 import AdminConsoleScreen from "./screens/AdminConsoleScreen";
 import OrderSuccessScreen from "./screens/OrderSuccessScreen";
 
+//publishable key is safe to expose
+// const stripePromise = loadStripe(
+//   "pk_test_51MgFTDE9bJZH5kiQuzUbJHPJ7fmQwSejIxWYh5maW6j8ACwbcLz8dSRvMBP3xYtB8EUIA5qVZDcY9ImbNU4X8qEg00DeApogPl"
+// );
+
 const App = () => {
   return (
     <ChakraProvider theme={theme}>
@@ -40,13 +45,12 @@ const App = () => {
             <Route path="/cart" element={<CartScreen />}></Route>
             <Route path="/login" element={<LoginScreen />}></Route>
             <Route path="/orderSuccess" element={<OrderSuccessScreen />} />
-
             <Route
               path="/registration"
               element={<RegistrationScreen />}
             ></Route>
             <Route path="/profile" element={<ProfileScreen />}></Route>
-            <Route path="/checkout" element={<CheckoutScreen />}></Route>
+            <Route path="/checkout" element={<CheckoutScreen />} />
             <Route
               path="/adminConsole"
               element={<AdminConsoleScreen />}
