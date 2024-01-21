@@ -57,11 +57,11 @@ const App = () => {
             <Route
               path="/checkout"
               element={
-                <Elements stripe={stripePromise}>
+                
                   <CheckoutScreen />
-                </Elements>
+               
               }
-            />{" "}
+            />
             <Route
               path="/adminConsole"
               element={<AdminConsoleScreen />}
