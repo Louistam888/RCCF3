@@ -22,7 +22,7 @@ const StatsCounter = () => {
             my={{ base: "5px", sm: "0" }}
             boxShadow="0 4px 12px rgba(0, 0, 0, 0.5)"
           >
-            <Text className="rccfRed" fontSize={{ base: "4xl", sm: "xl", md: "4xl", lg: "5xl", xl: "6xl" }}>
+            <Text color="brand.red" fontSize={{ base: "4xl", sm: "xl", md: "4xl", lg: "5xl", xl: "6xl" }}>
               {counterOn && <CountUp start={0} end={5000000} duration={2.5} delay={0} />} +
             </Text>
             <Text
@@ -50,7 +50,7 @@ const StatsCounter = () => {
             my={{ base: "5px", sm: "0" }}
             boxShadow="0 4px 12px rgba(0, 0, 0, 0.5)"
           >
-            <Text className="rccfRed" fontSize={{ base: "4xl", sm: "xl", md: "4xl", lg: "5xl", xl: "6xl" }}>
+            <Text color="brand.red" fontSize={{ base: "4xl", sm: "xl", md: "4xl", lg: "5xl", xl: "6xl" }}>
               {counterOn && <CountUp start={0} end={90} duration={2.5} delay={0} />} +
             </Text>
             <Text
