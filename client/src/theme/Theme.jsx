@@ -12,6 +12,21 @@ const theme = extendTheme({
     body: `"Roboto", "sans-serif"`,
     select: `"Roboto", "sans-serif"`,
   },
+  Button: {
+    baseStyle: {
+      fontSize: "md",
+    },
+    buttonRed: {
+      _hover: { bg: "black", color:"white" },
+      bgColor: "blue.300",
+      color: "#f2f2f2",
+    },
+    buttonBlue: {
+      _hover: { bg: "black", color:"white" },
+      bgColor: "#c2122f",
+      color: "#f2f2f2",
+    },
+  },
   styles: {
     global: (state) => ({
       hr: {
@@ -26,5 +41,5 @@ const theme = extendTheme({
 });
 
 export default theme;
-
-
+export const buttonRed = theme.Button.buttonRed;
+export const buttonBlue = theme.Button.buttonBlue;

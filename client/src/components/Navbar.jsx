@@ -33,6 +33,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/actions/userActions.js";
 import Hamburger from "./Hamburger.jsx";
+import { buttonRed, buttonBlue } from "../theme/Theme.jsx";
 
 const links = [
   { linkName: "Shop", path: "/shop" },
@@ -70,17 +71,15 @@ const Navbar = () => {
     });
   };
 
-  //function to loop through menu items 
-  const MenuItems = ({links}) => {
-    return (
-      links.map((link) => (
-        <NavLink key={link.linkName} path={link.path}>
-          <Text fontSize={{ md: "1rem", lg: "1.2rem" }}>
-            {link.linkName.toUpperCase()}
-          </Text>
-        </NavLink>
-      ))
-    )
+  //function to loop through menu items
+  const MenuItems = ({ links }) => {
+    return links.map((link) => (
+      <NavLink key={link.linkName} path={link.path}>
+        <Text fontSize={{ md: "1rem", lg: "1.2rem" }}>
+          {link.linkName.toUpperCase()}
+        </Text>
+      </NavLink>
+    ));
   };
 
   //navLink components for the menu
@@ -169,7 +168,7 @@ const Navbar = () => {
             mr={{ base: "0", lg: "5%" }}
           >
             <Flex>
-              <MenuItems links={links}/>
+              <MenuItems links={links} />
             </Flex>
           </HStack>
         </Flex>
@@ -241,14 +240,14 @@ const Navbar = () => {
               <Button
                 as={ReactLink}
                 to="/login"
-                bg={buttonBg}
+                sx={buttonBlue}
                 _hover={{ bg: hoverColor }}
                 m={{ base: "3px", lg: "5px" }}
                 fontSize={{ base: "0.7rem", md: "0.8rem", lg: "1.2rem" }}
                 w={{ base: "50px", sm: "65px", md: "100px" }}
                 display={{ base: "none", sm: "flex" }}
               >
-                <Text color={fontColorDarkLight}>Sign In</Text>
+                <Text>Sign In</Text>
               </Button>
               <Button
                 as={ReactLink}
@@ -258,9 +257,10 @@ const Navbar = () => {
                 fontSize={{ base: "0.7rem", md: "0.8rem", lg: "1.2rem" }}
                 w={{ base: "50px", sm: "65px", md: "100px" }}
                 display={{ base: "none", sm: "flex" }}
-                _hover={{ bg: hoverColor }}
+                // _hover={{ bg: hoverColor }}
+                sx={buttonRed}
               >
-                <Text color={fontColorDarkLight}> Sign Up</Text>
+                <Text> Sign Up</Text>
               </Button>
             </>
           )}
@@ -291,7 +291,7 @@ const Navbar = () => {
           onClick={onToggle}
         >
           <Stack as="nav" spacing="0" display="flex" alignItems="center">
-             <MenuItems links={links}/>
+            <MenuItems links={links} />
 
             {/* THESE ARE ONLY RENDERED IN HAMBURGER MENU BELOW 480PX VW */}
             <Box display={{ base: "relative", sm: "none" }}>
