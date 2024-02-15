@@ -22,6 +22,7 @@ import PasswordTextField from "../components/PasswordTextField";
 import TextField from "../components/TextField";
 import PageNotFound from "./PageNotFound";
 
+
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../redux/actions/userActions";
@@ -83,11 +84,7 @@ const LoginScreen = () => {
           >
             <Stack spacing="8">
               <Stack spacing="6">
-                <Stack
-                  spacing={{ base: "2", md: "3" }}
-                  textAlign="center"
-                
-                >
+                <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
                   <Heading size={{ base: "xs", md: "sm" }}>
                     Log in to your account
                   </Heading>

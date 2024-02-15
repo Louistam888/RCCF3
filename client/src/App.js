@@ -21,6 +21,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import CheckoutScreen from "./screens/CheckoutScreen";
 import AdminConsoleScreen from "./screens/AdminConsoleScreen";
 import OrderSuccessScreen from "./screens/OrderSuccessScreen";
+import FloatingContactButton from "./components/FloatingContactButton";
 
 //publishable key is safe to expose
 // const stripePromise = loadStripe(
@@ -57,6 +58,7 @@ const App = () => {
             ></Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>
+          <FloatingContactButton />
         </main>
         <Footer />
       </Router>
