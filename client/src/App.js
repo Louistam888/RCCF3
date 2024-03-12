@@ -22,6 +22,7 @@ import CheckoutScreen from "./screens/CheckoutScreen";
 import AdminConsoleScreen from "./screens/AdminConsoleScreen";
 import OrderSuccessScreen from "./screens/OrderSuccessScreen";
 import FloatingContactButton from "./components/FloatingContactButton";
+import { ScrollToTop } from "react-router-scroll-to-top";
 
 //publishable key is safe to expose
 // const stripePromise = loadStripe(
@@ -32,6 +33,7 @@ const App = () => {
   return (
     <ChakraProvider theme={theme}>
       <Router>
+        <ScrollToTop />
         <Navbar />
         <main>
           <Routes>
