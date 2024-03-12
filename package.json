@@ -18,8 +18,7 @@
   "dependencies": {
     "@fontsource-variable/roboto-flex": "^5.0.8",
     "@stripe/react-stripe-js": "^2.4.0",
-    "@stripe/stripe-js": "^2.3.0",
-  
+    "@stripe/stripe-js": "^2.3.0",  
     "babel-jest": "^26.6.0",
     "babel-loader": "^8.1.0",
     "bcrypt": "^5.1.1",
