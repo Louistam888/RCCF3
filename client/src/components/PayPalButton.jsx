@@ -98,8 +98,13 @@ const PayPalButton = ({
   
   return (
     <div style={{ maxWidth: "750px", minHeight: "200px" }}>
-      <PayPalScriptProvider
-        options={{ clientId: PAYPAL_CLIENT_ID, components: "buttons", currency: "USD" }}
+
+      {/* causing deploloyment error
+       */}
+      {/* <PayPalScriptProvider
+        options={{ clientId: 
+          PAYPAL_CLIENT_ID, 
+          components: "buttons", currency: "USD" }}
       >
         <ButtonWrapper
           showSpinner={false}
@@ -108,7 +113,7 @@ const PayPalButton = ({
           onPaymentSuccess={onPaymentSuccess}
           total={total}
         />
-      </PayPalScriptProvider>
+      </PayPalScriptProvider> */}
     </div>
   );
 };
