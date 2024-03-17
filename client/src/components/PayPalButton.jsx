@@ -34,7 +34,7 @@ const createOrder = () => {
   )
     .then((response) => response.json())
     .then((order) => {
-      // Your code here after create order
+      // Your code here after create the order
       return order.id;
     });
 };
@@ -98,13 +98,8 @@ const PayPalButton = ({
   
   return (
     <div style={{ maxWidth: "750px", minHeight: "200px" }}>
-
-      {/* causing deploloyment error
-       */}
-      {/* <PayPalScriptProvider
-        options={{ clientId: 
-          PAYPAL_CLIENT_ID, 
-          components: "buttons", currency: "USD" }}
+      <PayPalScriptProvider
+        options={{ clientId: PAYPAL_CLIENT_ID, components: "buttons", currency: "USD" }}
       >
         <ButtonWrapper
           showSpinner={false}
@@ -113,7 +108,7 @@ const PayPalButton = ({
           onPaymentSuccess={onPaymentSuccess}
           total={total}
         />
-      </PayPalScriptProvider> */}
+      </PayPalScriptProvider>
     </div>
   );
 };
