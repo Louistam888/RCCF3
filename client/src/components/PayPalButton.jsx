@@ -34,7 +34,7 @@ const createOrder = () => {
   )
     .then((response) => response.json())
     .then((order) => {
-      // Your code here after create the order
+      // Your code here after create order
       return order.id;
     });
 };
