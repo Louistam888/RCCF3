@@ -24,11 +24,6 @@ import OrderSuccessScreen from "./screens/OrderSuccessScreen";
 import FloatingContactButton from "./components/FloatingContactButton";
 import { ScrollToTop } from "react-router-scroll-to-top";
 
-//publishable key is safe to expose
-// const stripePromise = loadStripe(
-//   "pk_test_51MgFTDE9bJZH5kiQuzUbJHPJ7fmQwSejIxWYh5maW6j8ACwbcLz8dSRvMBP3xYtB8EUIA5qVZDcY9ImbNU4X8qEg00DeApogPl"
-// );
-
 const App = () => {
   return (
     <ChakraProvider theme={theme}>
