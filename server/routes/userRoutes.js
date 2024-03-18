@@ -2,7 +2,7 @@ import express from "express";
 import User from "../models/User.js";
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
-import { protectRoute, admin } from "../middleWare/authMiddleware.js";
+import { protectRoute, admin } from "../middleWare/authMiddleWare.js";
 
 const userRoutes = express.Router();
 
