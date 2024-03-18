@@ -4,7 +4,7 @@ import {
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
 import{ Stack,Spinner } from "@chakra-ui/react"
-import PAYPAL_CLIENT_ID from "../client_id"
+// import PAYPAL_CLIENT_ID from "../client_id"
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -98,7 +98,7 @@ const PayPalButton = ({
   
   return (
     <div style={{ maxWidth: "750px", minHeight: "200px" }}>
-      <PayPalScriptProvider
+      {/* <PayPalScriptProvider
         options={{ clientId: PAYPAL_CLIENT_ID, components: "buttons", currency: "USD" }}
       >
         <ButtonWrapper
@@ -108,7 +108,7 @@ const PayPalButton = ({
           onPaymentSuccess={onPaymentSuccess}
           total={total}
         />
-      </PayPalScriptProvider>
+      </PayPalScriptProvider> */}
     </div>
   );
 };
