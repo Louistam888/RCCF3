@@ -33,10 +33,6 @@ app.use("/*", (req, res) => {
   res.status(404).send("Not Found");
 });
 
-app.listen(port, () => {
-  `Server runs on port ${port}.`;
-});
-
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
@@ -47,5 +43,5 @@ if (process.env.NODE_ENV == 'production') {
 }
 
 app.listen(port, () => {
-  console.log(`Server runs on poooooort ${port}.`);
+  console.log(`Server runs on port ${port}.`);
 });
