@@ -34,7 +34,6 @@ const App = () => {
           <Routes>
             <Route path="/" element={<LandingScreen />}></Route>
             <Route path="/about" element={<About />}></Route>
-            <Route path="/*" element={<PageNotFound />} />
             <Route path="/shop" element={<Shop />}></Route>
             <Route path="/shop/*" element={<PageNotFound />} />
             <Route path="/shop/:brand" element={<ProductsScreen />}></Route>
