@@ -26,13 +26,6 @@ app.use("/api/brands", brandRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/order", orderRoutes);
 
-// app.use("*", (req, res) => {
-//   res.status(404).send("Not Found");
-// });
-// app.use("/*", (req, res) => {
-//   res.status(404).send("Not Found");
-// });
-
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
