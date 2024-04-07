@@ -4,7 +4,7 @@ import { FaInstagram, FaFacebook, FaYoutube } from "react-icons/fa";
 const Footer = () => {
  
   return (
-    <Box px={{ base: "5px", sm: "10px" }} mx="30px" mt="20px" mb="30px">
+    <Box px={{ base: "5px", sm: "10px" }} mx="100px" mt="20px" mb="30px">
       <hr />
       <Flex
         flexDirection={{ base: "column", md: "row" }}
@@ -16,7 +16,7 @@ const Footer = () => {
           alignItems={{ base: "center", md: "flex-start" }}
           fontSize={{ base: "15px", sm: "xl" }}
         >
-          <Text fontWeight="semibold">Royal Canadian Chair Force</Text>
+          <Text fontWeight="semibold" textAlign={{base:"center", md:"left"}}>Royal Canadian Chair Force</Text>
           <Text>1 Toronto St.</Text>
           <Text>416-888-8888</Text>
           <Text>
