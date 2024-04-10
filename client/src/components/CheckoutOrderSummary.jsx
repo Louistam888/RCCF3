@@ -10,7 +10,7 @@ import {
   Link,
   Button,
   useDisclosure,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,12 +19,12 @@ import { createOrder, resetOrder } from "../redux/actions/orderActions";
 import { resetCart } from "../redux/actions/cartActions";
 import { PhoneIcon, EmailIcon, ChatIcon } from "@chakra-ui/icons";
 import CheckoutItem from "./CheckoutItem";
+import { loadStripe } from "@stripe/stripe-js";
 import PayPalButton from "./PayPalButton";
 import PaymentSuccessModal from "./PaymentSuccessModal";
 import PaymentErrorModal from "./PaymentErrorModal";
 
 const CheckoutOrderSummary = () => {
-  
   //chakra
   const navigate = useNavigate();
   const toast = useToast();
@@ -40,8 +40,6 @@ const CheckoutOrderSummary = () => {
   const shippingInfo = useSelector((state) => state.order);
   const { error, shippingAddress } = shippingInfo;
 
-  //state for disabling payPal button
-  const [buttonDisabled, setButtonDisabled] = useState(false);
   const dispatch = useDispatch();
 
   const shipping = useCallback(() => {
@@ -68,7 +66,6 @@ const CheckoutOrderSummary = () => {
   );
 
   const onPaymentSuccess = async (data) => {
-  
     dispatch(
       createOrder({
         orderItems: cart,
@@ -87,7 +84,6 @@ const CheckoutOrderSummary = () => {
   };
 
   const onPaymentError = () => {
-    
     toast({
       description:
         "Something went wrong during the payment process. Please try again or make sure that your PayPal account balance is enough for this purchase.",
@@ -97,15 +93,35 @@ const CheckoutOrderSummary = () => {
     });
   };
 
-  //enables paypal button if all fields are changed, and only if there are no errors and as soon as shippingAddress in state.order is modifed with data in all
+  const makePayment = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51MgFTDE9bJZH5kiQuzUbJHPJ7fmQwSejIxWYh5maW6j8ACwbcLz8dSRvMBP3xYtB8EUIA5qVZDcY9ImbNU4X8qEg00DeApogPl"
+    );
 
-  useEffect(() => {
-    if (error === false && shippingAddress) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
+    const body = {
+      products: cart,
+    };
+
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    const response = await fetch(`${apiURL}/create-checkout-session)`, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body),
+    });
+
+    const session = await response.json();
+
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.log(result.error);
     }
-  }, [error, shippingAddress]);
+  };
 
   return (
     <Stack spacing="8px" rounded="xl" padding="0" width="full">
@@ -165,14 +181,14 @@ const CheckoutOrderSummary = () => {
         </Flex>
       </Stack>
       <Stack>
-        <Button>Back to cart</Button>
+        <Button as={ReactLink} to="/cart">
+          Back to cart
+        </Button>
       </Stack>
-      <PayPalButton
-        total={total}
-        onPaymentSuccess={onPaymentSuccess}
-        onPaymentError={onPaymentError}
-        buttonDisabled={buttonDisabled}
-      />
+      <Stack>
+        <Button onClick={makePayment}>Confirm</Button>
+      </Stack>
+
       <Box alignItems="center">
         <Text fontSize="sm">Questions or need help?</Text>
         <Flex justifyContent="center">
