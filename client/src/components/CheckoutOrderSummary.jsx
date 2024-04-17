@@ -20,9 +20,6 @@ import { resetCart } from "../redux/actions/cartActions";
 import { PhoneIcon, EmailIcon, ChatIcon } from "@chakra-ui/icons";
 import CheckoutItem from "./CheckoutItem";
 import { loadStripe } from "@stripe/stripe-js";
-import PayPalButton from "./PayPalButton";
-import PaymentSuccessModal from "./PaymentSuccessModal";
-import PaymentErrorModal from "./PaymentErrorModal";
 
 const CheckoutOrderSummary = () => {
   //chakra
@@ -98,28 +95,44 @@ const CheckoutOrderSummary = () => {
       "pk_test_51MgFTDE9bJZH5kiQuzUbJHPJ7fmQwSejIxWYh5maW6j8ACwbcLz8dSRvMBP3xYtB8EUIA5qVZDcY9ImbNU4X8qEg00DeApogPl"
     );
 
-    const body = {
-      products: cart,
-    };
+    try {
+      const body = {
+        products: cart,
+      };
 
-    const headers = {
-      "Content-Type": "application/json",
-    };
+      const response = await fetch("/api/stripe/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
 
-    const response = await fetch(`${apiURL}/create-checkout-session)`, {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(body),
-    });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
 
-    const session = await response.json();
+      const session = await response.json();
+      if (session.error) {
+        throw new Error(session.error);
+      }
 
-    const result = stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
 
-    if (result.error) {
-      console.log(result.error);
+      if (result.error) {
+        throw new Error(result.error.message);
+      }
+    } catch (error) {
+      console.error("Payment failed:", error);
+      toast({
+        title: "Payment error",
+        description: error.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
