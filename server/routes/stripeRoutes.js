@@ -3,11 +3,12 @@ import dotenv from "dotenv";
 import Stripe from "stripe";
 
 dotenv.config();
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY); // Make sure the env variable is named correctly
+const stripe = new Stripe(process.env.STRIPE_SECRET);
 const stripeRoutes = express.Router();
 
 stripeRoutes.get("/", (req, res) => {
   res.send("Response from Get Route");
+  console.log(res, req)
 });
 
 stripeRoutes.post("/create-checkout-session", async (req, res) => {
@@ -34,8 +35,8 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
-      success_url: `${req.protocol}://${req.get('host')}/OrderSuccessScreen`, // Use dynamic host
-      cancel_url: `${req.protocol}://${req.get('host')}/OrderCancelScreen`, // Use dynamic host
+      success_url: `${req.protocol}://${req.get("host")}/OrderSuccessScreen`, // Use dynamic host
+      cancel_url: `${req.protocol}://${req.get("host")}/OrderCancelScreen`, // Use dynamic host
     });
 
     res.json({ sessionId: session.id });

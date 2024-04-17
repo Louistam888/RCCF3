@@ -99,14 +99,16 @@ const CheckoutOrderSummary = () => {
       const body = {
         products: cart,
       };
-
-      const response = await fetch("/api/stripe/create-checkout-session", {
+  
+      const response = await fetch("/create-checkout-session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
       });
+   
+console.log(response)
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
