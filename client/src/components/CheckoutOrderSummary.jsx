@@ -30,14 +30,14 @@ const CheckoutOrderSummary = () => {
   //redux
   const cartItems = useSelector((state) => state.cart);
   const { cart, subtotal, expressShipping } = cartItems;
-
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
-
   const shippingInfo = useSelector((state) => state.order);
   const { error, shippingAddress } = shippingInfo;
-
   const dispatch = useDispatch();
+
+  //api
+  const apiUrl = "http://localhost:5000";
 
   const shipping = useCallback(() => {
     let shippingCost =
@@ -91,24 +91,24 @@ const CheckoutOrderSummary = () => {
   };
 
   const makePayment = async () => {
-    const stripe = await loadStripe(
-      "pk_test_51MgFTDE9bJZH5kiQuzUbJHPJ7fmQwSejIxWYh5maW6j8ACwbcLz8dSRvMBP3xYtB8EUIA5qVZDcY9ImbNU4X8qEg00DeApogPl"
-    );
-
     try {
+      const stripePromise = loadStripe(
+        "pk_test_51MgFTDE9bJZH5kiQuzUbJHPJ7fmQwSejIxWYh5maW6j8ACwbcLz8dSRvMBP3xYtB8EUIA5qVZDcY9ImbNU4X8qEg00DeApogPl"
+      );
+
+      const stripe = await stripePromise;
+
       const body = {
         products: cart,
       };
-  
-      const response = await fetch("/create-checkout-session", {
+
+      const response = await fetch(`${apiUrl}/create-checkout-session`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
       });
-   
-console.log(response)
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
