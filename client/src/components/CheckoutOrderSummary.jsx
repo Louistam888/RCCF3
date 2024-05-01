@@ -102,7 +102,7 @@ const CheckoutOrderSummary = () => {
         products: cart,
       };
 
-      const response = await fetch(`${apiUrl}/create-checkout-session`, {
+      const response = await fetch(`/api/stripe/create-checkout-session`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
