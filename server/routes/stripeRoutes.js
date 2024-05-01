@@ -43,7 +43,9 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       cancel_url: `${req.protocol}://${req.get("host")}/OrderCancelScreen`, // Use dynamic host
     });
 
-    res.redirect(303, session.url);
+    // Send the session URL back to the client instead of redirecting
+    res.status(200).json({ sessionUrl: session.url });
+    
   } catch (error) {
     console.error("Error creating checkout session:", error);
     res.status(500).json({ error: "Internal server error." });

@@ -20,6 +20,7 @@ import { resetCart } from "../redux/actions/cartActions";
 import { PhoneIcon, EmailIcon, ChatIcon } from "@chakra-ui/icons";
 import CheckoutItem from "./CheckoutItem";
 import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
 
 const CheckoutOrderSummary = () => {
   //chakra
@@ -102,27 +103,37 @@ const CheckoutOrderSummary = () => {
         products: cart,
       };
 
-      const response = await fetch(`/api/stripe/create-checkout-session`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
+      // Make a POST request to your backend to create a checkout session
+      const response = await axios.post(
+        `/api/stripe/create-checkout-session`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!response.ok) {
+      // Check if the response status is not OK
+      if (response.status !== 200) {
         throw new Error("Network response was not ok");
       }
 
-      const session = await response.json();
-      if (session.error) {
-        throw new Error(session.error);
+      // Extract the session URL from the response data
+      const { sessionUrl, error } = response.data;
+      const idOfSession = sessionUrl.split('/').pop();
+     
+      // Check if there's an error in the response
+      if (error) {
+        throw new Error(error);
       }
 
+      // Redirect to the checkout page using the retrieved session URL
       const result = await stripe.redirectToCheckout({
-        sessionId: session.id,
+        sessionId: sessionUrl,
       });
 
+      // Check if there's an error in the redirection
       if (result.error) {
         throw new Error(result.error.message);
       }

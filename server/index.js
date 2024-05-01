@@ -16,7 +16,8 @@ dotenv.config();
 connectToDatabase();
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: ['http://example1.com', 'http://localhost:3000/checkout'] }));
+
 const port = process.env.PORT || 5000;
 
 app.use(
