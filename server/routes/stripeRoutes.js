@@ -22,7 +22,7 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       price_data: {
         currency: "cad",
         product_data: {
-          name: product.name,
+          name: product.name
         },
         unit_amount: Math.round(product.price * 100), // Ensure price is in cents
       },
@@ -44,8 +44,7 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
     });
 
     // Send the session URL back to the client instead of redirecting
-    res.status(200).json({ sessionUrl: session.url });
-    
+    res.status(200).json({ sessionUrl: session.url, sessionId: session.id });
   } catch (error) {
     console.error("Error creating checkout session:", error);
     res.status(500).json({ error: "Internal server error." });
