@@ -12,11 +12,10 @@ import { logout } from "../redux/actions/userActions.js";
 import { useDispatch } from "react-redux";
 import useLogoutHandler from "../customHooks/useLogoutHandler.jsx";
 
-const OrderSuccessScreen = () => {
+const OrderFailedScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
-
   const logoutHandler = useLogoutHandler();
 
   return (
@@ -28,7 +27,7 @@ const OrderSuccessScreen = () => {
       minH="100vh"
     >
       <Alert
-        status="success"
+        status="error"
         variant="subtle"
         flexDirection="column"
         alignItems="center"
@@ -38,26 +37,13 @@ const OrderSuccessScreen = () => {
       >
         <AlertIcon boxSize="55px" />
         <AlertTitle pt="8px" fontSize="xl">
-          Payment Successful!
+          Sorry, something went wrong!
         </AlertTitle>
         <Stack mt="20px" minW="200px">
-          <Button
-            colorScheme="teal"
-            variant="outline"
-            as={ReactLink}
-            to="/your-orders"
-          >
-            Your Order
+          <Button colorScheme="red" variant="outline" as={ReactLink} to="/cart">
+            Return to cart
           </Button>
-          <Button
-            colorScheme="teal"
-            variant="outline"
-            as={ReactLink}
-            to="/products"
-          >
-            Products
-          </Button>
-          <Button colorScheme="teal" variant="outline" onClick={logoutHandler}>
+          <Button colorScheme="red" variant="outline" onClick={logoutHandler}>
             Logout
           </Button>
         </Stack>
@@ -66,4 +52,4 @@ const OrderSuccessScreen = () => {
   );
 };
 
-export default OrderSuccessScreen;
+export default OrderFailedScreen;

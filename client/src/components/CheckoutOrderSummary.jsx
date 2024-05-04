@@ -151,7 +151,7 @@ const CheckoutOrderSummary = () => {
 
   return (
     <Stack spacing="8px" rounded="xl" padding="0" width="full">
-      <Heading size="md">OrderSummary</Heading>
+      <Heading size="md">Order Summary</Heading>
       {cart.map((item) => (
         <CheckoutItem key={item.id} cartItem={item} />
       ))}

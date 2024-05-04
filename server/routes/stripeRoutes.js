@@ -39,8 +39,8 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
           allow_promotion_codes: true,
         },
       },
-      success_url: `${req.protocol}://${req.get("host")}/OrderSuccessScreen`, // Use dynamic host
-      cancel_url: `${req.protocol}://${req.get("host")}/OrderCancelScreen`, // Use dynamic host
+      success_url: `${req.protocol}://${req.get("host")}/ordersuccess`, // Use dynamic host
+      cancel_url: `${req.protocol}://${req.get("host")}/orderfailed`, // Use dynamic host
     });
 
     // Send the session URL back to the client instead of redirecting
