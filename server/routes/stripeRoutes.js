@@ -12,7 +12,7 @@ stripeRoutes.get("/", (req, res) => {
 
 stripeRoutes.post("/create-checkout-session", async (req, res) => {
   try {
-    const { products } = req.body;
+    const { products, shipping, hst } = req.body;
 
     if (!products || !Array.isArray(products) || products.length === 0) {
       return res.status(400).json({ error: "No products provided." });
@@ -22,12 +22,35 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       price_data: {
         currency: "cad",
         product_data: {
-          name: product.name
+          name: product.name,
         },
         unit_amount: Math.round(product.price * 100), // Ensure price is in cents
       },
       quantity: product.qty,
     }));
+
+    lineItems.push(
+      {
+        price_data: {
+          currency: "cad",
+          product_data: {
+            name: "Shipping",
+          },
+          unit_amount: Math.round(shipping * 100), // Ensure shipping cost is in cents
+        },
+        quantity: 1,
+      },
+      {
+        price_data: {
+          currency: "cad",
+          product_data: {
+            name: "HST",
+          },
+          unit_amount: Math.round(hst * 100), // Ensure shipping cost is in cents
+        },
+        quantity: 1,
+      }
+    );
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],

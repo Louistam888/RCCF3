@@ -37,9 +37,6 @@ const CheckoutOrderSummary = () => {
   const { error, shippingAddress } = shippingInfo;
   const dispatch = useDispatch();
 
-  //api
-  const apiUrl = "http://localhost:5000";
-
   const shipping = useCallback(() => {
     let shippingCost =
       expressShipping === "true" ? 14.99 : subtotal <= 1000 ? 4.99 : 0;
@@ -63,6 +60,69 @@ const CheckoutOrderSummary = () => {
     [shipping, subtotal, hst]
   );
 
+  const makePayment = async () => {
+    try {
+      const stripePromise = loadStripe(
+        "pk_test_51MgFTDE9bJZH5kiQuzUbJHPJ7fmQwSejIxWYh5maW6j8ACwbcLz8dSRvMBP3xYtB8EUIA5qVZDcY9ImbNU4X8qEg00DeApogPl"
+      );
+
+      const stripe = await stripePromise;
+
+      const body = {
+        products: cart,
+        shipping: shipping(),
+        hst: hst(),
+      };
+
+      // Make a POST request to your backend to create a checkout session
+      const response = await axios.post(
+        `/api/stripe/create-checkout-session`,
+        body,
+        shipping,
+        hst,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      // Check if the response status is not OK
+      if (response.status !== 200) {
+        throw new Error("Network response was not ok");
+      }
+
+      // Extract the session URL from the response data
+      const { sessionUrl, sessionId, error } = response.data;
+
+      // Check if there's an error in the response
+      if (error) {
+        throw new Error(error);
+      }
+
+      // Redirect to the checkout page using the retrieved session URL
+      const result = await stripe.redirectToCheckout({
+        // sessionUrl: sessionUrl,
+        sessionId: sessionId,
+      });
+
+      // Check if there's an error in the redirection
+      if (result.error) {
+        throw new Error(result.error.message);
+      }
+    } catch (error) {
+      console.error("Payment failed:", error);
+      toast({
+        title: "Payment error",
+        description: error.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+
+  //IMPLEMENT THIS
   const onPaymentSuccess = async (data) => {
     dispatch(
       createOrder({
@@ -89,64 +149,6 @@ const CheckoutOrderSummary = () => {
       duration: "600000",
       isClosable: true,
     });
-  };
-
-  const makePayment = async () => {
-    try {
-      const stripePromise = loadStripe(
-        "pk_test_51MgFTDE9bJZH5kiQuzUbJHPJ7fmQwSejIxWYh5maW6j8ACwbcLz8dSRvMBP3xYtB8EUIA5qVZDcY9ImbNU4X8qEg00DeApogPl"
-      );
-
-      const stripe = await stripePromise;
-
-      const body = {
-        products: cart,
-      };
-
-      // Make a POST request to your backend to create a checkout session
-      const response = await axios.post(
-        `/api/stripe/create-checkout-session`,
-        body,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      // Check if the response status is not OK
-      if (response.status !== 200) {
-        throw new Error("Network response was not ok");
-      }
-
-      // Extract the session URL from the response data
-      const { sessionUrl, sessionId, error } = response.data;
-         
-      // Check if there's an error in the response
-      if (error) {
-        throw new Error(error);
-      }
-
-      // Redirect to the checkout page using the retrieved session URL
-      const result = await stripe.redirectToCheckout({
-        // sessionUrl: sessionUrl,
-        sessionId: sessionId
-      });
-
-      // Check if there's an error in the redirection
-      if (result.error) {
-        throw new Error(result.error.message);
-      }
-    } catch (error) {
-      console.error("Payment failed:", error);
-      toast({
-        title: "Payment error",
-        description: error.message,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
   };
 
   return (
