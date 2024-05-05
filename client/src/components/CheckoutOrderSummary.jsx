@@ -71,7 +71,7 @@ const CheckoutOrderSummary = () => {
       const body = {
         products: cart,
         shipping: shipping(),
-        hst: hst(),
+        expressShipping: expressShipping,
       };
 
       // Make a POST request to your backend to create a checkout session
@@ -79,7 +79,7 @@ const CheckoutOrderSummary = () => {
         `/api/stripe/create-checkout-session`,
         body,
         shipping,
-        hst,
+        expressShipping,
         {
           headers: {
             "Content-Type": "application/json",

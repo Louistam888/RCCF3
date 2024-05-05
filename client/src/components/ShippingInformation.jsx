@@ -27,15 +27,13 @@ const ShippingInformation = () => {
 
   //formik
   const [formStateChanged, setFormStateChanged] = useState(false);
-  console.log("formstate", formStateChanged);
-
   const handleChange = (errors, touched, values) => {
     setTimeout(() => {
       if (
         Object.keys(errors).length === 0 &&
         Object.keys(touched).length >= 2
       ) {
-        setErrorState(false, values);   
+        setErrorState(false, values);
       } else {
         setErrorState(true);
       }
@@ -84,7 +82,7 @@ const ShippingInformation = () => {
               formik.touched,
               formik.values
             )}
-          >        
+          >
             <TextField
               name="address"
               placeholder="Street Address"
@@ -125,9 +123,6 @@ const ShippingInformation = () => {
                       <Text>Shipped within 24 hours</Text>
                     </Radio>
                   </Box>
-                  <Stack spacing="6px">
-                    <Text>Express</Text>
-                  </Stack>
                 </Stack>
                 <Radio value="false">
                   <Tooltip label="Free shipping for all orders over $1,000.">

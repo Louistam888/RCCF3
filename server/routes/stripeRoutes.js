@@ -12,7 +12,7 @@ stripeRoutes.get("/", (req, res) => {
 
 stripeRoutes.post("/create-checkout-session", async (req, res) => {
   try {
-    const { products, shipping, hst } = req.body;
+    const { products, shipping, expressShipping } = req.body;
 
     if (!products || !Array.isArray(products) || products.length === 0) {
       return res.status(400).json({ error: "No products provided." });
@@ -29,33 +29,38 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       quantity: product.qty,
     }));
 
-    lineItems.push(
-      {
-        price_data: {
-          currency: "cad",
-          product_data: {
-            name: "Shipping",
-          },
-          unit_amount: Math.round(shipping * 100), // Ensure shipping cost is in cents
-        },
-        quantity: 1,
-      },
-      {
-        price_data: {
-          currency: "cad",
-          product_data: {
-            name: "HST",
-          },
-          unit_amount: Math.round(hst * 100), // Ensure shipping cost is in cents
-        },
-        quantity: 1,
-      }
-    );
+    //calculate tax
+    const taxRate = await stripe.taxRates.create({
+      display_name: "Ontario HST",
+      description: "Harmonized Sales Tax for Ontario",
+      percentage: 13,
+      jurisdiction: "CA", // Jurisdiction code for Canada
+      inclusive: false,
+    });
 
+    console.log(taxRate)
+    //create stripe session
     const session = await stripe.checkout.sessions.create({
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: "fixed_amount",
+            fixed_amount: {
+              amount: Math.round(shipping * 100),
+              currency: "cad",
+            },
+            display_name: expressShipping
+              ? "Express shipping"
+              : shipping > 0
+              ? "Standard shipping"
+              : "Free shipping",
+          },
+        },
+      ],
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
+      // tax_rates: [taxRate.id],
       after_expiration: {
         recovery: {
           enabled: true,
