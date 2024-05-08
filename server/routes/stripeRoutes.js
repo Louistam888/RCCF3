@@ -18,17 +18,6 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       return res.status(400).json({ error: "No products provided." });
     }
 
-    const lineItems = products.map((product) => ({
-      price_data: {
-        currency: "cad",
-        product_data: {
-          name: product.name,
-        },
-        unit_amount: Math.round(product.price * 100), // Ensure price is in cents
-      },
-      quantity: product.qty,
-    }));
-
     //calculate tax
     const taxRate = await stripe.taxRates.create({
       display_name: "Ontario HST",
@@ -38,7 +27,19 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       inclusive: false,
     });
 
-    console.log(taxRate)
+    console.log(taxRate.percentage);
+    const lineItems = products.map((product) => ({
+      price_data: {
+        currency: "cad",
+        product_data: {
+          name: product.name,
+        },
+        unit_amount: Math.round(product.price * 100), // Ensure price is in cents
+      },
+      tax_rates: [taxRate.id],
+      quantity: product.qty,
+    }));
+
     //create stripe session
     const session = await stripe.checkout.sessions.create({
       shipping_options: [
@@ -60,7 +61,6 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
-      // tax_rates: [taxRate.id],
       after_expiration: {
         recovery: {
           enabled: true,

@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import TextField from "./TextField";
 import { useDispatch } from "react-redux";
 import { setExpress } from "../redux/actions/cartActions";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   setShippingAddress,
   setShippingAddressError,
