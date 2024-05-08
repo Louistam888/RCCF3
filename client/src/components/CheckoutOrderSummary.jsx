@@ -10,7 +10,7 @@ import {
   Link,
   Button,
   useDisclosure,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,12 +19,10 @@ import { createOrder, resetOrder } from "../redux/actions/orderActions";
 import { resetCart } from "../redux/actions/cartActions";
 import { PhoneIcon, EmailIcon, ChatIcon } from "@chakra-ui/icons";
 import CheckoutItem from "./CheckoutItem";
-import PayPalButton from "./PayPalButton";
-import PaymentSuccessModal from "./PaymentSuccessModal";
-import PaymentErrorModal from "./PaymentErrorModal";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
 
 const CheckoutOrderSummary = () => {
-  
   //chakra
   const navigate = useNavigate();
   const toast = useToast();
@@ -33,15 +31,10 @@ const CheckoutOrderSummary = () => {
   //redux
   const cartItems = useSelector((state) => state.cart);
   const { cart, subtotal, expressShipping } = cartItems;
-
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
-
   const shippingInfo = useSelector((state) => state.order);
   const { error, shippingAddress } = shippingInfo;
-
-  //state for disabling payPal button
-  const [buttonDisabled, setButtonDisabled] = useState(false);
   const dispatch = useDispatch();
 
   const shipping = useCallback(() => {
@@ -67,8 +60,70 @@ const CheckoutOrderSummary = () => {
     [shipping, subtotal, hst]
   );
 
+  const makePayment = async () => {
+    try {
+      const stripePromise = loadStripe(
+        "pk_test_51MgFTDE9bJZH5kiQuzUbJHPJ7fmQwSejIxWYh5maW6j8ACwbcLz8dSRvMBP3xYtB8EUIA5qVZDcY9ImbNU4X8qEg00DeApogPl"
+      );
+
+      const stripe = await stripePromise;
+
+      const body = {
+        products: cart,
+        shipping: shipping(),
+        expressShipping: expressShipping,
+      };
+
+      // Make a POST request to your backend to create a checkout session
+      const response = await axios.post(
+        `/api/stripe/create-checkout-session`,
+        body,
+        shipping,
+        expressShipping,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      // Check if the response status is not OK
+      if (response.status !== 200) {
+        throw new Error("Network response was not ok");
+      }
+
+      // Extract the session URL from the response data
+      const { sessionUrl, sessionId, error } = response.data;
+
+      // Check if there's an error in the response
+      if (error) {
+        throw new Error(error);
+      }
+
+      // Redirect to the checkout page using the retrieved session URL
+      const result = await stripe.redirectToCheckout({
+        // sessionUrl: sessionUrl,
+        sessionId: sessionId,
+      });
+
+      // Check if there's an error in the redirection
+      if (result.error) {
+        throw new Error(result.error.message);
+      }
+    } catch (error) {
+      console.error("Payment failed:", error);
+      toast({
+        title: "Payment error",
+        description: error.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+
+  //IMPLEMENT THIS
   const onPaymentSuccess = async (data) => {
-  
     dispatch(
       createOrder({
         orderItems: cart,
@@ -87,7 +142,6 @@ const CheckoutOrderSummary = () => {
   };
 
   const onPaymentError = () => {
-    
     toast({
       description:
         "Something went wrong during the payment process. Please try again or make sure that your PayPal account balance is enough for this purchase.",
@@ -97,19 +151,9 @@ const CheckoutOrderSummary = () => {
     });
   };
 
-  //enables paypal button if all fields are changed, and only if there are no errors and as soon as shippingAddress in state.order is modifed with data in all
-
-  useEffect(() => {
-    if (error === false && shippingAddress) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
-  }, [error, shippingAddress]);
-
   return (
     <Stack spacing="8px" rounded="xl" padding="0" width="full">
-      <Heading size="md">OrderSummary</Heading>
+      <Heading size="md">Order Summary</Heading>
       {cart.map((item) => (
         <CheckoutItem key={item.id} cartItem={item} />
       ))}
@@ -165,14 +209,14 @@ const CheckoutOrderSummary = () => {
         </Flex>
       </Stack>
       <Stack>
-        <Button>Back to cart</Button>
+        <Button as={ReactLink} to="/cart">
+          Back to cart
+        </Button>
       </Stack>
-      <PayPalButton
-        total={total}
-        onPaymentSuccess={onPaymentSuccess}
-        onPaymentError={onPaymentError}
-        buttonDisabled={buttonDisabled}
-      />
+      <Stack>
+        <Button onClick={makePayment}>Confirm</Button>
+      </Stack>
+
       <Box alignItems="center">
         <Text fontSize="sm">Questions or need help?</Text>
         <Flex justifyContent="center">

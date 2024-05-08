@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import TextField from "./TextField";
 import { useDispatch } from "react-redux";
 import { setExpress } from "../redux/actions/cartActions";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   setShippingAddress,
   setShippingAddressError,
@@ -27,15 +27,15 @@ const ShippingInformation = () => {
 
   //formik
   const [formStateChanged, setFormStateChanged] = useState(false);
-  console.log("formstate", formStateChanged);
 
+  //get shipping info from fields
   const handleChange = (errors, touched, values) => {
     setTimeout(() => {
       if (
         Object.keys(errors).length === 0 &&
-        Object.keys(touched).length >= 2
+        Object.keys(touched).length >= 3
       ) {
-        setErrorState(false, values);   
+        setErrorState(false, values);
       } else {
         setErrorState(true);
       }
@@ -60,7 +60,13 @@ const ShippingInformation = () => {
 
   return (
     <Formik
-      initialValues={{ address: "", postalCode: "", city: "", country: "" }}
+      initialValues={{
+        address: "",
+        postalCode: "",
+        city: "",
+        stateOrProvince: "",
+        country: "",
+      }}
       validationSchema={Yup.object({
         address: Yup.string()
           .required("This field is required.")
@@ -71,6 +77,9 @@ const ShippingInformation = () => {
         city: Yup.string()
           .required("This field is required.")
           .min(2, "This city name is is too short."),
+        stateOrProvince: Yup.string()
+          .required("This field is required.")
+          .min(2, "State or Province name is is too short."),
         country: Yup.string()
           .required("This field is required.")
           .min(2, "This country name is too short."),
@@ -84,14 +93,14 @@ const ShippingInformation = () => {
               formik.touched,
               formik.values
             )}
-          >        
+          >
             <TextField
               name="address"
               placeholder="Street Address"
               label="Street Address"
             />
-            <Flex>
-              <Box flex="1" mr="10">
+            <Flex direction={{ base: "column", sm: "row" }}>
+              <Box flex="1" mr={{ base: "0", sm: "10" }}>
                 <TextField
                   name="postalCode"
                   placeholder="Postal Code"
@@ -102,6 +111,13 @@ const ShippingInformation = () => {
                 <TextField name="city" placeholder="City" label="City" />
               </Box>
             </Flex>
+            <Box flex="2">
+              <TextField
+                name="stateOrProvince"
+                placeholder="State or Province"
+                label="State or Province"
+              />
+            </Box>
             <TextField name="country" placeholder="Country" label="Country" />
           </FormControl>
           <Box width="100%" height="180px" pr="5px">
@@ -125,9 +141,6 @@ const ShippingInformation = () => {
                       <Text>Shipped within 24 hours</Text>
                     </Radio>
                   </Box>
-                  <Stack spacing="6px">
-                    <Text>Express</Text>
-                  </Stack>
                 </Stack>
                 <Radio value="false">
                   <Tooltip label="Free shipping for all orders over $1,000.">
