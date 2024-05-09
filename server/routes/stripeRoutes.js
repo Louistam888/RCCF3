@@ -6,6 +6,11 @@ dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET);
 const stripeRoutes = express.Router();
 
+const frontendBaseUrl = process.env.NODE_ENV === 'production'
+  ? 'https://rccf3.onrender.com'
+  : 'http://localhost:3000';
+
+
 stripeRoutes.get("/", (req, res) => {
   res.send("Response from Get Route");
 });
@@ -26,8 +31,6 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       jurisdiction: "CA", // Jurisdiction code for Canada
       inclusive: false,
     });
-
-    console.log(taxRate.percentage);
     const lineItems = products.map((product) => ({
       price_data: {
         currency: "cad",
@@ -67,8 +70,8 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
           allow_promotion_codes: true,
         },
       },
-      success_url: `${req.protocol}://${req.get("host")}/ordersuccess`, // Use dynamic host
-      cancel_url: `${req.protocol}://${req.get("host")}/orderfailed`, // Use dynamic host
+      success_url: `${req.protocol}://${frontendBaseUrl}/ordersuccess`,
+      cancel_url: `${req.protocol}://${frontendBaseUrl}/orderfailed`,
     });
 
     // Send the session URL back to the client instead of redirecting

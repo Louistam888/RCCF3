@@ -9,7 +9,6 @@ import {
   Divider,
   Link,
   Button,
-  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState, useCallback } from "react";
