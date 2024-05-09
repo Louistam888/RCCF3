@@ -10,14 +10,12 @@ import {
 import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { logout } from "../redux/actions/userActions.js";
 import { useDispatch } from "react-redux";
-import useLogoutHandler from "../customHooks/useLogoutHandler.jsx";
 
 const OrderSuccessScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const logoutHandler = useLogoutHandler();
 
   return (
     <Wrap
@@ -53,11 +51,11 @@ const OrderSuccessScreen = () => {
             colorScheme="teal"
             variant="outline"
             as={ReactLink}
-            to="/products"
+            to="/shop"
           >
             Products
           </Button>
-          <Button colorScheme="teal" variant="outline" onClick={logoutHandler}>
+          <Button colorScheme="teal" variant="outline" >
             Logout
           </Button>
         </Stack>

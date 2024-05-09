@@ -14,7 +14,7 @@ import UsersTab from "../components/UsersTab";
 import BrandsTab from "../components/BrandsTab";
 import ProductsTab from "../components/ProductsTab";
 import ReviewsTab from "../components/ReviewsTab";
-import OrdersTab from "../components/Orders.Tab";
+import OrdersTab from "../components/OrdersTab";
 
 export const convertImage = (uploadedFile, setterFunction, toast) => {
   const file = uploadedFile.files[0];
@@ -70,9 +70,7 @@ const AdminConsoleScreen = () => {
               <TabPanel>
                 <ProductsTab />
               </TabPanel>
-              <TabPanel>
-                {/* <ReviewsTab /> */}
-              </TabPanel>
+              <TabPanel>{/* <ReviewsTab /> */}</TabPanel>
               <TabPanel>
                 {/* <OrdersTab /> */}
               </TabPanel>
@@ -81,10 +79,8 @@ const AdminConsoleScreen = () => {
         </Stack>
       </Stack>
     </Box>
-  ) : (
-    // <Navigate to="/login" replace={true} state={{ from: location }} />
-    null
-  );
+  ) : // <Navigate to="/login" replace={true} state={{ from: location }} />
+  null;
 };
 
 export default AdminConsoleScreen;
