@@ -6,7 +6,7 @@ dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET);
 const stripeRoutes = express.Router();
 
-const frontendBaseUrl = process.env.RENDER === 'production'
+const frontendBaseUrl = process.env.NODE_ENV === 'production'
   ? 'https://rccf3.onrender.com'
   : 'http://localhost:3000';
 
