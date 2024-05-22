@@ -6,10 +6,8 @@ dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET);
 const stripeRoutes = express.Router();
 
-const frontendBaseUrl = process.env.RENDER === 'production'
-  ? 'https://rccf3.onrender.com'
-  : 'http://localhost:3000';
-
+const frontendBaseUrl =
+  process.env.RENDER === "production" ? "rccf3.onrender.com" : "localhost:3000";
 
 stripeRoutes.get("/", (req, res) => {
   res.send("Response from Get Route");
@@ -81,5 +79,42 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
     res.status(500).json({ error: "Internal server error." });
   }
 });
+
+//check if payment was successful from stripe
+const bodyParser = require("body-parser");
+const endpointSecret = "whsec_...";
+
+stripeRoutes.post(
+  "/webhook",
+  bodyParser.raw({ type: "application/json" }),
+  (request, response) => {
+    const payload = request.body;
+    const sig = request.headers["stripe-signature"];
+
+    let event;
+
+    try {
+      // Verify the event
+      event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+    } catch (err) {
+      // Return error if verification fails
+      return response.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    // Handle specific event types
+    if (event.type === "checkout.session.completed") {
+      // This event is triggered when a checkout session is completed
+      const session = event.data.object;
+      // Process the completed checkout session (e.g., update your database)
+      console.log("Checkout session completed:", session.id);
+    } else {
+      // Ignore other event types
+      console.log("Received event of type:", event.type);
+    }
+
+    // Respond with success status
+    response.status(200).end();
+  }
+);
 
 export default stripeRoutes;

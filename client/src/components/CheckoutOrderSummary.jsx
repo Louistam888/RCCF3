@@ -93,7 +93,7 @@ const CheckoutOrderSummary = () => {
 
       // Extract the session URL from the response data
       const { sessionUrl, sessionId, error } = response.data;
-
+      
       // Check if there's an error in the response
       if (error) {
         throw new Error(error);
@@ -101,7 +101,6 @@ const CheckoutOrderSummary = () => {
 
       // Redirect to the checkout page using the retrieved session URL
       const result = await stripe.redirectToCheckout({
-        // sessionUrl: sessionUrl,
         sessionId: sessionId,
       });
 

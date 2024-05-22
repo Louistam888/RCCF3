@@ -10,12 +10,12 @@ import {
 import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { logout } from "../redux/actions/userActions.js";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const OrderSuccessScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
-
 
   return (
     <Wrap
