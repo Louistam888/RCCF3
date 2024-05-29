@@ -9,6 +9,8 @@ const stripeRoutes = express.Router();
 
 const frontendBaseUrl =
   process.env.RENDER === "production" ? "rccf3.onrender.com" : "localhost:3000";
+const endpointSecret =
+  "whsec_d299b4686ed2365f8780f59027e8b3e493cc6678181496df2bb47e352eac0971"; //todo swap this testing endpoint for actual url later
 
 stripeRoutes.get("/", (req, res) => {
   res.send("Response from Get Route");
@@ -118,43 +120,27 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
 //   }
 // );
 
-// stripeRoutes.post(
-//   "/webhook",
-//   express.raw({ type: "application/json" }),
-//   (request, response) => {
-//     console.log("recieved webhook req")
-//     const payload = request.body;
-//     console.log("payload", payload)
-//     const sig = request.headers["stripe-signature"];
-//     const endpointSecret =
-//       "whsec_d299b4686ed2365f8780f59027e8b3e493cc6678181496df2bb47e352eac0971"; //todo swap this testing endpoint for actual url later
-
-//     let event;
-
-//     try {
-//       event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
-//       console.log(event)
-//     } catch (err) {
-//       return response.status(400).send(`Webhook Error: ${err.message}`);
-//     }
-
-//     if (event.type === "checkout.session.completed") {
-//       const session = event.data.object;
-//       console.log("Checkout session completed:", session.id);
-//     } else {
-//       console.log("Received event of type:", event.type);
-//     }
-
-//     response.status(200).end();
-//   }
-// );
-
 stripeRoutes.post(
   "/webhook",
-  bodyParser.raw({ type: "application/json" }),
+  express.raw({ type: "application/json" }),
   (request, response) => {
     const payload = request.body;
-    console.log("got payload", payload);
+    const sig = request.headers["stripe-signature"];
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+    } catch (err) {
+      return response.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
+      console.log("GREAT SUCCESS", session);
+    } else {
+      console.log("Received event of type:", event.type);
+    }
+
     response.status(200).end();
   }
 );

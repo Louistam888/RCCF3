@@ -22,11 +22,13 @@ app.use(cors({ origin: ['http://example1.com', 'http://localhost:3000/checkout']
 
 const port = process.env.PORT || 5000;
 
-app.use(
-  express.json({
-    limit: "10mb",
-  })
-);
+app.use((req, res, next) => {
+  if (req.originalUrl === '/webhook') {
+    next(); // Do nothing with the body because I need it in a raw state.
+  } else {
+    express.json()(req, res, next);  // ONLY do express.json() if the received request is NOT a WebHook from Stripe.
+  }
+});
 
 //names after/api/ must match mongoDB collection names
 app.use("/api/products", productRoutes);
