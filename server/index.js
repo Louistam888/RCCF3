@@ -2,7 +2,9 @@ import dotenv from "dotenv";
 import connectToDatabase from "./database.js";
 import express from "express";
 import path from "path";
-import cors from "cors";
+import cors from "cors";import bodyParser from "body-parser";
+
+
 // import Stripe from "stripe";
 
 //ROUTES
@@ -32,6 +34,7 @@ app.use("/api/brands", brandRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/stripe", stripeRoutes);
+app.use("/", stripeRoutes)
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));

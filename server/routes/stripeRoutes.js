@@ -153,11 +153,8 @@ stripeRoutes.post(
   "/webhook",
   bodyParser.raw({ type: "application/json" }),
   (request, response) => {
-    console.log("recieved webhook req");
     const payload = request.body;
-
     console.log("got payload", payload);
-
     response.status(200).end();
   }
 );
