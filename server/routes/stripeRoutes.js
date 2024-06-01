@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
 import Stripe from "stripe";
-import bodyParser from "body-parser";
 
 dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET);
@@ -10,7 +9,7 @@ const stripeRoutes = express.Router();
 const frontendBaseUrl =
   process.env.RENDER === "production" ? "rccf3.onrender.com" : "localhost:3000";
 const endpointSecret =
-  "whsec_d299b4686ed2365f8780f59027e8b3e493cc6678181496df2bb47e352eac0971"; //todo swap this testing endpoint for actual url later
+  "whsec_d299b4686ed2365f8780f59027e8b3e493cc6678181496df2bb47e352eac0971"; //make endpoint
 
 stripeRoutes.get("/", (req, res) => {
   res.send("Response from Get Route");
@@ -83,6 +82,8 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
   }
 });
 
+let latestSession = null;
+
 stripeRoutes.post(
   "/webhook",
   express.raw({ type: "application/json" }),
@@ -99,12 +100,20 @@ stripeRoutes.post(
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
+      console.log(session)
     } else {
       console.log("Received event of type:", event.type);
     }
-
     response.status(200).end();
   }
 );
 
+//endpoint for checking completed checkout session object
+stripeRoutes.get("/latestSession", (req, res) => {
+  if (latestSession) {
+    res.json(latestSession);
+  } else {
+    res.status(404).send("no session data available");
+  }
+});
 export default stripeRoutes;

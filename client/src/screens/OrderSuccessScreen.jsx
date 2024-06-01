@@ -11,6 +11,7 @@ import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { logout } from "../redux/actions/userActions.js";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import axios from "axios";
 
 const OrderSuccessScreen = () => {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ const OrderSuccessScreen = () => {
           >
             Products
           </Button>
-          <Button colorScheme="teal" variant="outline" >
+          <Button colorScheme="teal" variant="outline">
             Logout
           </Button>
         </Stack>
