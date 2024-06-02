@@ -9,7 +9,7 @@ const stripeRoutes = express.Router();
 const frontendBaseUrl =
   process.env.RENDER === "production" ? "rccf3.onrender.com" : "localhost:3000";
 const endpointSecret =
-  "whsec_d299b4686ed2365f8780f59027e8b3e493cc6678181496df2bb47e352eac0971"; //make endpoint
+  "whsec_d299b4686ed2365f8780f59027e8b3e493cc6678181496df2bb47e352eac0971"; //todo swap this testing endpoint for actual url later
 
 stripeRoutes.get("/", (req, res) => {
   res.send("Response from Get Route");
@@ -82,6 +82,7 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
   }
 });
 
+
 let latestSession = null;
 
 stripeRoutes.post(
@@ -100,15 +101,16 @@ stripeRoutes.post(
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
-      console.log(session)
+      latestSession = session
     } else {
       console.log("Received event of type:", event.type);
     }
+
     response.status(200).end();
   }
 );
-
 //endpoint for checking completed checkout session object
+// in cli use listen stripe listen --forward-to localhost:5000/webhook
 stripeRoutes.get("/latestSession", (req, res) => {
   if (latestSession) {
     res.json(latestSession);
@@ -116,4 +118,5 @@ stripeRoutes.get("/latestSession", (req, res) => {
     res.status(404).send("no session data available");
   }
 });
+
 export default stripeRoutes;

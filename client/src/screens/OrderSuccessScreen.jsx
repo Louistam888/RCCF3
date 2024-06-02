@@ -10,13 +10,34 @@ import {
 import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { logout } from "../redux/actions/userActions.js";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const OrderSuccessScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
+
+  const [sessionStatus, setSessionStatus] = useState("");
+
+  console.log("SUCCESS", sessionStatus);
+
+  useEffect(() => {
+    const fetchLatestSession = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/latestSession");
+        setSessionStatus(response.data);
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          console.log("No session data available");
+        } else {
+          console.error("Error fetching latest session:", error);
+        }
+      }
+    };
+
+    fetchLatestSession();
+  }, []);
 
   return (
     <Wrap

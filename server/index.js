@@ -2,8 +2,8 @@ import dotenv from "dotenv";
 import connectToDatabase from "./database.js";
 import express from "express";
 import path from "path";
-import cors from "cors";import bodyParser from "body-parser";
-
+import cors from "cors";
+import bodyParser from "body-parser";
 
 // import Stripe from "stripe";
 
@@ -18,15 +18,24 @@ dotenv.config();
 connectToDatabase();
 
 const app = express();
-app.use(cors({ origin: ['http://example1.com', 'http://localhost:3000/checkout'] }));
+
+app.use(
+  cors({
+    origin: [
+      "http://example1.com",
+      "http://localhost:3000",
+      "http://localhost:5000",
+    ],
+  })
+);
 
 const port = process.env.PORT || 5000;
 
 app.use((req, res, next) => {
-  if (req.originalUrl === '/webhook') {
+  if (req.originalUrl === "/webhook") {
     next(); // Do nothing with the body because I need it in a raw state.
   } else {
-    express.json()(req, res, next);  // ONLY do express.json() if the received request is NOT a WebHook from Stripe.
+    express.json()(req, res, next); // ONLY do express.json() if the received request is NOT a WebHook from Stripe.
   }
 });
 
@@ -36,7 +45,7 @@ app.use("/api/brands", brandRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/stripe", stripeRoutes);
-app.use("/", stripeRoutes)
+app.use("/", stripeRoutes);
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
