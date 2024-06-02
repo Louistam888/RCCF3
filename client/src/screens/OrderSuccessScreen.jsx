@@ -21,24 +21,31 @@ const OrderSuccessScreen = () => {
   const toast = useToast();
 
   const cartItems = useSelector((state) => state.cart);
-  const { cart } = cartItems;
+  const { cart, brand } = cartItems;
   const shippingInfo = useSelector((state) => state.order);
   const { error, shippingAddress } = shippingInfo;
+  const user = useSelector((state) => state.user);
+  const { userInfo } = user;
 
-
-  const onPaymentSuccess = (data) => {
-    console.log("success")
-    // dispatch(
-    //   createOrder({
-    //     orderItems: cart,
-    //     shippingAddress,
-    //     // paymentMethod: data.paymentSource,
-    //     paymentDetails: data,
-    //     shippingPrice: shipping(),
-    //     totalPrice: total(),
-    //     userInfo,
-    //   })
-    // );
+  const onPaymentSuccess = (
+    paymentMethod,
+    paymentDetails,
+    shippingCost,
+    totalTax,
+    amountTotal
+  ) => {
+    dispatch(
+      createOrder({
+        orderItems: cart,
+        shippingAddress,
+        paymentMethod: paymentMethod,
+        paymentDetails: paymentDetails,
+        shippingPrice: shippingCost,
+        tax: totalTax,
+        totalPrice: amountTotal,
+        userInfo,
+      })
+    );
 
     dispatch(resetOrder());
     dispatch(resetCart());
@@ -60,9 +67,24 @@ const OrderSuccessScreen = () => {
     const fetchLatestSession = async () => {
       try {
         const response = await axios.get("http://localhost:5000/latestSession");
-        
+        const paymentMethod = response.data.payment_method_types;
+        const paymentDetails = response.data.total_details;
+        const shippingCost = (
+          response.data.total_details.amount_shipping / 100
+        ).toFixed(2);
+        const totalTax = (response.data.total_details.amount_tax / 100).toFixed(
+          2
+        );
+        const amountTotal = (response.data.amount_total / 100).toFixed(2);
+
         if (response.data.status === "complete") {
-          onPaymentSuccess()
+          onPaymentSuccess(
+            paymentMethod,
+            paymentDetails,
+            shippingCost,
+            totalTax,
+            amountTotal
+          );
         }
       } catch (error) {
         if (error.response && error.response.status === 404) {

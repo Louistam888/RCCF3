@@ -28,10 +28,7 @@ const CheckoutOrderSummary = () => {
   //redux
   const cartItems = useSelector((state) => state.cart);
   const { cart, subtotal, expressShipping } = cartItems;
-  const user = useSelector((state) => state.user);
-  const { userInfo } = user;
-
-
+  
   const shipping = useCallback(() => {
     let shippingCost =
       expressShipping === "true" ? 14.99 : subtotal <= 1000 ? 4.99 : 0;
