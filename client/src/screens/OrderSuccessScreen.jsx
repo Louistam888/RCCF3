@@ -9,13 +9,95 @@ import {
 } from "@chakra-ui/react";
 import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { logout } from "../redux/actions/userActions.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { createOrder, resetOrder } from "../redux/actions/orderActions";
+import { resetCart } from "../redux/actions/cartActions";
+import axios from "axios";
 
 const OrderSuccessScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
 
+  const cartItems = useSelector((state) => state.cart);
+  const { cart, brand } = cartItems;
+  const shippingInfo = useSelector((state) => state.order);
+  const { error, shippingAddress } = shippingInfo;
+  const user = useSelector((state) => state.user);
+  const { userInfo } = user;
+
+  const onPaymentSuccess = (
+    paymentMethod,
+    paymentDetails,
+    shippingCost,
+    totalTax,
+    amountTotal
+  ) => {
+    dispatch(
+      createOrder({
+        orderItems: cart,
+        shippingAddress,
+        paymentMethod: paymentMethod,
+        paymentDetails: paymentDetails,
+        shippingPrice: shippingCost,
+        tax: totalTax,
+        totalPrice: amountTotal,
+        userInfo,
+      })
+    );
+
+    dispatch(resetOrder());
+    dispatch(resetCart());
+    navigate("/orderSuccess");
+  };
+
+  const onPaymentError = () => {
+    toast({
+      description:
+        "Something went wrong during the payment process. Please try again or make sure that your PayPal account balance is enough for this purchase.",
+      status: "error",
+      duration: "600000",
+      isClosable: true,
+    });
+  };
+
+  // check if payment was successful
+  useEffect(() => {
+    const fetchLatestSession = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/latestSession");
+        const paymentMethod = response.data.payment_method_types;
+        const paymentDetails = response.data.total_details;
+        const shippingCost = (
+          response.data.total_details.amount_shipping / 100
+        ).toFixed(2);
+        const totalTax = (response.data.total_details.amount_tax / 100).toFixed(
+          2
+        );
+        const amountTotal = (response.data.amount_total / 100).toFixed(2);
+
+        if (response.data.status === "complete") {
+          onPaymentSuccess(
+            paymentMethod,
+            paymentDetails,
+            shippingCost,
+            totalTax,
+            amountTotal
+          );
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          console.log("No session data available");
+        } else {
+          console.error("Error fetching latest session:", error);
+        }
+        onPaymentError();
+      }
+    };
+
+    fetchLatestSession();
+  }, []);
 
   return (
     <Wrap
@@ -55,7 +137,7 @@ const OrderSuccessScreen = () => {
           >
             Products
           </Button>
-          <Button colorScheme="teal" variant="outline" >
+          <Button colorScheme="teal" variant="outline">
             Logout
           </Button>
         </Stack>

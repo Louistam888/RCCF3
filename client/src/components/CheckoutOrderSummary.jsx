@@ -14,8 +14,7 @@ import {
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as ReactLink, useNavigate } from "react-router-dom";
-import { createOrder, resetOrder } from "../redux/actions/orderActions";
-import { resetCart } from "../redux/actions/cartActions";
+
 import { PhoneIcon, EmailIcon, ChatIcon } from "@chakra-ui/icons";
 import CheckoutItem from "./CheckoutItem";
 import { loadStripe } from "@stripe/stripe-js";
@@ -23,19 +22,13 @@ import axios from "axios";
 
 const CheckoutOrderSummary = () => {
   //chakra
-  const navigate = useNavigate();
   const toast = useToast();
   const colorMode = mode("gray.600", "gray.400");
 
   //redux
   const cartItems = useSelector((state) => state.cart);
   const { cart, subtotal, expressShipping } = cartItems;
-  const user = useSelector((state) => state.user);
-  const { userInfo } = user;
-  const shippingInfo = useSelector((state) => state.order);
-  const { error, shippingAddress } = shippingInfo;
-  const dispatch = useDispatch();
-
+  
   const shipping = useCallback(() => {
     let shippingCost =
       expressShipping === "true" ? 14.99 : subtotal <= 1000 ? 4.99 : 0;
@@ -93,7 +86,7 @@ const CheckoutOrderSummary = () => {
 
       // Extract the session URL from the response data
       const { sessionUrl, sessionId, error } = response.data;
-
+      
       // Check if there's an error in the response
       if (error) {
         throw new Error(error);
@@ -101,7 +94,6 @@ const CheckoutOrderSummary = () => {
 
       // Redirect to the checkout page using the retrieved session URL
       const result = await stripe.redirectToCheckout({
-        // sessionUrl: sessionUrl,
         sessionId: sessionId,
       });
 
@@ -121,34 +113,6 @@ const CheckoutOrderSummary = () => {
     }
   };
 
-  //IMPLEMENT THIS
-  const onPaymentSuccess = async (data) => {
-    dispatch(
-      createOrder({
-        orderItems: cart,
-        shippingAddress,
-        paymentMethod: data.paymentSource,
-        paymentDetails: data,
-        shippingPrice: shipping(),
-        totalPrice: total(),
-        userInfo,
-      })
-    );
-
-    dispatch(resetOrder());
-    dispatch(resetCart());
-    navigate("/orderSuccess");
-  };
-
-  const onPaymentError = () => {
-    toast({
-      description:
-        "Something went wrong during the payment process. Please try again or make sure that your PayPal account balance is enough for this purchase.",
-      status: "error",
-      duration: "600000",
-      isClosable: true,
-    });
-  };
 
   return (
     <Stack spacing="8px" rounded="xl" padding="0" width="full">

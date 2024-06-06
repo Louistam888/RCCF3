@@ -6,10 +6,10 @@ dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET);
 const stripeRoutes = express.Router();
 
-const frontendBaseUrl = process.env.RENDER === 'production'
-  ? 'https://rccf3.onrender.com'
-  : 'http://localhost:3000';
-
+const frontendBaseUrl =
+  process.env.RENDER === "production" ? "rccf3.onrender.com" : "localhost:3000";
+const endpointSecret =
+  "whsec_d299b4686ed2365f8780f59027e8b3e493cc6678181496df2bb47e352eac0971"; //todo swap this testing endpoint for actual url later
 
 stripeRoutes.get("/", (req, res) => {
   res.send("Response from Get Route");
@@ -79,6 +79,43 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
   } catch (error) {
     console.error("Error creating checkout session:", error);
     res.status(500).json({ error: "Internal server error." });
+  }
+});
+
+
+let latestSession = null;
+
+stripeRoutes.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  (request, response) => {
+    const payload = request.body;
+    const sig = request.headers["stripe-signature"];
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+    } catch (err) {
+      return response.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
+      latestSession = session
+    } else {
+      console.log("Received event of type:", event.type);
+    }
+
+    response.status(200).end();
+  }
+);
+//endpoint for checking completed checkout session object
+// in cli use listen stripe listen --forward-to localhost:5000/webhook
+stripeRoutes.get("/latestSession", (req, res) => {
+  if (latestSession) {
+    res.json(latestSession);
+  } else {
+    res.status(404).send("no session data available");
   }
 });
 
