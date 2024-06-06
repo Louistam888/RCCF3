@@ -28,7 +28,7 @@ const Shop = () => {
         position="relative"
         mb={{ base: "20px", sm: "50px" }}
       >
-        <Image src="/assets/tech.jpg" w="100%" />
+        <Image src="/assets/techbackground.jpg" w="100%" />
         <Flex
           position="absolute"
           justifyContent="center"
