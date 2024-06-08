@@ -24,6 +24,7 @@ const OrderSuccessScreen = () => {
   const { cart, brand } = cartItems;
   const shippingInfo = useSelector((state) => state.order);
   const { error, shippingAddress } = shippingInfo;
+  const orderItems = useSelector((state) => state.order)
 
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
@@ -53,6 +54,8 @@ const OrderSuccessScreen = () => {
     navigate("/orderSuccess");
   };
 
+  console.log("order items afterwards ",orderItems)
+
   const onPaymentError = () => {
     toast({
       description:
@@ -68,6 +71,7 @@ const OrderSuccessScreen = () => {
     const fetchLatestSession = async () => {
       try {
         const response = await axios.get("http://localhost:5000/latestSession");
+        console.log("tada", response)
         const paymentMethod = response.data.payment_method_types[0];
         const paymentDetails = response.data.total_details;
         const shippingCost = (

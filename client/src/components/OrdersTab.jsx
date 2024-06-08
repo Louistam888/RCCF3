@@ -41,6 +41,7 @@ const OrdersTab = () => {
   const { error, loading, orders, deliveredFlag, orderRemoval } = admin;
   const toast = useToast();
 
+  console.log("here are the ordrs",orders)
 
   useEffect(() => {
     dispatch(getAllOrders());
@@ -117,18 +118,18 @@ const OrdersTab = () => {
                       <Td>{new Date(order.createdAt).toDateString()}</Td>
                       <Td>{order.username}</Td>
                       <Td>{order.email}</Td>
-                      {/* <Td>
+                      <Td>
                         <Text>
-                          <i>Address:</i> {order.shippingAddress.address}
+                          <i>Address:</i> {order.shippingAddress}
                         </Text>
-                        <Text>
+                        {/* <Text>
                           <i>City:</i> {order.shippingAddress.postalCode}{" "}
                           {order.shippingAddress.city}
-                        </Text>
-                        <Text>
+                        </Text> */}
+                        {/* <Text>
                           <i>Country:</i> {order.shippingAddress.country}
-                        </Text>
-                      </Td> */}
+                        </Text> */}
+                      </Td>
                       <Td>
                         {order.orderItems.map((item) => (
                           <Text key={item._id}>
