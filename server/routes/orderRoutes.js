@@ -1,13 +1,11 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
-import Orders from "../models/Orders.js";
+import Order from "../models/Orders.js";
 import { admin, protectRoute } from "../middleWare/authMiddleWare.js";
 
 const orderRoutes = express.Router();
 
 const createOrder = asyncHandler(async (req, res) => {
-
-  console.log("here is the req", req.body)
   const {
     orderItems,
     shippingAddress,
@@ -22,7 +20,7 @@ const createOrder = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("No order items.");
   } else {
-    const order = new Orders({
+    const order = new Order({
       orderItems,
       user: userInfo._id,
       firstName: userInfo.firstName,
@@ -39,10 +37,11 @@ const createOrder = asyncHandler(async (req, res) => {
   }
 });
 
-const getOrders = async (req, res) => {
-  const orders = await Order.find({});
+const getOrders = asyncHandler(async (req, res) => {
+  // Added asyncHandler wrapper
+  const orders = await Order.find({}); // Changed variable name from Orders to Order
   res.json(orders);
-};
+});
 
 const deleteOrder = asyncHandler(async (req, res) => {
   const order = await Order.findByIdAndDelete(req.params.id);
@@ -69,8 +68,8 @@ const setDelivered = asyncHandler(async (req, res) => {
 });
 
 orderRoutes.route("/").post(protectRoute, createOrder);
-orderRoutes.route('/:id').delete(protectRoute, admin, deleteOrder);
-orderRoutes.route('/:id').put(protectRoute, admin, setDelivered);
+orderRoutes.route("/:id").delete(protectRoute, admin, deleteOrder);
+orderRoutes.route("/:id").put(protectRoute, admin, setDelivered);
 orderRoutes.route("/").get(protectRoute, admin, getOrders);
 
 export default orderRoutes;

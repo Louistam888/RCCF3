@@ -111,13 +111,13 @@ const OrdersTab = () => {
                 </Tr>
               </Thead>
               <Tbody>
-                {/* {orders &&
+                {orders &&
                   orders.map((order) => (
                     <Tr key={order._id}>
                       <Td>{new Date(order.createdAt).toDateString()}</Td>
                       <Td>{order.username}</Td>
                       <Td>{order.email}</Td>
-                      <Td>
+                      {/* <Td>
                         <Text>
                           <i>Address:</i> {order.shippingAddress.address}
                         </Text>
@@ -128,7 +128,7 @@ const OrdersTab = () => {
                         <Text>
                           <i>Country:</i> {order.shippingAddress.country}
                         </Text>
-                      </Td>
+                      </Td> */}
                       <Td>
                         {order.orderItems.map((item) => (
                           <Text key={item._id}>
@@ -164,7 +164,7 @@ const OrdersTab = () => {
                         </Flex>
                       </Td>
                     </Tr>
-                  ))} */}
+                  ))}
               </Tbody>
             </Table>
           </TableContainer>
