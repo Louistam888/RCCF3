@@ -35,7 +35,7 @@ app.use((req, res, next) => {
   if (req.originalUrl === "/webhook") {
     next(); // Do nothing with the body because I need it in a raw state.
   } else {
-    express.json()(req, res, next); // ONLY do express.json() if the received request is NOT a WebHook from Stripe.
+    express.json({ limit: "20mb" })(req, res, next); // ONLY do express.json() if the received request is NOT a WebHook from Stripe.
   }
 });
 
@@ -43,7 +43,7 @@ app.use((req, res, next) => {
 app.use("/api/products", productRoutes);
 app.use("/api/brands", brandRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/order", orderRoutes);
+app.use("/api/orders", orderRoutes);
 app.use("/api/stripe", stripeRoutes);
 app.use("/", stripeRoutes);
 

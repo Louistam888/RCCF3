@@ -27,8 +27,10 @@ const CheckoutOrderSummary = () => {
 
   //redux
   const cartItems = useSelector((state) => state.cart);
+  const orderItems = useSelector((state) => state.order);
+  const { shippingAddress } = orderItems;
   const { cart, subtotal, expressShipping } = cartItems;
-  
+
   const shipping = useCallback(() => {
     let shippingCost =
       expressShipping === "true" ? 14.99 : subtotal <= 1000 ? 4.99 : 0;
@@ -64,6 +66,7 @@ const CheckoutOrderSummary = () => {
         products: cart,
         shipping: shipping(),
         expressShipping: expressShipping,
+        // shippingAddress: shippingAddress,
       };
 
       // Make a POST request to your backend to create a checkout session
@@ -86,7 +89,7 @@ const CheckoutOrderSummary = () => {
 
       // Extract the session URL from the response data
       const { sessionUrl, sessionId, error } = response.data;
-      
+
       // Check if there's an error in the response
       if (error) {
         throw new Error(error);
@@ -112,7 +115,6 @@ const CheckoutOrderSummary = () => {
       });
     }
   };
-
 
   return (
     <Stack spacing="8px" rounded="xl" padding="0" width="full">

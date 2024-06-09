@@ -17,13 +17,13 @@ stripeRoutes.get("/", (req, res) => {
 
 stripeRoutes.post("/create-checkout-session", async (req, res) => {
   try {
-    const { products, shipping, expressShipping } = req.body;
+    const { products, shippingAddress } = req.body;
 
     if (!products || !Array.isArray(products) || products.length === 0) {
       return res.status(400).json({ error: "No products provided." });
     }
 
-    //calculate tax
+    // Calculate tax
     const taxRate = await stripe.taxRates.create({
       display_name: "Ontario HST",
       description: "Harmonized Sales Tax for Ontario",
@@ -43,26 +43,23 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       quantity: product.qty,
     }));
 
-    //create stripe session
+    // Create stripe session
     const session = await stripe.checkout.sessions.create({
       shipping_options: [
         {
           shipping_rate_data: {
             type: "fixed_amount",
             fixed_amount: {
-              amount: Math.round(shipping * 100),
+              amount: 100, // Example: fixed amount for shipping in cents
               currency: "cad",
             },
-            display_name: expressShipping
-              ? "Express shipping"
-              : shipping > 0
-              ? "Standard shipping"
-              : "Free shipping",
+            display_name: "Express shipping", // Example: display name for shipping
           },
         },
       ],
       payment_method_types: ["card"],
       line_items: lineItems,
+      // shipping_address: shippingAddress,
       mode: "payment",
       after_expiration: {
         recovery: {
@@ -101,7 +98,7 @@ stripeRoutes.post(
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
-      latestSession = session
+      latestSession = session;
     } else {
       console.log("Received event of type:", event.type);
     }
@@ -110,7 +107,9 @@ stripeRoutes.post(
   }
 );
 //endpoint for checking completed checkout session object
-// in cli use listen stripe listen --forward-to localhost:5000/webhook
+// in cli use 
+// stripe login
+// listen stripe listen --forward-to localhost:5000/webhook
 stripeRoutes.get("/latestSession", (req, res) => {
   if (latestSession) {
     res.json(latestSession);

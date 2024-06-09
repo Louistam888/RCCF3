@@ -72,7 +72,8 @@ export const getAllOrders = () => async (dispatch, getState) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.get("api/orders", config);
+    const { data } = await axios.get("/api/orders", config);
+    console.log("here are all the ordeas",data )
     dispatch(getOrders(data));
   } catch (error) {
     dispatch(
@@ -99,7 +100,7 @@ export const deleteOrder = (id) => async (dispatch, getState) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.delete(`api/orders/${id}`, config);
+    const { data } = await axios.delete(`/api/orders/${id}`, config);
     dispatch(orderDelete(data));
   } catch (error) {
     dispatch(
