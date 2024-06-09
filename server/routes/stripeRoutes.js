@@ -59,7 +59,7 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       ],
       payment_method_types: ["card"],
       line_items: lineItems,
-      // shipping_address: shippingAddress, //TODO 
+      // shipping_address: shippingAddress, //TODO
       mode: "payment",
       after_expiration: {
         recovery: {
