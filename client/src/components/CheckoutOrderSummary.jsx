@@ -27,9 +27,9 @@ const CheckoutOrderSummary = () => {
 
   //redux
   const cartItems = useSelector((state) => state.cart);
+  const { cart, subtotal, expressShipping } = cartItems;
   const orderItems = useSelector((state) => state.order);
   const { shippingAddress } = orderItems;
-  const { cart, subtotal, expressShipping } = cartItems;
 
   const shipping = useCallback(() => {
     let shippingCost =
@@ -66,7 +66,6 @@ const CheckoutOrderSummary = () => {
         products: cart,
         shipping: shipping(),
         expressShipping: expressShipping,
-        // shippingAddress: shippingAddress,
       };
 
       // Make a POST request to your backend to create a checkout session
@@ -75,6 +74,7 @@ const CheckoutOrderSummary = () => {
         body,
         shipping,
         expressShipping,
+        shippingAddress,
         {
           headers: {
             "Content-Type": "application/json",
