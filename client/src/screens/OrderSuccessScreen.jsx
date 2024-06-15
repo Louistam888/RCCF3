@@ -19,15 +19,13 @@ const OrderSuccessScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
-
   const cartItems = useSelector((state) => state.cart);
   const { cart, brand } = cartItems;
-  const shippingInfo = useSelector((state) => state.order);
-  const { error, shippingAddress } = shippingInfo;
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
-  
+
   const onPaymentSuccess = (
+    addressInfo,
     paymentMethod,
     paymentDetails,
     shippingCost,
@@ -37,10 +35,10 @@ const OrderSuccessScreen = () => {
     dispatch(
       createOrder({
         orderItems: cart,
-        shippingAddress,
+        shippingAddress: addressInfo,
         paymentMethod: paymentMethod,
         paymentDetails: paymentDetails,
-        shippingPrice: shippingCost, 
+        shippingPrice: shippingCost,
         shippingCost,
         tax: totalTax,
         totalPrice: amountTotal,
@@ -68,7 +66,7 @@ const OrderSuccessScreen = () => {
     const fetchLatestSession = async () => {
       try {
         const response = await axios.get("http://localhost:5000/latestSession");
-        console.log("tada", response)
+        const addressInfo = response.data.metadata.addressInfo;
         const paymentMethod = response.data.payment_method_types[0];
         const paymentDetails = response.data.total_details;
         const shippingCost = (
@@ -81,6 +79,7 @@ const OrderSuccessScreen = () => {
 
         if (response.data.status === "complete") {
           onPaymentSuccess(
+            addressInfo,
             paymentMethod,
             paymentDetails,
             shippingCost,

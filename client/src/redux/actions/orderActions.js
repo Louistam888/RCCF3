@@ -11,11 +11,12 @@ export const setShippingAddressError = (value) => (dispatch) => {
 
 export const createOrder = (order) => async (dispatch, getState) => {
   const {
-    order: { shippingAddress },
-    user: {userInfo},
+    user: { userInfo },
   } = getState();
 
-  const preparedOrder = { ...order, shippingAddress };
+  const shipTo = order.shippingAddress;
+
+  const preparedOrder = { ...order, shipTo };
   try {
     const config = {
       headers: {
@@ -37,7 +38,6 @@ export const createOrder = (order) => async (dispatch, getState) => {
   }
 };
 
-export const resetOrder = () => async(dispatch) => {
-  dispatch(clearOrder())
-}
-
+export const resetOrder = () => async (dispatch) => {
+  dispatch(clearOrder());
+};

@@ -18,7 +18,9 @@ stripeRoutes.get("/", (req, res) => {
 stripeRoutes.post("/create-checkout-session", async (req, res) => {
   try {
     const { products, shipping, addressInfo } = req.body;
-    console.log("shippingaddy dispatched", addressInfo)
+    // const { products, shipping } = req.body;
+    // console.log("shippingaddy dispatched", addressInfo);
+    // console.log("body info", req.body);
 
     if (!products || !Array.isArray(products) || products.length === 0) {
       return res.status(400).json({ error: "No products provided." });
@@ -52,11 +54,12 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       ],
       payment_method_types: ["card"],
       line_items: lineItems,
-      automatic_tax
-      : {
-          enabled
-      : true,
-        },
+      automatic_tax: {
+        enabled: true,
+      },
+      metadata: {
+        addressInfo: JSON.stringify(addressInfo)
+      },
       mode: "payment",
       after_expiration: {
         recovery: {

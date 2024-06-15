@@ -41,8 +41,6 @@ const OrdersTab = () => {
   const { error, loading, orders, deliveredFlag, orderRemoval } = admin;
   const toast = useToast();
 
-  console.log("here are the ordrs",orders)
-
   useEffect(() => {
     dispatch(getAllOrders());
     dispatch(resetErrorAndRemoval());
@@ -120,7 +118,7 @@ const OrdersTab = () => {
                       <Td>{order.email}</Td>
                       <Td>
                         <Text>
-                          <i>Address:</i> {order.shippingAddress}
+                          {/* <i>Address:</i> {order.shippingAddress} */}
                         </Text>
                         {/* <Text>
                           <i>City:</i> {order.shippingAddress.postalCode}{" "}
