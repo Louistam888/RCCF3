@@ -8,7 +8,7 @@
     "client": "npm run start --prefix client",
     "start": "node server/index.js",
     "app": "concurrently npm \"npm run start\" \"npm run client\"",
-    "build": "cd client && npm install && npm install --production && npm run build"
+    "build": "cd client && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -46,7 +46,9 @@
     "@babel/plugin-transform-numeric-separator": "^7.24.7",
     "@babel/plugin-transform-optional-chaining": "^7.24.7",
     "@babel/plugin-transform-private-methods": "^7.24.7",
+    "@babel/plugin-transform-private-property-in-object": "^7.24.7",
     "@babel/preset-env": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
     "assert": "^2.1.0",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
