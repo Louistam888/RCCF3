@@ -16,6 +16,12 @@ const createOrder = asyncHandler(async (req, res) => {
     userInfo,
   } = req.body;
 
+  const jsonAddress = JSON.parse(shippingAddress);
+  console.log("parsable obj", jsonAddress)
+
+  const { address, city, postalCode, stateOrProvince, country } =
+   jsonAddress;
+
   if (orderItems && orderItems.length === 0) {
     res.status(400);
     throw new Error("No order items.");
@@ -26,7 +32,13 @@ const createOrder = asyncHandler(async (req, res) => {
       firstName: userInfo.firstName,
       lastName: userInfo.lastName,
       email: userInfo.email,
-      shippingAddress,
+      shippingAddress: {
+        address: address,
+        city: city,
+        postalCode: postalCode,
+        stateOrProvince: stateOrProvince,
+        country: country,
+      },
       paymentMethod,
       paymentDetails,
       shippingPrice,

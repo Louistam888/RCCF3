@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET);
 const stripeRoutes = express.Router();
 
 const frontendBaseUrl =
-  process.env.RENDER === "production" ? "rccf3.onrender.com" : "localhost:3000";
+  process.env.RENDER === "development" ? "rccf3.onrender.com" : "localhost:3000";
 const endpointSecret =
   "whsec_d299b4686ed2365f8780f59027e8b3e493cc6678181496df2bb47e352eac0971"; //todo swap this testing endpoint for actual url later
 
@@ -18,7 +18,9 @@ stripeRoutes.get("/", (req, res) => {
 stripeRoutes.post("/create-checkout-session", async (req, res) => {
   try {
     const { products, shipping, addressInfo } = req.body;
-    console.log("shippingaddy dispatched", addressInfo)
+    // const { products, shipping } = req.body;
+    // console.log("shippingaddy dispatched", addressInfo);
+    // console.log("body info", req.body);
 
     if (!products || !Array.isArray(products) || products.length === 0) {
       return res.status(400).json({ error: "No products provided." });
@@ -52,11 +54,12 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       ],
       payment_method_types: ["card"],
       line_items: lineItems,
-      automatic_tax
-      : {
-          enabled
-      : true,
-        },
+      automatic_tax: {
+        enabled: true,
+      },
+      metadata: {
+        addressInfo: JSON.stringify(addressInfo)
+      },
       mode: "payment",
       after_expiration: {
         recovery: {
