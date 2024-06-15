@@ -9,26 +9,27 @@ export const initialState = {
 
 export const orderSlice = createSlice({
   name: "order",
-  initialState, 
+  initialState,
   reducers: {
-    setLoading:(state) => {
+    setLoading: (state) => {
       state.loading = true;
     },
-    setError: (state, {payload}) => {
+    setError: (state, { payload }) => {
       state.error = payload;
       state.loading = false;
     },
-    shippingAddressAdd: (state, {payload}) => {
-      state.shippingAddress = payload; 
+    shippingAddressAdd: (state, { payload }) => {
+      state.shippingAddress = payload;
       state.loading = false;
     },
     clearOrder: (state) => {
       state = initialState;
-    }
+    },
   },
 });
 
-export const { setLoading, setError, shippingAddressAdd, clearOrder } = orderSlice.actions; 
+export const { setLoading, setError, shippingAddressAdd, clearOrder } =
+  orderSlice.actions;
 
 export default orderSlice.reducer;
 export const orderSelector = (state) => state.order;

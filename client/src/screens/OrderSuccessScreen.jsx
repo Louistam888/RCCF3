@@ -24,10 +24,9 @@ const OrderSuccessScreen = () => {
   const { cart, brand } = cartItems;
   const shippingInfo = useSelector((state) => state.order);
   const { error, shippingAddress } = shippingInfo;
-  const orderItems = useSelector((state) => state.order)
-
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
+  
   const onPaymentSuccess = (
     paymentMethod,
     paymentDetails,
@@ -53,8 +52,6 @@ const OrderSuccessScreen = () => {
     dispatch(resetCart());
     navigate("/orderSuccess");
   };
-
-  console.log("order items afterwards ",orderItems)
 
   const onPaymentError = () => {
     toast({

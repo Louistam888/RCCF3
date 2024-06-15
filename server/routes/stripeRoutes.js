@@ -17,20 +17,14 @@ stripeRoutes.get("/", (req, res) => {
 
 stripeRoutes.post("/create-checkout-session", async (req, res) => {
   try {
-    const { products, shippingAddress } = req.body;
+    const { products, shipping, addressInfo } = req.body;
+    console.log("shippingaddy dispatched", addressInfo)
 
     if (!products || !Array.isArray(products) || products.length === 0) {
       return res.status(400).json({ error: "No products provided." });
     }
 
     // Calculate tax
-    const taxRate = await stripe.taxRates.create({
-      display_name: "Ontario HST",
-      description: "Harmonized Sales Tax for Ontario",
-      percentage: 13,
-      jurisdiction: "CA", // Jurisdiction code for Canada
-      inclusive: false,
-    });
     const lineItems = products.map((product) => ({
       price_data: {
         currency: "cad",
@@ -39,7 +33,6 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
         },
         unit_amount: Math.round(product.price * 100), // Ensure price is in cents
       },
-      tax_rates: [taxRate.id],
       quantity: product.qty,
     }));
 
@@ -50,7 +43,7 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
           shipping_rate_data: {
             type: "fixed_amount",
             fixed_amount: {
-              amount: 100, // Example: fixed amount for shipping in cents
+              amount: shipping * 100,
               currency: "cad",
             },
             display_name: "Express shipping", // Example: display name for shipping
@@ -59,7 +52,11 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       ],
       payment_method_types: ["card"],
       line_items: lineItems,
-      // shipping_address: shippingAddress, //TODO
+      automatic_tax
+      : {
+          enabled
+      : true,
+        },
       mode: "payment",
       after_expiration: {
         recovery: {
@@ -78,7 +75,6 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
     res.status(500).json({ error: "Internal server error." });
   }
 });
-
 
 let latestSession = null;
 
@@ -107,7 +103,7 @@ stripeRoutes.post(
   }
 );
 //endpoint for checking completed checkout session object
-// in cli use 
+// in cli use
 // stripe login
 // listen stripe listen --forward-to localhost:5000/webhook
 stripeRoutes.get("/latestSession", (req, res) => {

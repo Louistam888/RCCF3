@@ -27,9 +27,10 @@ const CheckoutOrderSummary = () => {
 
   //redux
   const cartItems = useSelector((state) => state.cart);
+  const { cart, subtotal, expressShipping } = cartItems;
   const orderItems = useSelector((state) => state.order);
   const { shippingAddress } = orderItems;
-  const { cart, subtotal, expressShipping } = cartItems;
+  console.log("here is what the addy being entre", shippingAddress)
 
   const shipping = useCallback(() => {
     let shippingCost =
@@ -66,15 +67,16 @@ const CheckoutOrderSummary = () => {
         products: cart,
         shipping: shipping(),
         expressShipping: expressShipping,
-        // shippingAddress: shippingAddress,
+        addressInfo: shippingAddress
       };
 
       // Make a POST request to your backend to create a checkout session
       const response = await axios.post(
         `/api/stripe/create-checkout-session`,
         body,
-        shipping,
-        expressShipping,
+        // shipping,
+        // expressShipping,
+        // shippingAddress,
         {
           headers: {
             "Content-Type": "application/json",
