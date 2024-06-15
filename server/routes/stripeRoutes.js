@@ -17,7 +17,8 @@ stripeRoutes.get("/", (req, res) => {
 
 stripeRoutes.post("/create-checkout-session", async (req, res) => {
   try {
-    const { products, shipping, shippingAddress } = req.body;
+    const { products, shipping, addressInfo } = req.body;
+    console.log("shippingaddy dispatched", addressInfo)
 
     if (!products || !Array.isArray(products) || products.length === 0) {
       return res.status(400).json({ error: "No products provided." });
@@ -51,7 +52,6 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       ],
       payment_method_types: ["card"],
       line_items: lineItems,
-      shipping_address_collection: shippingAddress,  
       automatic_tax
       : {
           enabled
