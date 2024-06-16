@@ -41,7 +41,6 @@ const OrdersTab = () => {
   const { error, loading, orders, deliveredFlag, orderRemoval } = admin;
   const toast = useToast();
 
-  console.log("here are hte orders", orders);
   useEffect(() => {
     dispatch(getAllOrders());
     dispatch(resetErrorAndRemoval());
@@ -180,6 +179,7 @@ const OrdersTab = () => {
             onClose={onClose}
             cancelRef={cancelRef}
             itemToDelete={orderToDelete}
+            itemType={"order"}
             deleteAction={deleteOrder}
           />
         </Box>
