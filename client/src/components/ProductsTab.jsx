@@ -43,7 +43,6 @@ const ProductsTab = () => {
   const { error, loading } = admin;
   const productInfo = useSelector((state) => state.products);
   const { products, productUpdate } = productInfo;
-
   const brandList = useSelector((state) => state.brands);
   const { brands, brandUpdate } = brandList;
 

@@ -41,7 +41,6 @@ const OrdersTab = () => {
   const { error, loading, orders, deliveredFlag, orderRemoval } = admin;
   const toast = useToast();
 
-  console.log("here are hte orders", orders);
   useEffect(() => {
     dispatch(getAllOrders());
     dispatch(resetErrorAndRemoval());
@@ -115,25 +114,16 @@ const OrdersTab = () => {
                   orders.map((order) => (
                     <Tr key={order._id}>
                       <Td>{new Date(order.createdAt).toDateString()}</Td>
-                      <Td>{order.username}</Td>
+                      <Td>
+                        {order.firstName} {order.lastName}
+                      </Td>
                       <Td>{order.email}</Td>
                       <Td>
-                        <Text>
-                          <i>Address:</i> {order.shippingAddress.address}
-                        </Text>
-                        <Text>
-                          <i>City:</i> {order.shippingAddress.city}
-                        </Text>
-                        <Text>
-                          <i>State Or Province:</i>{" "}
-                          {order.shippingAddress.stateOrProvince}
-                        </Text>
-                        <Text>
-                          <i>Postal:</i> {order.shippingAddress.postalCode}
-                        </Text>
-                        <Text>
-                          <i>Country:</i> {order.shippingAddress.country}
-                        </Text>
+                        <Text>{order.shippingAddress.address}</Text>
+                        <Text>{order.shippingAddress.city}</Text>
+                        <Text>{order.shippingAddress.stateOrProvince}</Text>
+                        <Text>{order.shippingAddress.postalCode}</Text>
+                        <Text>{order.shippingAddress.country}</Text>
                       </Td>
                       <Td>
                         {order.orderItems.map((item) => (
@@ -180,6 +170,7 @@ const OrdersTab = () => {
             onClose={onClose}
             cancelRef={cancelRef}
             itemToDelete={orderToDelete}
+            itemType={"order"}
             deleteAction={deleteOrder}
           />
         </Box>

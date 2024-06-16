@@ -17,8 +17,8 @@ const createOrder = asyncHandler(async (req, res) => {
   } = req.body;
 
   const jsonAddress = JSON.parse(shippingAddress);
-  console.log("parsable obj", jsonAddress)
 
+  //jsonify incoming Address info
   const { address, city, postalCode, stateOrProvince, country } =
    jsonAddress;
 

@@ -14,6 +14,7 @@ import {
   deleteProduct,
   deleteBrand,
   deleteUser,
+  deleteOrder,
 } from "../redux/actions/adminActions";
 
 import { setBrandUpdateFlag } from "../redux/slices/brands";
@@ -39,6 +40,9 @@ const ConfirmRemovalAlert = ({
       onClose();
     } else if (itemType === "user") {
       dispatch(deleteUser(itemToDelete._id));
+    } else if (itemType === "order") {
+      dispatch(deleteOrder(itemToDelete._id, toast));
+      onClose();
     }
   };
   return (

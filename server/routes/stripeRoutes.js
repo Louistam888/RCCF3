@@ -18,10 +18,7 @@ stripeRoutes.get("/", (req, res) => {
 stripeRoutes.post("/create-checkout-session", async (req, res) => {
   try {
     const { products, shipping, addressInfo } = req.body;
-    // const { products, shipping } = req.body;
-    // console.log("shippingaddy dispatched", addressInfo);
-    // console.log("body info", req.body);
-
+   
     if (!products || !Array.isArray(products) || products.length === 0) {
       return res.status(400).json({ error: "No products provided." });
     }
