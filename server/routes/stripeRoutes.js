@@ -11,10 +11,6 @@ const frontendBaseUrl =
 const endpointSecret =
   "whsec_d299b4686ed2365f8780f59027e8b3e493cc6678181496df2bb47e352eac0971"; //todo swap this testing endpoint for actual url later
 
-stripeRoutes.get("/", (req, res) => {
-  res.send("Response from Get Route");
-});
-
 stripeRoutes.post("/create-checkout-session", async (req, res) => {
   try {
     const { products, shipping, addressInfo } = req.body;
