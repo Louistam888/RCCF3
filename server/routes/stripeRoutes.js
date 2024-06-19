@@ -8,8 +8,8 @@ const stripeRoutes = express.Router();
 
 const frontendBaseUrl =
   process.env.RENDER === "development" ? "rccf3.onrender.com" : "localhost:3000";
-const endpointSecret =
-  "whsec_d299b4686ed2365f8780f59027e8b3e493cc6678181496df2bb47e352eac0971"; //todo swap this testing endpoint for actual url later
+const endpointSecret = process.env.STRIPE_ENDPOINT
+  // "whsec_d299b4686ed2365f8780f59027e8b3e493cc6678181496df2bb47e352eac0971"; //todo swap this testing endpoint for actual url later
 
 // stripeRoutes.get("/", (req, res) => {
 //   res.send("Response from Get Route");
