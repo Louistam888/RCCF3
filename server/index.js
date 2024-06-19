@@ -3,7 +3,6 @@ import connectToDatabase from "./database.js";
 import express from "express";
 import path from "path";
 import cors from "cors";
-import bodyParser from "body-parser";
 
 // import Stripe from "stripe";
 
@@ -40,7 +39,6 @@ app.use((req, res, next) => {
 });
 
 //names after/api/ must match mongoDB collection names
-app.use("/", stripeRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/brands", brandRoutes);
 app.use("/api/users", userRoutes);
