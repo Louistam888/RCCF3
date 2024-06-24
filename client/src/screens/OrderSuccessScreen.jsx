@@ -122,25 +122,15 @@ const OrderSuccessScreen = () => {
           Payment Successful!
         </AlertTitle>
         <Stack mt="20px" minW="200px">
-          <Button
-            colorScheme="teal"
-            variant="outline"
-            as={ReactLink}
-            to="/your-orders"
-          >
-            Your Order
-          </Button>
+         
           <Button
             colorScheme="teal"
             variant="outline"
             as={ReactLink}
             to="/shop"
           >
-            Products
-          </Button>
-          <Button colorScheme="teal" variant="outline">
-            Logout
-          </Button>
+            Continue Shopping
+          </Button>       
         </Stack>
       </Alert>
     </Wrap>

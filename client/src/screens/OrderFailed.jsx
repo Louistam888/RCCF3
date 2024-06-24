@@ -10,14 +10,8 @@ import {
 import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { logout } from "../redux/actions/userActions.js";
 import { useDispatch } from "react-redux";
-import useLogoutHandler from "../customHooks/useLogoutHandler.jsx";
 
 const OrderFailedScreen = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const toast = useToast();
-  const logoutHandler = useLogoutHandler();
-
   return (
     <Wrap
       justify="center"
@@ -42,9 +36,6 @@ const OrderFailedScreen = () => {
         <Stack mt="20px" minW="200px">
           <Button colorScheme="red" variant="outline" as={ReactLink} to="/cart">
             Return to cart
-          </Button>
-          <Button colorScheme="red" variant="outline" onClick={logoutHandler}>
-            Logout
           </Button>
         </Stack>
       </Alert>

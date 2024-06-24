@@ -21,6 +21,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import CheckoutScreen from "./screens/CheckoutScreen";
 import AdminConsoleScreen from "./screens/AdminConsoleScreen";
 import OrderSuccessScreen from "./screens/OrderSuccessScreen";
+import OrderFailedScreen from "./screens/OrderFailed";
 import FloatingContactButton from "./components/FloatingContactButton";
 import { ScrollToTop } from "react-router-scroll-to-top";
 
@@ -42,6 +43,7 @@ const App = () => {
             <Route path="/cart" element={<CartScreen />}></Route>
             <Route path="/login" element={<LoginScreen />}></Route>
             <Route path="/ordersuccess" element={<OrderSuccessScreen />} />
+            <Route path="/orderfailed" element={<OrderFailedScreen />} />
             <Route
               path="/registration"
               element={<RegistrationScreen />}
