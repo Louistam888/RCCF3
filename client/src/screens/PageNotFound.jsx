@@ -2,12 +2,10 @@ import {
   Box,
   Flex,
   Image,
-  Heading,
   Alert,
   AlertIcon,
   AlertDescription,
   AlertTitle,
-  Text,
 } from "@chakra-ui/react";
 
 const PageNotFound = ({ error }) => {

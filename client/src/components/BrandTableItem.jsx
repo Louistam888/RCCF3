@@ -4,14 +4,8 @@ import {
   Button,
   Image,
   VStack,
-  Textarea,
-  Tooltip,
   Input,
   Flex,
-  FormControl,
-  FormLabel,
-  Switch,
-  Badge,
   useDisclosure,
   useToast,
   Select,
@@ -21,23 +15,15 @@ import { useState, useEffect, useRef } from "react";
 import { MdOutlineDataSaverOn } from "react-icons/md";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useDispatch } from "react-redux";
-import { updateBrand, updateProduct } from "../redux/actions/adminActions.js";
+import { updateBrand } from "../redux/actions/adminActions.js";
 import ConfirmRemovalAlert from "./ConfirmRemovalAlert.jsx";
 import { convertImage } from "../screens/AdminConsoleScreen.jsx";
-import { setBrand } from "../redux/slices/brands.js";
 
-const BrandTableItem = ({
-  brand,
-  productList,
-  setBrandUpdateFlag,
-  brandUpdate,
-}) => {
-
-  const updateProductProp = updateProduct();
+const BrandTableItem = ({ brand, productList, setBrandUpdateFlag }) => {
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { products, productUpdate } = productList;
-  
+  const { products } = productList;
+
   const [brandName, setBrandName] = useState(brand.name);
   const [image, setImage] = useState(brand.image);
   const dispatch = useDispatch();
@@ -65,7 +51,6 @@ const BrandTableItem = ({
   useEffect(() => {
     setProductsUnderBrand(numberOfProductsUnderBrand);
   }, [products]);
-
 
   const onSaveBrand = () => {
     dispatch(updateBrand(brandName, brand._id, image, toast));
