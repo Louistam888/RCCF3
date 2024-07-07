@@ -14,7 +14,6 @@ import {
 import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as ReactLink, useNavigate } from "react-router-dom";
-
 import { PhoneIcon, EmailIcon, ChatIcon } from "@chakra-ui/icons";
 import CheckoutItem from "./CheckoutItem";
 import { loadStripe } from "@stripe/stripe-js";
@@ -55,11 +54,11 @@ const CheckoutOrderSummary = () => {
   );
 
   const makePayment = async () => {
-    
+
     try {
       const stripePromise = loadStripe(
         "pk_test_51MgFTDE9bJZH5kiQuzUbJHPJ7fmQwSejIxWYh5maW6j8ACwbcLz8dSRvMBP3xYtB8EUIA5qVZDcY9ImbNU4X8qEg00DeApogPl"
-      );
+      )
 
       const stripe = await stripePromise;
 
