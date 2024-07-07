@@ -42,6 +42,11 @@ export const userSlice = createSlice({
     resetUpdate: (state) => {
       state.updateSuccess = false;
     },
+    setUserOrders: (state,{payload}) => {
+      state.error = null;
+      state.orders = payload;
+      state.loading = false;
+    },
   },
 });
 
@@ -52,6 +57,7 @@ export const {
   userLogout,
   updateUserProfile,
   resetUpdate,
+  setUserOrders
 } = userSlice.actions;
 export default userSlice.reducer;
 

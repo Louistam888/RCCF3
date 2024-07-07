@@ -55,6 +55,7 @@ const CheckoutOrderSummary = () => {
   );
 
   const makePayment = async () => {
+    
     try {
       const stripePromise = loadStripe(
         "pk_test_51MgFTDE9bJZH5kiQuzUbJHPJ7fmQwSejIxWYh5maW6j8ACwbcLz8dSRvMBP3xYtB8EUIA5qVZDcY9ImbNU4X8qEg00DeApogPl"
