@@ -23,7 +23,6 @@ const BrandTableItem = ({ brand, productList, setBrandUpdateFlag }) => {
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { products } = productList;
-
   const [brandName, setBrandName] = useState(brand.name);
   const [image, setImage] = useState(brand.image);
   const dispatch = useDispatch();

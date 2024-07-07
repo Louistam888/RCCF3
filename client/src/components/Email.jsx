@@ -1,8 +1,5 @@
 import {
   Box,
-  Flex,
-  Heading,
-  Text,  
   FormControl,
   FormLabel,
   Input,
@@ -25,7 +22,6 @@ const Email = () => {
 
   //function to send data to server for email processing and reset all fields onSubmit
   const handleSubmit = (values, { resetForm }) => {
-    console.log("Form data:", values);
     // Reset the form after successful submission
     resetForm();
   };

@@ -8,7 +8,6 @@ import {
   Thead,
   Tbody,
   Button,
-  useDisclosure,
   Alert,
   Stack,
   Spinner,
@@ -16,24 +15,15 @@ import {
   AlertTitle,
   AlertDescription,
   Wrap,
-  useToast,
   Text,
   Flex,
 } from "@chakra-ui/react";
 import { CheckCircleIcon, DeleteIcon } from "@chakra-ui/icons";
 import { TbTruckDelivery } from "react-icons/tb";
-import { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllOrders,
-  deleteOrder,
-  setDelivered,
-  resetErrorAndRemoval,
-} from "../redux/actions/adminActions.js";
+import { deleteOrder } from "../redux/actions/adminActions.js";
 import ConfirmRemovalAlert from "./ConfirmRemovalAlert.jsx";
 
 const OrdersTab = () => {
-  
   return (
     <Box>
       {error && (

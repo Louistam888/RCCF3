@@ -11,9 +11,9 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link as ReactLink, useNavigate } from "react-router-dom";
+import { useCallback } from "react";
+import { useSelector } from "react-redux";
+import { Link as ReactLink } from "react-router-dom";
 import { PhoneIcon, EmailIcon, ChatIcon } from "@chakra-ui/icons";
 import CheckoutItem from "./CheckoutItem";
 import { loadStripe } from "@stripe/stripe-js";

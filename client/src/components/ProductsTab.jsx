@@ -6,8 +6,6 @@ import {
   Td,
   Thead,
   Tbody,
-  Button,
-  useDisclosure,
   Alert,
   Stack,
   Spinner,
@@ -17,7 +15,6 @@ import {
   Wrap,
   useToast,
   Text,
-  Flex,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -35,7 +32,6 @@ import ProductTableItem from "./ProductTableItem.jsx";
 import AddNewProduct from "./AddNewProduct.jsx";
 import { getBrands } from "../redux/actions/brandActions.js";
 
-
 const ProductsTab = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -44,8 +40,7 @@ const ProductsTab = () => {
   const productInfo = useSelector((state) => state.products);
   const { products, productUpdate } = productInfo;
   const brandList = useSelector((state) => state.brands);
-  const { brands, brandUpdate } = brandList;
-
+  const { brands } = brandList;
   const [sortedProductsArray, setSortedProductsArray] = useState([]);
 
   const toast = useToast();
