@@ -5,7 +5,6 @@ import {
   Image,
   VStack,
   Textarea,
-  Tooltip,
   Input,
   Flex,
   FormControl,
@@ -15,8 +14,6 @@ import {
   useDisclosure,
   useToast,
   Select,
-  Box,
-  Text,
 } from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import { MdOutlineDataSaverOn } from "react-icons/md";
@@ -27,8 +24,6 @@ import ConfirmRemovalAlert from "./ConfirmRemovalAlert.jsx";
 import { convertImage } from "../screens/AdminConsoleScreen.jsx";
 
 const ProductTableItem = ({ product, brands }) => {
-
-  const updateProductProp = updateProduct();
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [brand, setBrand] = useState(product.brand);

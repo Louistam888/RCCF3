@@ -8,7 +8,7 @@ import {
   TabPanels,
   TabPanel,
 } from "@chakra-ui/react";
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import UsersTab from "../components/UsersTab";
 import BrandsTab from "../components/BrandsTab";
@@ -70,7 +70,9 @@ const AdminConsoleScreen = () => {
               <TabPanel>
                 <ProductsTab />
               </TabPanel>
-              <TabPanel>{/* <ReviewsTab /> */}</TabPanel>
+              <TabPanel>
+                <ReviewsTab />
+              </TabPanel>
               <TabPanel>
                 <OrdersTab />
               </TabPanel>

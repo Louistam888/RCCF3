@@ -1,6 +1,5 @@
 import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
 import StatsCounter from "../components/StatsCounter";
-import Email from "../components/Email";
 
 const LandingScreen = () => {
   return (

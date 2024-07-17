@@ -1,6 +1,5 @@
 import { Box, Flex, Heading, Grid, Image, Center } from "@chakra-ui/react";
 import BrandCard from "../components/BrandCard";
-
 import { getBrands } from "../redux/actions/brandActions.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";

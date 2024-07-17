@@ -14,7 +14,7 @@ import { useState, useRef, useEffect } from "react";
 import { removeCartItem, updateCartItem } from "../redux/actions/cartActions";
 
 const CartItem = ({ cartItem }) => {
-  const { name, image, price, stock, qty, id } = cartItem;
+  const { name, image, price, qty, id } = cartItem;
   const dispatch = useDispatch();
 
   //states for handling changes to item Quantity

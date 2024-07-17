@@ -7,18 +7,15 @@ const stripe = new Stripe(process.env.STRIPE_SECRET);
 const stripeRoutes = express.Router();
 
 const frontendBaseUrl =
-  process.env.RENDER === "development" ? "rccf3.onrender.com" : "localhost:3000";
-const endpointSecret =
-  "whsec_d299b4686ed2365f8780f59027e8b3e493cc6678181496df2bb47e352eac0971"; //todo swap this testing endpoint for actual url later
-
-// stripeRoutes.get("/", (req, res) => {
-//   res.send("Response from Get Route");
-// });
+  process.env.RENDER === "development"
+    ? "rccf3.onrender.com"
+    : "localhost:3000";
+const endpointSecret = process.env.STRIPE_ENDPOINT; //change for web endpoint
 
 stripeRoutes.post("/create-checkout-session", async (req, res) => {
   try {
     const { products, shipping, addressInfo } = req.body;
-   
+
     if (!products || !Array.isArray(products) || products.length === 0) {
       return res.status(400).json({ error: "No products provided." });
     }
@@ -55,7 +52,7 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
         enabled: true,
       },
       metadata: {
-        addressInfo: JSON.stringify(addressInfo)
+        addressInfo: JSON.stringify(addressInfo),
       },
       mode: "payment",
       after_expiration: {

@@ -1,5 +1,4 @@
 import {
-  Box,
   Flex,
   Link,
   useColorModeValue,
@@ -12,7 +11,6 @@ import { Link as ReactLink } from "react-router-dom";
 const BrandCard = ({ brandItem }) => {
   const brand = brandItem.name;
   const brandImage = brandItem.image;
-
   const borderColor = useColorModeValue("gray", "white");
   const borderWidth = useColorModeValue("1px", "2px");
 

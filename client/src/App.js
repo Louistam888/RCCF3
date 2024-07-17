@@ -1,7 +1,6 @@
 // Supports weights 100-800
 import "@fontsource/anek-latin/300.css";
 import "@fontsource/roboto";
-
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import theme from "./theme/Theme";
@@ -21,6 +20,8 @@ import ProfileScreen from "./screens/ProfileScreen";
 import CheckoutScreen from "./screens/CheckoutScreen";
 import AdminConsoleScreen from "./screens/AdminConsoleScreen";
 import OrderSuccessScreen from "./screens/OrderSuccessScreen";
+import OrderFailedScreen from "./screens/OrderFailed";
+import Orders from "./screens/Orders";
 import FloatingContactButton from "./components/FloatingContactButton";
 import { ScrollToTop } from "react-router-scroll-to-top";
 
@@ -41,7 +42,10 @@ const App = () => {
             <Route path="/shop/:brand/:id" element={<ProductScreen />}></Route>
             <Route path="/cart" element={<CartScreen />}></Route>
             <Route path="/login" element={<LoginScreen />}></Route>
-            <Route path="/ordersuccess" element={<OrderSuccessScreen />} />
+            <Route path="/ordersuccess" element={<OrderSuccessScreen />}>
+            </Route>
+            <Route path="/orderfailed" element={<OrderFailedScreen />}></Route>
+            <Route path="/orders" element={<Orders />}></Route>
             <Route
               path="/registration"
               element={<RegistrationScreen />}

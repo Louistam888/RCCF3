@@ -1,19 +1,14 @@
 import {
   Flex,
-  Select,
   useColorModeValue as mode,
   Image,
   Box,
   Text,
-  Spacer,
   Divider,
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
-import { addCartItem } from "../redux/actions/cartActions";
 
 const CheckoutItem = ({ cartItem }) => {
-  const { name, image, price, stock, qty, id } = cartItem;
-  const dispatch = useDispatch();
+  const { name, image, price, qty } = cartItem;
   return (
     <>
       <Flex>

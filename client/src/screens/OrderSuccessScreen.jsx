@@ -8,9 +8,8 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { Link as ReactLink, useNavigate } from "react-router-dom";
-import { logout } from "../redux/actions/userActions.js";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { createOrder, resetOrder } from "../redux/actions/orderActions";
 import { resetCart } from "../redux/actions/cartActions";
 import axios from "axios";
@@ -54,7 +53,7 @@ const OrderSuccessScreen = () => {
   const onPaymentError = () => {
     toast({
       description:
-        "Something went wrong during the payment process. Please try again or make sure that your PayPal account balance is enough for this purchase.",
+        "Something went wrong during the payment process. Please try again or make sure that your account balance is enough for this purchase.",
       status: "error",
       duration: "600000",
       isClosable: true,
@@ -126,20 +125,9 @@ const OrderSuccessScreen = () => {
             colorScheme="teal"
             variant="outline"
             as={ReactLink}
-            to="/your-orders"
-          >
-            Your Order
-          </Button>
-          <Button
-            colorScheme="teal"
-            variant="outline"
-            as={ReactLink}
             to="/shop"
           >
-            Products
-          </Button>
-          <Button colorScheme="teal" variant="outline">
-            Logout
+            Continue Shopping
           </Button>
         </Stack>
       </Alert>
