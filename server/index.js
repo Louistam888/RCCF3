@@ -21,7 +21,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://example1.com",
+      "https://rccf3.onrender.com",
       "http://localhost:3000",
       "http://localhost:5000",
     ],
