@@ -47,7 +47,14 @@ const OrderSuccessScreen = () => {
 
     dispatch(resetOrder());
     dispatch(resetCart());
-    navigate("/ordersuccess");
+
+    const redirectUrl =
+      window.location.hostname === "localhost"
+        ? "http://localhost:3000/ordersuccess"
+        : "https://rccf3.onrender.com/ordersuccess";
+
+    // Navigate to the appropriate URL
+    window.location.href = redirectUrl;
   };
 
   const onPaymentError = () => {
@@ -66,8 +73,8 @@ const OrderSuccessScreen = () => {
       try {
         const response = await axios.get(
           process.env.NODE_ENV === "development"
-          ? "https://rccf3.onrender.com/latestSession"
-          : "http://localhost:5000/latestSession" 
+            ? "https://rccf3.onrender.com/latestSession"
+            : "http://localhost:5000/latestSession"
         );
         const addressInfo = response.data.metadata.addressInfo;
         const paymentMethod = response.data.payment_method_types[0];
