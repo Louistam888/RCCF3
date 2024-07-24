@@ -5,11 +5,6 @@ import Stripe from "stripe";
 dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET);
 const stripeRoutes = express.Router();
-
-const frontendBaseUrl =
-  process.env.NODE_ENV === "development"
-    ? "rccf3.onrender.com"
-    : "localhost:3000";
 const endpointSecret = process.env.STRIPE_ENDPOINT; //change for web endpoint
 
 stripeRoutes.post("/create-checkout-session", async (req, res) => {
@@ -61,9 +56,8 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
           allow_promotion_codes: true,
         },
       },
-      // success_url: `${req.protocol}://${frontendBaseUrl}/ordersuccess`,
       success_url: "https://rccf3.onrender.com/ordersuccess",
-      cancel_url: `${req.protocol}://${frontendBaseUrl}/orderfailed`,
+      cancel_url: `"https://rccf3.onrender.com/orderfailed`,
     });
 
     // Send the session URL back to the client instead of redirecting
