@@ -47,14 +47,11 @@ const OrderSuccessScreen = () => {
 
     dispatch(resetOrder());
     dispatch(resetCart());
-
-    const redirectUrl =
-      window.location.hostname === "localhost"
-        ? "http://localhost:3000/ordersuccess"
-        : "https://rccf3.onrender.com/ordersuccess";
-
-    // Navigate to the appropriate URL
-    window.location.href = redirectUrl;
+    if (process.env.NODE_ENV === "development") {
+      window.location.href = "https://rccf3.onrender.com/ordersuccess";
+    } else {
+      navigate("/ordersuccess");
+    }
   };
 
   const onPaymentError = () => {
