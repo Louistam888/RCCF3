@@ -47,7 +47,7 @@ const OrderSuccessScreen = () => {
 
     dispatch(resetOrder());
     dispatch(resetCart());
-    navigate("/orderSuccess");
+    navigate("/ordersuccess");
   };
 
   const onPaymentError = () => {
