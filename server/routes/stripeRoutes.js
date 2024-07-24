@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET);
 const stripeRoutes = express.Router();
 
 const frontendBaseUrl =
-  process.env.RENDER === "development"
+  process.env.NODE_ENV === "development"
     ? "rccf3.onrender.com"
     : "localhost:3000";
 const endpointSecret = process.env.STRIPE_ENDPOINT; //change for web endpoint
