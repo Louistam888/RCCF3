@@ -64,7 +64,11 @@ const OrderSuccessScreen = () => {
   useEffect(() => {
     const fetchLatestSession = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/latestSession");
+        const response = await axios.get(
+          process.env.NODE_ENV === "development"
+          ? "https://rccf3.onrender.com/latestSession"
+          : "http://localhost:5000/latestSession" 
+        );
         const addressInfo = response.data.metadata.addressInfo;
         const paymentMethod = response.data.payment_method_types[0];
         const paymentDetails = response.data.total_details;
