@@ -61,7 +61,8 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
           allow_promotion_codes: true,
         },
       },
-      success_url: `${req.protocol}://${frontendBaseUrl}/ordersuccess`,
+      // success_url: `${req.protocol}://${frontendBaseUrl}/ordersuccess`,
+      success_url: "https://rccf3.onrender.com/ordersuccess",
       cancel_url: `${req.protocol}://${frontendBaseUrl}/orderfailed`,
     });
 
