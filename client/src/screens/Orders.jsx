@@ -73,6 +73,7 @@ const Orders = () => {
                   <Th>Order Date</Th>
                   <Th>Paid Total</Th>
                   <Th>Items</Th>
+                  <Th>Receipt</Th>
                 </Tr>
               </Thead>
               <Tbody>
