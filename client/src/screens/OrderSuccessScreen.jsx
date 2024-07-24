@@ -47,8 +47,11 @@ const OrderSuccessScreen = () => {
 
     dispatch(resetOrder());
     dispatch(resetCart());
-    window.location.href = "https://rccf3.onrender.com/ordersuccess";
-    // navigate("/ordersuccess"); // reactivate only on local
+    if (process.env.NODE_ENV === "development") {
+      window.location.href = "https://rccf3.onrender.com/ordersuccess";
+    } else {
+      window.location.href = "http://localhost:3000/ordersuccess";
+    }
   };
 
   const onPaymentError = () => {
