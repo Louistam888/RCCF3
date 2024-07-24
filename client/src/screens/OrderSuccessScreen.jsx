@@ -48,8 +48,10 @@ const OrderSuccessScreen = () => {
     dispatch(resetOrder());
     dispatch(resetCart());
     if (process.env.NODE_ENV === "development") {
+      console.log("up")
       window.location.href = "https://rccf3.onrender.com/ordersuccess";
     } else {
+      console.log("what")
       navigate("/ordersuccess");
     }
   };
