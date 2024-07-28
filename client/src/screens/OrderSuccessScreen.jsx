@@ -11,6 +11,7 @@ import { Link as ReactLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { createOrder, resetOrder } from "../redux/actions/orderActions";
+import { resetCart } from "../redux/actions/cartActions";
 import { getProducts } from "../redux/actions/productActions";
 import { updateProduct } from "../redux/actions/adminActions";
 import axios from "axios";
@@ -92,14 +93,14 @@ const OrderSuccessScreen = () => {
         userInfo,
       })
     );
-
+ console.log(cart.length, products.length, "called at all?")
     // Find and update matching product stock
     if (cart.length > 0 && products.length > 0) {
       cart.forEach((cartItem) => {
         const matchedProduct = products.find(
           (item) => item._id === cartItem.id
         );
-        console.log(matchedProduct, "matched")
+        console.log(matchedProduct, "matched");
 
         if (matchedProduct) {
           const updatedStock = matchedProduct.stock - cartItem.qty;
