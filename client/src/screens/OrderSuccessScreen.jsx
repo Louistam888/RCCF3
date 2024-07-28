@@ -7,28 +7,30 @@ import {
   useToast,
   Stack,
 } from "@chakra-ui/react";
-import { Link as ReactLink, useNavigate } from "react-router-dom";
+import { Link as ReactLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { createOrder, resetOrder } from "../redux/actions/orderActions";
 import { getProducts } from "../redux/actions/productActions";
 import { updateProduct } from "../redux/actions/adminActions";
-import { resetCart } from "../redux/actions/cartActions";
 import axios from "axios";
 
 const OrderSuccessScreen = () => {
   const dispatch = useDispatch();
   const toast = useToast();
   const cartItems = useSelector((state) => state.cart);
-  const { cart, brand } = cartItems;
+  const { cart } = cartItems;
   const productInfo = useSelector((state) => state.products);
   const { products } = productInfo;
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
 
-  const [matchedProducts, setMatchedProducts] = useState([]);
+  // Fetch products on component mount
+  useEffect(() => {
+    dispatch(getProducts("adminConsole"));
+  }, [dispatch]);
 
-  // check if payment was successful
+  // Check if payment was successful
   useEffect(() => {
     const fetchLatestSession = async () => {
       try {
@@ -65,23 +67,9 @@ const OrderSuccessScreen = () => {
         onPaymentError();
       }
     };
+
     fetchLatestSession();
   }, []);
-
-  useEffect(() => {
-    dispatch(getProducts("adminConsole"));
-  }, []);
-
-  useEffect(() => {
-    if (cart && cart.length > 0 && products && products.length > 0) {
-      const matched = cart
-        .map((cartItem) => {
-          return products.find((item) => item._id === cartItem.id);
-        })
-        .filter((matchedProduct) => matchedProduct !== undefined);
-      setMatchedProducts(matched);
-    }
-  }, [cart, products]);
 
   const onPaymentSuccess = (
     addressInfo,
@@ -105,25 +93,27 @@ const OrderSuccessScreen = () => {
       })
     );
 
-    // find matching product quantity to modify quantity in stock
-    if (
-      cart.length > 0 &&
-      cart !== undefined &&
-      matchedProducts &&
-      matchedProducts.length > 0
-    ) {
-      cart.forEach((item, index) => {
-        const found = matchedProducts.find((match) => match.id === item._id);
-        const updatedStock = found.stock - item.qty;
-        dispatch(
-          updateProduct({
-            stock: updatedStock,
-          })
+    // Find and update matching product stock
+    if (cart.length > 0 && products.length > 0) {
+      cart.forEach((cartItem) => {
+        const matchedProduct = products.find(
+          (item) => item._id === cartItem.id
         );
+
+        if (matchedProduct) {
+          const updatedStock = matchedProduct.stock - cartItem.qty;
+          dispatch(
+            updateProduct({
+              id: matchedProduct._id, 
+              stock: updatedStock, 
+            })
+          );
+        }
       });
     }
+
     dispatch(resetOrder());
-    // dispatch(resetCart());
+    // Optionally dispatch resetCart()
   };
 
   const onPaymentError = () => {
