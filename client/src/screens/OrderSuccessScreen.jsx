@@ -56,7 +56,7 @@ const OrderSuccessScreen = () => {
               brand: cartItem.brand,
               price: cartItem.price,
               stock: cartItem.stock,
-              qty,
+              qty: qty - cartItem.qty,
               category: cartItem.category,
               productIsNew: cartItem.productIsNew,
               description: cartItem.description,
