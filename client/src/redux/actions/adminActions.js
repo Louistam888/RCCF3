@@ -182,13 +182,14 @@ export const updateProduct =
         },
       };
       const { data } = await axios.put(
-        `api/products/${id}`, // Make sure ID is included in the URL
+        `api/products`,
         {
           brand,
           name,
           category,
           stock,
           price,
+          id,
           productIsNew,
           description,
           image,
