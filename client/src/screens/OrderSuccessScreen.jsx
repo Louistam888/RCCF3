@@ -89,7 +89,7 @@ const OrderSuccessScreen = () => {
           const name = matchedProduct.name;
           const category = matchedProduct.category;
           const updatedStock = matchedProduct.stock - cartItem.qty;
-          const price = (matchedProduct.price = matchedProduct.price);
+          const price = matchedProduct.price;
           const id = matchedProduct._id;
           const isNew = matchedProduct.isNew;
           const description = matchedProduct.description;
