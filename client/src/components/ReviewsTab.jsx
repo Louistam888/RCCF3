@@ -42,8 +42,6 @@ const ReviewsTab = () => {
   const { error, loading } = admin;
   const productInfo = useSelector((state) => state.products);
   const { products, reviewRemoval } = productInfo;
-  console.log("products", products);
-
   const toast = useToast();
 
   useEffect(() => {

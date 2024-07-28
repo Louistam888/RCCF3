@@ -23,6 +23,7 @@ const OrderSuccessScreen = () => {
   console.log(cart, "in the cart ");
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
+
   const onPaymentSuccess = (
     addressInfo,
     paymentMethod,
@@ -49,7 +50,7 @@ const OrderSuccessScreen = () => {
       ? cart.forEach((cartItem) => {
           dispatch(
             updateProduct({
-              id: cartItem._id,
+              id: cartItem.id,
               name: cartItem.name,
               image: cartItem.image,
               brand: cartItem.brand,
