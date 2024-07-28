@@ -21,6 +21,9 @@ export const addCartItem = (id, qty, brand) => async (dispatch) => {
       price: data.price,
       stock: data.stock,
       qty,
+      category: data.category,
+      productIsNew: data.productIsNew,
+      description: data.description,
     };
     dispatch(cartItemAdd(itemToAdd));
   } catch (error) {
