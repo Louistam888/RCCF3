@@ -11,6 +11,7 @@ import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { createOrder, resetOrder } from "../redux/actions/orderActions";
+import { updateProduct } from "../redux/actions/adminActions";
 import { resetCart } from "../redux/actions/cartActions";
 import axios from "axios";
 
@@ -19,6 +20,7 @@ const OrderSuccessScreen = () => {
   const toast = useToast();
   const cartItems = useSelector((state) => state.cart);
   const { cart, brand } = cartItems;
+  console.log(cart, "in the cart ");
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
   const onPaymentSuccess = (
@@ -42,6 +44,25 @@ const OrderSuccessScreen = () => {
         userInfo,
       })
     );
+
+    cart && cart.length > 0
+      ? cart.forEach((cartItem) => {
+          dispatch(
+            updateProduct({
+              id: cartItem._id,
+              name: cartItem.name,
+              image: cartItem.image,
+              brand: cartItem.brand,
+              price: cartItem.price,
+              stock: cartItem.stock,
+              qty,
+              category: cartItem.category,
+              productIsNew: cartItem.productIsNew,
+              description: cartItem.description,
+            })
+          );
+        })
+      : null;
     dispatch(resetOrder());
     dispatch(resetCart());
   };
@@ -63,7 +84,6 @@ const OrderSuccessScreen = () => {
         const response = await axios.get(
           "https://rccf3.onrender.com/latestSession"
         );
-        console.log(response, "this is the response");
         const addressInfo = response.data.metadata.addressInfo;
         const paymentMethod = response.data.payment_method_types[0];
         const paymentDetails = response.data.total_details;
