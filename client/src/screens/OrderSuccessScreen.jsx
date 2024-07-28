@@ -40,18 +40,16 @@ const OrderSuccessScreen = () => {
         const response = await axios.get(
           "https://rccf3.onrender.com/latestSession"
         );
-        const addressInfo = response.data.metadata.addressInfo;
-        const paymentMethod = response.data.payment_method_types[0];
+        const { metadata, payment_method_types, total_details, amount_total } =
+          response.data;
+        const addressInfo = metadata.addressInfo;
+        const paymentMethod = payment_method_types[0];
         const paymentDetails = response.data.total_details;
-        const shippingCost = (
-          response.data.total_details.amount_shipping / 100
-        ).toFixed(2);
-        const totalTax = (response.data.total_details.amount_tax / 100).toFixed(
-          2
-        );
-        const amountTotal = (response.data.amount_total / 100).toFixed(2);
+        const shippingCost = (total_details.amount_shipping / 100).toFixed(2);
+        const totalTax = (total_details.amount_tax / 100).toFixed(2);
+        const amountTotal = (amount_total / 100).toFixed(2);
 
-        if (response && response.data.status === "complete") {
+        if (response.data.status === "complete") {
           setPaymentSuccess(true);
           onPaymentSuccess(
             addressInfo,
@@ -81,38 +79,41 @@ const OrderSuccessScreen = () => {
       const updateProducts = async () => {
         try {
           // Create an array of promises for updating products
-          const updatePromises = cart.map(async (cartItem) => {
-            const matchedProduct = products.find(
-              (item) => item._id === cartItem.id
-            );
-            console.log(matchedProduct, "matched");
-
-            if (matchedProduct) {
-              const updatedStock = matchedProduct.stock - cartItem.qty;
-
-              // Dispatch the action and return the promise
-              return dispatch(
-                updateProduct({
-                  stock: updatedStock,
-                  brand: matchedProduct.brand,
-                  name: matchedProduct.name,
-                  category: matchedProduct.category,
-                  price: matchedProduct.price,
-                  id: matchedProduct._id,
-                  isNew: matchedProduct.isNew,
-                  description: matchedProduct.description,
-                  image: matchedProduct.image,
-                })
+          const updatePromises = cart
+            .map((cartItem) => {
+              const matchedProduct = products.find(
+                (item) => item._id === cartItem.id
               );
-            }
-          });
 
-          // Wait for all update promises to resolve
-          await Promise.all(updatePromises);
+              if (matchedProduct) {
+                const updatedStock = matchedProduct.stock - cartItem.qty;
+                return dispatch(
+                  updateProduct({
+                    stock: updatedStock,
+                    brand: matchedProduct.brand,
+                    name: matchedProduct.name,
+                    category: matchedProduct.category,
+                    price: matchedProduct.price,
+                    id: matchedProduct._id,
+                    isNew: matchedProduct.isNew,
+                    description: matchedProduct.description,
+                    image: matchedProduct.image,
+                  })
+                );
+              }
+              return null; // Return null for items not found
+            })
+            .filter((promise) => promise !== null); // Remove null promises
 
-          // Dispatch reset actions after updating products
-          dispatch(resetOrder());
-          dispatch(resetCart());
+          // Avoid calling Promise.all if there are no promises
+          if (updatePromises.length > 0) {
+            // Wait for all update promises to resolve
+            await Promise.all(updatePromises);
+
+            // Dispatch reset actions after updating products
+            dispatch(resetOrder());
+            dispatch(resetCart());
+          }
         } catch (error) {
           console.error("Error updating products:", error);
         }

@@ -173,6 +173,7 @@ export const updateProduct =
     const {
       user: { userInfo },
     } = getState();
+    console.log(user)
 
     try {
       const config = {
