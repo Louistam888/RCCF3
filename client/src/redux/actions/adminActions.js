@@ -167,7 +167,7 @@ export const updateProduct =
     productIsNew,
     description,
     image,
-    toast
+    toast = () => {} 
   ) =>
   async (dispatch, getState) => {
     const {
