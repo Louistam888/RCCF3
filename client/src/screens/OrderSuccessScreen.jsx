@@ -85,11 +85,29 @@ const OrderSuccessScreen = () => {
         console.log(matchedProduct, "matched");
 
         if (matchedProduct) {
+          const brand = matchedProduct.brand;
+          const name = matchedProduct.name;
+          const category = matchedProduct.category;
           const updatedStock = matchedProduct.stock - cartItem.qty;
+          const price = (matchedProduct.price = matchedProduct.price);
+          const id = matchedProduct._id;
+          const isNew = matchedProduct.isNew;
+          const description = matchedProduct.description;
+          const image = matchedProduct.image;
+
           dispatch(
             updateProduct({
               id: matchedProduct._id,
               stock: updatedStock,
+              brand,
+              name,
+              category,
+              stock,
+              price,
+              id,
+              isNew,
+              description,
+              image,
             })
           );
         }
