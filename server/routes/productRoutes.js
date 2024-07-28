@@ -225,13 +225,11 @@ const removeProductReview = asyncHandler(async (req, res) => {
 
 productRoutes.route("/").get(getProducts);
 productRoutes.route("/adminConsole").get(getProducts);
-
-// productRoutes.route("/shop").get(getProducts);
 productRoutes.route("/shop/:brand").get(getProducts);
 productRoutes.route("/shop/:brand/:id").get(getProduct);
 productRoutes.route("/").put(protectRoute, admin, updateProduct);
+productRoutes.route("/ordersuccess").put(protectRoute, admin, updateProduct);
 productRoutes.route("/:id").delete(protectRoute, admin, deleteProduct);
-//may need to redo
 productRoutes.route("/").post(protectRoute, admin, createNewProduct);
 productRoutes
   .route("/reviews/:brand/:productId")
