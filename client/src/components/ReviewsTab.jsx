@@ -89,7 +89,7 @@ const ReviewsTab = () => {
           <Heading fontSize="20px" pb="20px">
             The following products have reviews:
           </Heading>
-          {products && products.length > 0
+          {Array.isArray(products) && products.length > 0
             ? products.map((product) =>
                 product.reviews.length > 0 ? (
                   <Box key={product._id}>
