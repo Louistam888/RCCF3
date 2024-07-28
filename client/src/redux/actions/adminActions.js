@@ -73,7 +73,6 @@ export const getAllOrders = () => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get("/api/orders", config);
-    console.log("here are all the ordeas",data )
     dispatch(getOrders(data));
   } catch (error) {
     dispatch(
