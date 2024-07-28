@@ -22,7 +22,7 @@ const OrderSuccessScreen = () => {
   const cartItems = useSelector((state) => state.cart);
   const { cart } = cartItems;
   const productInfo = useSelector((state) => state.products);
-  const { products } = productInfo;
+  const { products, loading: productsLoading } = productInfo;
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
 
@@ -93,9 +93,9 @@ const OrderSuccessScreen = () => {
         userInfo,
       })
     );
- console.log(cart.length, products.length, "called at all?")
-    // Find and update matching product stock
-    if (cart.length > 0 && products.length > 0) {
+
+    // Find and update matching product stock only when products are loaded
+    if (cart.length > 0 && !productsLoading) {
       cart.forEach((cartItem) => {
         const matchedProduct = products.find(
           (item) => item._id === cartItem.id
