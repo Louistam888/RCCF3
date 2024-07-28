@@ -75,7 +75,7 @@ const OrdersTab = () => {
       {error && (
         <Alert status="error">
           <AlertIcon />
-          <AlertTitle>Upps!</AlertTitle>
+          <AlertTitle>Opps!</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
