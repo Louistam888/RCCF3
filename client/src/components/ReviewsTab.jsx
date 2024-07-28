@@ -28,7 +28,6 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeReview } from "../redux/actions/adminActions.js";
 import {
