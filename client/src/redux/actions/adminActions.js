@@ -1,5 +1,14 @@
 import axios from "axios";
-import { getUsers, userDelete, resetError, setError, setLoading, getOrders, orderDelete, setDeliveredFlag } from "../slices/admin";
+import {
+  getUsers,
+  userDelete,
+  resetError,
+  setError,
+  setLoading,
+  getOrders,
+  orderDelete,
+  setDeliveredFlag,
+} from "../slices/admin";
 import {
   setProducts,
   setProductUpdateFlag,
