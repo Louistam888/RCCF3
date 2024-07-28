@@ -1,6 +1,8 @@
 import {
   Box,
   TableContainer,
+  useDisclosure,
+  useToast,
   Th,
   Tr,
   Table,
@@ -20,16 +22,60 @@ import {
 } from "@chakra-ui/react";
 import { CheckCircleIcon, DeleteIcon } from "@chakra-ui/icons";
 import { TbTruckDelivery } from "react-icons/tb";
-import { deleteOrder } from "../redux/actions/adminActions.js";
 import ConfirmRemovalAlert from "./ConfirmRemovalAlert.jsx";
+import { useEffect, useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllOrders,
+  deleteOrder,
+  setDelivered,
+  resetErrorAndRemoval,
+} from "../redux/actions/adminActions.js";
 
 const OrdersTab = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
+  const [orderToDelete, setOrderToDelete] = useState("");
+  const dispatch = useDispatch();
+  const admin = useSelector((state) => state.admin);
+  const { error, loading, orders, deliveredFlag, orderRemoval } = admin;
+  const toast = useToast();
+
+  useEffect(() => {
+    dispatch(getAllOrders());
+    dispatch(resetErrorAndRemoval());
+    if (orderRemoval) {
+      toast({
+        description: "Order has been removed.",
+        status: "success",
+        isClosable: true,
+      });
+    }
+    if (deliveredFlag) {
+      toast({
+        description: "Order has been set to delivered.",
+        status: "success",
+        isClosable: true,
+      });
+    }
+  }, [orderRemoval, dispatch, toast, deliveredFlag]);
+
+  const openDeleteConfirmBox = (order) => {
+    setOrderToDelete(order);
+    onOpen();
+  };
+
+  const onSetToDelivered = (order) => {
+    dispatch(resetErrorAndRemoval());
+    dispatch(setDelivered(order._id));
+  };
+
   return (
     <Box>
       {error && (
         <Alert status="error">
           <AlertIcon />
-          <AlertTitle>Upps!</AlertTitle>
+          <AlertTitle>Opps!</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
