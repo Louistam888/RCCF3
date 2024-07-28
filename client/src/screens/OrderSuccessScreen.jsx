@@ -97,7 +97,6 @@ const OrderSuccessScreen = () => {
 
           dispatch(
             updateProduct({
-              id: matchedProduct._id,
               stock: updatedStock,
               brand,
               name,
