@@ -102,7 +102,7 @@ const OrderSuccessScreen = () => {
               brand,
               name,
               category,
-              stock,
+              updatedStock,
               price,
               id,
               isNew,
