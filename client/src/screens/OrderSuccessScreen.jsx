@@ -78,42 +78,47 @@ const OrderSuccessScreen = () => {
   // Handle payment success and update product stock
   useEffect(() => {
     if (paymentSuccess && !loading && products.length > 0) {
-      cart.forEach((cartItem) => {
-        const matchedProduct = products.find(
-          (item) => item._id === cartItem.id
-        );
-        console.log(matchedProduct, "matched");
+      const updateProducts = async () => {
+        try {
+          // Create an array of promises for updating products
+          const updatePromises = cart.map(async (cartItem) => {
+            const matchedProduct = products.find(
+              (item) => item._id === cartItem.id
+            );
+            console.log(matchedProduct, "matched");
 
-        if (matchedProduct) {
-          const brand = matchedProduct.brand;
-          const name = matchedProduct.name;
-          const category = matchedProduct.category;
-          const updatedStock = matchedProduct.stock - cartItem.qty;
-          const price = matchedProduct.price;
-          const id = matchedProduct._id;
-          const isNew = matchedProduct.isNew;
-          const description = matchedProduct.description;
-          const image = matchedProduct.image;
+            if (matchedProduct) {
+              const updatedStock = matchedProduct.stock - cartItem.qty;
 
-          dispatch(
-            updateProduct({
-              stock: updatedStock,
-              brand,
-              name,
-              category,
-              updatedStock,
-              price,
-              id,
-              isNew,
-              description,
-              image,
-            })
-          );
+              // Dispatch the action and return the promise
+              return dispatch(
+                updateProduct({
+                  stock: updatedStock,
+                  brand: matchedProduct.brand,
+                  name: matchedProduct.name,
+                  category: matchedProduct.category,
+                  price: matchedProduct.price,
+                  id: matchedProduct._id,
+                  isNew: matchedProduct.isNew,
+                  description: matchedProduct.description,
+                  image: matchedProduct.image,
+                })
+              );
+            }
+          });
+
+          // Wait for all update promises to resolve
+          await Promise.all(updatePromises);
+
+          // Dispatch reset actions after updating products
+          dispatch(resetOrder());
+          dispatch(resetCart());
+        } catch (error) {
+          console.error("Error updating products:", error);
         }
-      });
+      };
 
-      dispatch(resetOrder());
-      dispatch(resetCart());
+      updateProducts();
     }
   }, [paymentSuccess, loading, products, cart, dispatch]);
 
