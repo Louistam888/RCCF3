@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createOrder, resetOrder } from "../redux/actions/orderActions";
 import { resetCart } from "../redux/actions/cartActions";
 import { getProducts } from "../redux/actions/productActions";
@@ -22,9 +22,11 @@ const OrderSuccessScreen = () => {
   const cartItems = useSelector((state) => state.cart);
   const { cart } = cartItems;
   const productInfo = useSelector((state) => state.products);
-  const { products, loading: productsLoading } = productInfo;
+  const { products, loading } = productInfo;
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
+
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   // Fetch products on component mount
   useEffect(() => {
@@ -50,6 +52,7 @@ const OrderSuccessScreen = () => {
         const amountTotal = (response.data.amount_total / 100).toFixed(2);
 
         if (response && response.data.status === "complete") {
+          setPaymentSuccess(true);
           onPaymentSuccess(
             addressInfo,
             paymentMethod,
@@ -72,6 +75,31 @@ const OrderSuccessScreen = () => {
     fetchLatestSession();
   }, []);
 
+  // Handle payment success and update product stock
+  useEffect(() => {
+    if (paymentSuccess && !loading && products.length > 0) {
+      cart.forEach((cartItem) => {
+        const matchedProduct = products.find(
+          (item) => item._id === cartItem.id
+        );
+        console.log(matchedProduct, "matched");
+
+        if (matchedProduct) {
+          const updatedStock = matchedProduct.stock - cartItem.qty;
+          dispatch(
+            updateProduct({
+              id: matchedProduct._id,
+              stock: updatedStock,
+            })
+          );
+        }
+      });
+
+      dispatch(resetOrder());
+      dispatch(resetCart());
+    }
+  }, [paymentSuccess, loading, products, cart, dispatch]);
+
   const onPaymentSuccess = (
     addressInfo,
     paymentMethod,
@@ -93,29 +121,6 @@ const OrderSuccessScreen = () => {
         userInfo,
       })
     );
-
-    // Find and update matching product stock only when products are loaded
-    if (cart.length > 0 && !productsLoading) {
-      cart.forEach((cartItem) => {
-        const matchedProduct = products.find(
-          (item) => item._id === cartItem.id
-        );
-        console.log(matchedProduct, "matched");
-
-        if (matchedProduct) {
-          const updatedStock = matchedProduct.stock - cartItem.qty;
-          dispatch(
-            updateProduct({
-              id: matchedProduct._id,
-              stock: updatedStock,
-            })
-          );
-        }
-      });
-    }
-
-    dispatch(resetOrder());
-    dispatch(resetCart());
   };
 
   const onPaymentError = () => {
