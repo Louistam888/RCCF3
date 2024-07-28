@@ -99,13 +99,14 @@ const OrderSuccessScreen = () => {
         const matchedProduct = products.find(
           (item) => item._id === cartItem.id
         );
+        console.log(matchedProduct, "matched")
 
         if (matchedProduct) {
           const updatedStock = matchedProduct.stock - cartItem.qty;
           dispatch(
             updateProduct({
-              id: matchedProduct._id, 
-              stock: updatedStock, 
+              id: matchedProduct._id,
+              stock: updatedStock,
             })
           );
         }
@@ -113,7 +114,7 @@ const OrderSuccessScreen = () => {
     }
 
     dispatch(resetOrder());
-    // Optionally dispatch resetCart()
+    dispatch(resetCart());
   };
 
   const onPaymentError = () => {
