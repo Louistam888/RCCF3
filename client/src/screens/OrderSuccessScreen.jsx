@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createOrder, resetOrder } from "../redux/actions/orderActions";
 import { getProducts } from "../redux/actions/productActions";
 import { updateProduct } from "../redux/actions/adminActions";
@@ -26,67 +26,7 @@ const OrderSuccessScreen = () => {
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
 
-  useEffect(() => {
-    dispatch(getProducts("adminConsole"));
-  }, []);
-
-  const onPaymentSuccess = (
-    addressInfo,
-    paymentMethod,
-    paymentDetails,
-    shippingCost,
-    totalTax,
-    amountTotal
-  ) => {
-    dispatch(
-      createOrder({
-        orderItems: cart,
-        shippingAddress: addressInfo,
-        paymentMethod: paymentMethod,
-        paymentDetails: paymentDetails,
-        shippingPrice: shippingCost,
-        shippingCost,
-        tax: totalTax,
-        totalPrice: amountTotal,
-        userInfo,
-      })
-    );
-    // find matching product quantity to modify quantity in stock
-    cart && cart.length > 0 && products && products.length > 0
-      ? cart.forEach((cartItem) => {
-          const matchedProduct = products.find(
-            (item) => item.id === cartItem.id
-          )
-
-          dispatch(
-            updateProduct({
-              id: cartItem.id,
-              name: cartItem.name,
-              image: cartItem.image,
-              brand: cartItem.brand,
-              price: cartItem.price,
-              stock: cartItem.stock,
-              qty: matchedProduct.qty - cartItem.qty,
-              category: cartItem.category,
-              productIsNew: cartItem.productIsNew,
-              description: cartItem.description,
-            })
-          );
-        })
-      : null;
-    dispatch(resetOrder());
-    dispatch(resetCart());
-  };
-
-  const onPaymentError = () => {
-    toast({
-      description:
-        "Something went wrong during the payment process. Please try again or make sure that your account balance is enough for this purchase.",
-      status: "error",
-      duration: "600000",
-      isClosable: true,
-    });
-  };
+  const [matchedProducts, setMatchedProducts] = useState([]);
 
   // check if payment was successful
   useEffect(() => {
@@ -125,9 +65,76 @@ const OrderSuccessScreen = () => {
         onPaymentError();
       }
     };
-
     fetchLatestSession();
   }, []);
+
+  useEffect(() => {
+    dispatch(getProducts("adminConsole"));
+  }, []);
+
+  useEffect(() => {
+    if (cart && cart.length > 0 && products && products.length > 0) {
+      const matched = cart
+        .map((cartItem) => {
+          return products.find((item) => item._id === cartItem.id);
+        })
+        .filter((matchedProduct) => matchedProduct !== undefined);
+      setMatchedProducts(matched);
+    }
+  }, [cart, products]);
+
+  const onPaymentSuccess = (
+    addressInfo,
+    paymentMethod,
+    paymentDetails,
+    shippingCost,
+    totalTax,
+    amountTotal
+  ) => {
+    dispatch(
+      createOrder({
+        orderItems: cart,
+        shippingAddress: addressInfo,
+        paymentMethod: paymentMethod,
+        paymentDetails: paymentDetails,
+        shippingPrice: shippingCost,
+        shippingCost,
+        tax: totalTax,
+        totalPrice: amountTotal,
+        userInfo,
+      })
+    );
+
+    // find matching product quantity to modify quantity in stock
+    if (
+      cart.length > 0 &&
+      cart !== undefined &&
+      matchedProducts &&
+      matchedProducts.length > 0
+    ) {
+      cart.forEach((item, index) => {
+        const found = matchedProducts.find((match) => match.id === item._id);
+        const updatedStock = found.stock - item.qty;
+        dispatch(
+          updateProduct({
+            stock: updatedStock,
+          })
+        );
+      });
+    }
+    dispatch(resetOrder());
+    // dispatch(resetCart());
+  };
+
+  const onPaymentError = () => {
+    toast({
+      description:
+        "Something went wrong during the payment process. Please try again or make sure that your account balance is enough for this purchase.",
+      status: "error",
+      duration: "600000",
+      isClosable: true,
+    });
+  };
 
   return (
     <Wrap
@@ -165,4 +172,4 @@ const OrderSuccessScreen = () => {
   );
 };
 
-export default OrderSuccessScreen
+export default OrderSuccessScreen;
