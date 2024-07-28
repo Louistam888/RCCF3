@@ -42,7 +42,6 @@ const OrderSuccessScreen = () => {
         userInfo,
       })
     );
-
     dispatch(resetOrder());
     dispatch(resetCart());
   };
@@ -64,7 +63,6 @@ const OrderSuccessScreen = () => {
         const response = await axios.get(
           "https://rccf3.onrender.com/latestSession"
         );
-        console.log(response);
         const addressInfo = response.data.metadata.addressInfo;
         const paymentMethod = response.data.payment_method_types[0];
         const paymentDetails = response.data.total_details;
@@ -76,7 +74,7 @@ const OrderSuccessScreen = () => {
         );
         const amountTotal = (response.data.amount_total / 100).toFixed(2);
 
-        if (response.data.status === "complete") {
+        if (response && response.data.status === "complete") {
           onPaymentSuccess(
             addressInfo,
             paymentMethod,

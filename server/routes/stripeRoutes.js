@@ -57,7 +57,7 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
         },
       },
       success_url: "https://rccf3.onrender.com/ordersuccess",
-      cancel_url: `"https://rccf3.onrender.com/orderfailed`,
+      cancel_url: "https://rccf3.onrender.com/orderfailed",
     });
 
     // Send the session URL back to the client instead of redirecting
