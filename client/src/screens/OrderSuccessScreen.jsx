@@ -11,6 +11,7 @@ import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { createOrder, resetOrder } from "../redux/actions/orderActions";
+import { getProducts } from "../redux/actions/productActions";
 import { updateProduct } from "../redux/actions/adminActions";
 import { resetCart } from "../redux/actions/cartActions";
 import axios from "axios";
@@ -20,9 +21,14 @@ const OrderSuccessScreen = () => {
   const toast = useToast();
   const cartItems = useSelector((state) => state.cart);
   const { cart, brand } = cartItems;
-  console.log(cart, "in the cart ");
+  const productInfo = useSelector((state) => state.products);
+  const { products } = productInfo;
   const user = useSelector((state) => state.user);
   const { userInfo } = user;
+
+  useEffect(() => {
+    dispatch(getProducts("adminConsole"));
+  }, []);
 
   const onPaymentSuccess = (
     addressInfo,
@@ -45,9 +51,13 @@ const OrderSuccessScreen = () => {
         userInfo,
       })
     );
-
-    cart && cart.length > 0
+    // find matching product quantity to modify quantity in stock
+    cart && cart.length > 0 && products && products.length > 0
       ? cart.forEach((cartItem) => {
+          const matchedProduct = products.find(
+            (item) => item.id === cartItem.id
+          )
+
           dispatch(
             updateProduct({
               id: cartItem.id,
@@ -56,7 +66,7 @@ const OrderSuccessScreen = () => {
               brand: cartItem.brand,
               price: cartItem.price,
               stock: cartItem.stock,
-              qty: qty - cartItem.qty,
+              qty: matchedProduct.qty - cartItem.qty,
               category: cartItem.category,
               productIsNew: cartItem.productIsNew,
               description: cartItem.description,
@@ -155,4 +165,4 @@ const OrderSuccessScreen = () => {
   );
 };
 
-export default OrderSuccessScreen;
+export default OrderSuccessScreen
