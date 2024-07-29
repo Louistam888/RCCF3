@@ -167,13 +167,12 @@ export const updateProduct =
     productIsNew,
     description,
     image,
-    toast = () => {} 
+    toast = () => {}
   ) =>
   async (dispatch, getState) => {
     const {
       user: { userInfo },
     } = getState();
-    console.log(user)
 
     try {
       const config = {
@@ -182,7 +181,7 @@ export const updateProduct =
           "Content-Type": "application/json",
         },
       };
-      console.log("config", config)
+      console.log("config", config);
       const { data } = await axios.put(
         `api/products`,
         {
