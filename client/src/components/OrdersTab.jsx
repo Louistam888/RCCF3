@@ -60,6 +60,10 @@ const OrdersTab = () => {
     }
   }, [orderRemoval, dispatch, toast, deliveredFlag]);
 
+  //sort so latest orders appear first
+  const orderCopy = orders ? [...orders] : [];
+  const orderReversed = orderCopy.reverse();
+
   const openDeleteConfirmBox = (order) => {
     setOrderToDelete(order);
     onOpen();
@@ -111,7 +115,7 @@ const OrdersTab = () => {
               </Thead>
               <Tbody>
                 {orders &&
-                  orders.map((order) => (
+                  orderReversed.map((order) => (
                     <Tr key={order._id}>
                       <Td>{new Date(order.createdAt).toDateString()}</Td>
                       <Td>

@@ -40,6 +40,8 @@ const OrderSuccessScreen = () => {
         const response = await axios.get(
           "https://rccf3.onrender.com/latestSession"
         );
+
+        console.log(response, "stripe")
         const { metadata, payment_method_types, total_details, amount_total } =
           response.data;
         const addressInfo = metadata.addressInfo;
