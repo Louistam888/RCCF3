@@ -87,13 +87,8 @@ const OrderSuccessScreen = () => {
               const matchedProduct = products.find(
                 (item) => item._id === cartItem.id
               );
-
-              console.log(matchedProduct._id, "matched")
-              console.log(matchedProduct.name, "name")
-              
               if (matchedProduct) {
                 const updatedStock = matchedProduct.stock - cartItem.qty;
-                console.log(updatedStock, "updated stock")
                 return dispatch(
                   updateProduct({
                     brand: matchedProduct.brand,
