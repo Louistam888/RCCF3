@@ -7,13 +7,9 @@ import {
   Textarea,
   Flex,
   Spinner,
-  Heading,
   Badge,
-  Icon,
   useColorModeValue as mode,
-  useColorMode,
   useToast,
-  Wrap,
   Input,
 } from "@chakra-ui/react";
 // import { getProduct } from "../redux/actions/productActions.js";

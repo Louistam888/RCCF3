@@ -10,11 +10,11 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect} from "react";
 import { removeCartItem, updateCartItem } from "../redux/actions/cartActions";
 
 const CartItem = ({ cartItem }) => {
-  const { name, image, price, qty, id } = cartItem;
+  const { name, image, price, qty, id, stock } = cartItem;
   const dispatch = useDispatch();
 
   //states for handling changes to item Quantity
@@ -22,6 +22,7 @@ const CartItem = ({ cartItem }) => {
   const [updateQty, setUpdateQty] = useState(qty); // quantity of item
   const [displayEditBtn, setDisplayEditBtn] = useState("block"); // determines if edit btn is displayed after click
   const [updateQtyBtn, setUpdateQtyBtn] = useState("none"); // determines if save button is displayed after click
+
   const [isFocused, setIsFocused] = useState(false); // handles whether input placeholder appears when input is selected
 
   //chakra
@@ -49,7 +50,16 @@ const CartItem = ({ cartItem }) => {
   //function grabs new quantity entered in input box
   const handleInputChange = (event) => {
     const newQtyValue = event.target.value;
-    setUpdateQty(newQtyValue);
+    if (newQtyValue > stock) {
+      setUpdateQty(stock);
+      toast({
+        description: `We only have ${stock} of this item left in stock`,
+        status: "error",
+        isClosable: true,
+      });
+    } else {
+      setUpdateQty(newQtyValue);
+    }
   };
 
   //function that resets edit/save box and triggers update cart qty state
@@ -122,10 +132,11 @@ const CartItem = ({ cartItem }) => {
             textAlign="center"
             isDisabled={editQty}
             ref={inputRef}
-            placeholder={isFocused ? "" : qty}
+            placeholder={isFocused ? "" : updateQty}
             _placeholder={{ opacity: 1, color: "inherit" }}
             focusBorderColor="blackAlpha"
             onChange={handleInputChange}
+            value={updateQty}
           />
           <Button
             onClick={handleQtyClick}
