@@ -123,15 +123,13 @@ const updateProduct = asyncHandler(async (req, res) => {
 
   console.log(brand, " brand");
   console.log(name, " name");
-  console.log(image, " image");
+  console.log(image, " image"); 
   console.log(category, " category");
   console.log(stock, " stock");
   console.log(price, " price");
   console.log(id, " id");
   console.log(productIsNew, " new");
   console.log(description, " desc");
-  
-  console.log(req.body.id, "id");
 
   //find product with matching ID
   const product = await Product.findById(id);
