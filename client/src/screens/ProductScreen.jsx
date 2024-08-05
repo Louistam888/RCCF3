@@ -48,7 +48,6 @@ const ProductScreen = () => {
 
   const user = useSelector((state) => state.user);
   const userInfo = user;
-  console.log(userInfo);
 
   //chakra
   const buttonBg = mode("gray.300");

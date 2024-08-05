@@ -75,10 +75,7 @@ const OrderSuccessScreen = () => {
 
   // Handle payment success and update product stock
   useEffect(() => {
-    console.log("beginning");
     if (paymentSuccess && !loading && products.length > 0) {
-      console.log("secondary condition met");
-
       const updateProducts = async () => {
         try {
           // Create an array of promises for updating products
@@ -99,7 +96,7 @@ const OrderSuccessScreen = () => {
                     matchedProduct._id,
                     matchedProduct.isNew,
                     matchedProduct.description,
-                    matchedProduct.image,
+                    matchedProduct.image
                   )
                 );
               }
