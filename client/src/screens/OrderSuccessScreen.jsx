@@ -88,8 +88,9 @@ const OrderSuccessScreen = () => {
                 (item) => item._id === cartItem.id
               );
 
-              console.log(matchedProduct, "matched")
-
+              console.log(matchedProduct._id, "matched")
+              console.log(matchedProduct.name, "name")
+              
               if (matchedProduct) {
                 const updatedStock = matchedProduct.stock - cartItem.qty;
                 console.log(updatedStock, "updated stock")
