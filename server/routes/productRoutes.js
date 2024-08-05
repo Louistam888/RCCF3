@@ -108,6 +108,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 //route to update product
 const updateProduct = asyncHandler(async (req, res) => {
+  console.log("res received", res.body)
   const {
     brand,
     name,
@@ -121,7 +122,7 @@ const updateProduct = asyncHandler(async (req, res) => {
   } = req.body;
 
   const jsonObject = req.body
-  console.log("here is res", jsonObject)
+  console.log("here is res", jsonObject.id)
   //find product with matching ID
   const product = await Product.findById(id);
   console.log("product found in update product function", product)
