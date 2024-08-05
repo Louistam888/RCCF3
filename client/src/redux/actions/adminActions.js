@@ -181,7 +181,6 @@ export const updateProduct =
           "Content-Type": "application/json",
         },
       };
-      console.log("config", config);
       const { data } = await axios.put(
         `api/products`,
         {
