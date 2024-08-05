@@ -27,7 +27,6 @@ const CheckoutOrderSummary = () => {
   //redux
   const cartItems = useSelector((state) => state.cart);
   const { cart, subtotal, expressShipping } = cartItems;
-  console.log("in the cart", cart)
   const orderItems = useSelector((state) => state.order);
   const { shippingAddress } = orderItems;
 
