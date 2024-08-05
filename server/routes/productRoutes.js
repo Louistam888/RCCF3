@@ -108,6 +108,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 //route to update product
 const updateProduct = asyncHandler(async (req, res) => {
+  console.log("res received", res.body)
   const {
     brand,
     name,
