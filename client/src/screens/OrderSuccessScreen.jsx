@@ -93,13 +93,13 @@ const OrderSuccessScreen = () => {
                   updateProduct(
                     matchedProduct.brand,
                     matchedProduct.name,
-                    matchedProduct.image,
                     matchedProduct.category,
                     updatedStock,
                     matchedProduct.price,
                     matchedProduct._id,
                     matchedProduct.isNew,
-                    matchedProduct.description
+                    matchedProduct.description,
+                    matchedProduct.image,
                   )
                 );
               }
