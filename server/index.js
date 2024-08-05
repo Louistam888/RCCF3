@@ -16,7 +16,7 @@ import stripeRoutes from "./routes/stripeRoutes.js";
 dotenv.config();
 connectToDatabase();
 
-// const app = express();
+const app = express();
 app.use(express.json());
 
 app.use(
