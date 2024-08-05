@@ -120,8 +120,11 @@ const updateProduct = asyncHandler(async (req, res) => {
     description,
   } = req.body;
 
+  console.log(id, "id to search")
+
   //find product with matching ID
   const product = await Product.findById(id);
+  console.log("product found in update product function", product)
 
   //if matching product is found with identical information, replace descriptive information with updated info from the req
   if (product) {
@@ -136,6 +139,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 
     //save updated product
     const updatedProduct = await product.save();
+    console.log("updated product", updatedProduct)
     res.json(updatedProduct);
   } else {
     res.status(404);
