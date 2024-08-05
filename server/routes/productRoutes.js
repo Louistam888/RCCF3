@@ -120,6 +120,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     description,
   } = req.body;
 
+  console.log(req.body, "entire req")
   console.log(id, "id to search")
 
   //find product with matching ID
