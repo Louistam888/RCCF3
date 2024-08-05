@@ -120,9 +120,8 @@ const updateProduct = asyncHandler(async (req, res) => {
     description,
   } = req.body;
 
-  console.log(req.body, "req, body")
-  console.log(req.body.id," search by id")
-
+  const jsonObject = (JSON.stringify(req.body, null, 2),  "req body");
+console.log(jsonObject,"json", typeof jsonObject)
   //find product with matching ID
   const product = await Product.findById(id);
   console.log("product found in update product function", product)
