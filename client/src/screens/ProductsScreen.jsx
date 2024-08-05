@@ -1,4 +1,12 @@
-import { Center, Grid, Flex, Box, Image, Heading, Spinner } from "@chakra-ui/react";
+import {
+  Center,
+  Grid,
+  Flex,
+  Box,
+  Image,
+  Heading,
+  Spinner,
+} from "@chakra-ui/react";
 import ProductCard from "../components/ProductCard";
 import PageNotFound from "./PageNotFound";
 import { getProducts } from "../redux/actions/productActions.js";
@@ -32,19 +40,18 @@ const ProductsScreen = () => {
     });
 
     chairArray.sort((a, b) => {
-      const cleanNameA = a.name.replace(/,/g, '');
-      const cleanNameB = b.name.replace(/,/g, '');
-    
+      const cleanNameA = a.name.replace(/,/g, "");
+      const cleanNameB = b.name.replace(/,/g, "");
+
       if (cleanNameA > cleanNameB) return 1;
       if (cleanNameA < cleanNameB) return -1;
       return 0;
     });
-    
 
     isNew.sort((a, b) => {
-      const cleanNameA = a.name.replace(/,/g, '');
-      const cleanNameB = b.name.replace(/,/g, '');
-    
+      const cleanNameA = a.name.replace(/,/g, "");
+      const cleanNameB = b.name.replace(/,/g, "");
+
       if (cleanNameA > cleanNameB) return 1;
       if (cleanNameA < cleanNameB) return -1;
       return 0;
@@ -57,12 +64,18 @@ const ProductsScreen = () => {
     const finalArray = chairArray;
     return finalArray;
   };
-  const chairArray = sortByNew(products);
+  const chairArray = products ? sortByNew(products) : [];
 
   return (
-    <Box >
+    <Box>
       {loading ? (
-        <Flex w="100%" h="calc(100vh - 90px)" justifyContent="center" alignItems="center" pt="90px">
+        <Flex
+          w="100%"
+          h="calc(100vh - 90px)"
+          justifyContent="center"
+          alignItems="center"
+          pt="90px"
+        >
           <Spinner
             mt="50px"
             thickness="20px"
@@ -85,8 +98,19 @@ const ProductsScreen = () => {
             mb={{ base: "20px", sm: "50px" }}
           >
             <Image src="/assets/brandPhotos/brandBanner.jpg" w="100%" />
-            <Flex position="absolute" justifyContent="center" alignItems="center" w="100%" h="100%" className="fadeIn">
-              <Heading fontSize={{ base: "5xl", sm: "7xl" }} textTransform="uppercase" color="whiteAlpha.900">
+            <Flex
+              position="absolute"
+              justifyContent="center"
+              alignItems="center"
+              w="100%"
+              h="100%"
+              className="fadeIn"
+            >
+              <Heading
+                fontSize={{ base: "5xl", sm: "7xl" }}
+                textTransform="uppercase"
+                color="whiteAlpha.900"
+              >
                 {brand} {/* Render the brand name dynamically */}
               </Heading>
             </Flex>
