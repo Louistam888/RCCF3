@@ -40,6 +40,8 @@ const OrderSuccessScreen = () => {
         const response = await axios.get(
           "https://rccf3.onrender.com/latestSession"
         );
+
+        console.log(response, "stripe")
         const { metadata, payment_method_types, total_details, amount_total } =
           response.data;
         const addressInfo = metadata.addressInfo;
@@ -75,10 +77,7 @@ const OrderSuccessScreen = () => {
 
   // Handle payment success and update product stock
   useEffect(() => {
-    console.log("beginning");
     if (paymentSuccess && !loading && products.length > 0) {
-      console.log("secondary condition met");
-
       const updateProducts = async () => {
         try {
           // Create an array of promises for updating products
@@ -99,7 +98,7 @@ const OrderSuccessScreen = () => {
                     matchedProduct._id,
                     matchedProduct.isNew,
                     matchedProduct.description,
-                    matchedProduct.image,
+                    matchedProduct.image
                   )
                 );
               }

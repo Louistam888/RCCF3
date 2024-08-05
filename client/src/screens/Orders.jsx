@@ -30,6 +30,10 @@ const Orders = () => {
   const location = useLocation();
   const navigate = useNavigate(); // Using useNavigate hook
 
+  //sort so latest orders appear first
+  const orderCopy = orders ? [...orders] : []
+  const orderReversed = orderCopy.reverse();
+
   useEffect(() => {
     if (userInfo) {
       dispatch(getUserOrders());
@@ -72,12 +76,11 @@ const Orders = () => {
                   <Th>Order Id</Th>
                   <Th>Order Date</Th>
                   <Th>Paid Total</Th>
-                  <Th>Items</Th>
-                  <Th>Receipt</Th>
+                  <Th>Items</Th>                
                 </Tr>
               </Thead>
               <Tbody>
-                {orders.map((order) => (
+                {orderReversed.map((order) => (
                   <Tr key={order._id}>
                     <Td>{order._id}</Td>
                     <Td>{new Date(order.createdAt).toDateString()}</Td>
@@ -92,10 +95,7 @@ const Orders = () => {
                           </ListItem>
                         </UnorderedList>
                       ))}
-                    </Td>
-                    <Td>
-                      <Button variant="outline">Receipt</Button>
-                    </Td>
+                    </Td>                   
                   </Tr>
                 ))}
               </Tbody>

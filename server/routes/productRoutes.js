@@ -108,7 +108,6 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 //route to update product
 const updateProduct = asyncHandler(async (req, res) => {
-  console.log("res received", req.body);
   const {
     brand,
     name,
@@ -121,19 +120,8 @@ const updateProduct = asyncHandler(async (req, res) => {
     description,
   } = req.body;
 
-  console.log(brand, " brand");
-  console.log(name, " name");
-  console.log(image, " image"); 
-  console.log(category, " category");
-  console.log(stock, " stock");
-  console.log(price, " price");
-  console.log(id, " id");
-  console.log(productIsNew, " new");
-  console.log(description, " desc");
-
   //find product with matching ID
   const product = await Product.findById(id);
-  console.log("product found in update product function", product);
 
   //if matching product is found with identical information, replace descriptive information with updated info from the req
   if (product) {
@@ -148,7 +136,6 @@ const updateProduct = asyncHandler(async (req, res) => {
 
     //save updated product
     const updatedProduct = await product.save();
-    console.log("updated product", updatedProduct);
     res.json(updatedProduct);
   } else {
     res.status(404);
