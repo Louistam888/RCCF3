@@ -120,15 +120,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     description,
   } = req.body;
 
-  console.log(req.body, "entire req")
-  console.log(brand,"brand")
-  console.log(name,"name")
-  console.log(category, "category")
-  console.log(stock, "stock")
-  console.log(price, "price")
-  console.log(productIsNew, "isnew")
-  console.log(description, "description")
-  console.log(id, "id to search")
+  console.log(req.body.id," search by id")
 
   //find product with matching ID
   const product = await Product.findById(id);
