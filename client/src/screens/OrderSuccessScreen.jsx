@@ -75,7 +75,10 @@ const OrderSuccessScreen = () => {
 
   // Handle payment success and update product stock
   useEffect(() => {
+    console.log("beginning")
     if (paymentSuccess && !loading && products.length > 0) {
+      console.log("secondary condition met")
+
       const updateProducts = async () => {
         try {
           // Create an array of promises for updating products
@@ -84,6 +87,8 @@ const OrderSuccessScreen = () => {
               const matchedProduct = products.find(
                 (item) => item._id === cartItem.id
               );
+
+              console.log(matchedProduct, "matched")
 
               if (matchedProduct) {
                 const updatedStock = matchedProduct.stock - cartItem.qty;
