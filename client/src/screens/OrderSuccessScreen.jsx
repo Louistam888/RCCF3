@@ -75,9 +75,9 @@ const OrderSuccessScreen = () => {
 
   // Handle payment success and update product stock
   useEffect(() => {
-    console.log("beginning")
+    console.log("beginning");
     if (paymentSuccess && !loading && products.length > 0) {
-      console.log("secondary condition met")
+      console.log("secondary condition met");
 
       const updateProducts = async () => {
         try {
@@ -90,17 +90,17 @@ const OrderSuccessScreen = () => {
               if (matchedProduct) {
                 const updatedStock = matchedProduct.stock - cartItem.qty;
                 return dispatch(
-                  updateProduct({
-                    brand: matchedProduct.brand,
-                    name: matchedProduct.name,
-                    image: matchedProduct.image,
-                    category: matchedProduct.category,
-                    stock: updatedStock,
-                    price: matchedProduct.price,
-                    id: matchedProduct._id,
-                    isNew: matchedProduct.isNew,
-                    description: matchedProduct.description,
-                  })
+                  updateProduct(
+                    matchedProduct.brand,
+                    matchedProduct.name,
+                    matchedProduct.image,
+                    matchedProduct.category,
+                    updatedStock,
+                    matchedProduct.price,
+                    matchedProduct._id,
+                    matchedProduct.isNew,
+                    matchedProduct.description
+                  )
                 );
               }
               return null; // Return null for items not found
@@ -195,5 +195,3 @@ const OrderSuccessScreen = () => {
 };
 
 export default OrderSuccessScreen;
-
-
