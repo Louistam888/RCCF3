@@ -92,17 +92,18 @@ const OrderSuccessScreen = () => {
 
               if (matchedProduct) {
                 const updatedStock = matchedProduct.stock - cartItem.qty;
+                console.log(updatedStock, "updated stock")
                 return dispatch(
                   updateProduct({
-                    stock: updatedStock,
                     brand: matchedProduct.brand,
                     name: matchedProduct.name,
+                    image: matchedProduct.image,
                     category: matchedProduct.category,
+                    stock: updatedStock,
                     price: matchedProduct.price,
                     id: matchedProduct._id,
                     isNew: matchedProduct.isNew,
                     description: matchedProduct.description,
-                    image: matchedProduct.image,
                   })
                 );
               }
