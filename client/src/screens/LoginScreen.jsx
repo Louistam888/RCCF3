@@ -112,13 +112,13 @@ const LoginScreen = () => {
                       <TextField
                         text="text"
                         name="email"
-                        placeholder="email@email.com"
+                        placeholder="ben@web.com"
                         label="email"
                       />
                       <PasswordTextField
                         type="password"
                         name="password"
-                        placeholder="your password"
+                        placeholder="12"
                         label="password"
                       />
                     </FormControl>
