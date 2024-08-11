@@ -74,7 +74,7 @@ const Navbar = () => {
   //function to loop through menu items
   const MenuItems = ({ links }) => {
     return links.map((link) => (
-      <NavLink key={link.linkName} path={link.path}>
+      <NavLink key={link.linkName} to={link.path}>
         <Text fontSize={{ md: "1rem", lg: "1.2rem" }}>
           {link.linkName.toUpperCase()}
         </Text>
@@ -93,7 +93,8 @@ const Navbar = () => {
         color="blackAlpha.900"
         _hover={{
           textDecoration: "none",
-          bg: mode("gray.300", "whiteAlpha.800"),
+          bg: mode("#c2122f", "#401e9e"),
+          color: "#f2f2f2",
         }}
         fontSize="xl"
         h="40px"
@@ -188,6 +189,7 @@ const Navbar = () => {
             <Icon
               as={colorMode === "light" ? MoonIcon : SunIcon}
               alignSelf="center"
+              color="black"
             />
           </Flex>
           {userInfo ? (
@@ -240,7 +242,7 @@ const Navbar = () => {
               <Button
                 as={ReactLink}
                 to="/login"
-                sx={buttonBlue}
+                sx={buttonRed}
                 _hover={{ bg: hoverColor }}
                 m={{ base: "3px", lg: "5px" }}
                 fontSize={{ base: "0.7rem", md: "0.8rem", lg: "1.2rem" }}
@@ -258,7 +260,7 @@ const Navbar = () => {
                 w={{ base: "50px", sm: "65px", md: "100px" }}
                 display={{ base: "none", sm: "flex" }}
                 // _hover={{ bg: hoverColor }}
-                sx={buttonRed}
+                sx={buttonBlue}
               >
                 <Text> Sign Up</Text>
               </Button>

@@ -18,6 +18,7 @@ import { PhoneIcon, EmailIcon, ChatIcon } from "@chakra-ui/icons";
 import CheckoutItem from "./CheckoutItem";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
+import { buttonRed, buttonBlue } from "../theme/Theme";
 
 const CheckoutOrderSummary = () => {
   //chakra
@@ -54,11 +55,10 @@ const CheckoutOrderSummary = () => {
   );
 
   const makePayment = async () => {
-
     try {
       const stripePromise = loadStripe(
         "pk_test_51MgFTDE9bJZH5kiQuzUbJHPJ7fmQwSejIxWYh5maW6j8ACwbcLz8dSRvMBP3xYtB8EUIA5qVZDcY9ImbNU4X8qEg00DeApogPl"
-      )
+      );
 
       const stripe = await stripePromise;
 
@@ -66,7 +66,7 @@ const CheckoutOrderSummary = () => {
         products: cart,
         shipping: shipping(),
         expressShipping: expressShipping,
-        addressInfo: shippingAddress
+        addressInfo: shippingAddress,
       };
 
       // Make a POST request to your backend to create a checkout session
@@ -172,12 +172,14 @@ const CheckoutOrderSummary = () => {
         </Flex>
       </Stack>
       <Stack>
-        <Button as={ReactLink} to="/cart">
+        <Button as={ReactLink} to="/cart" sx={buttonRed}>
           Back to cart
         </Button>
       </Stack>
       <Stack>
-        <Button onClick={makePayment}>Confirm</Button>
+        <Button onClick={makePayment} sx={buttonBlue}>
+          Confirm
+        </Button>
       </Stack>
 
       <Box alignItems="center">

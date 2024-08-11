@@ -18,7 +18,7 @@ import { useNavigate, Link as ReactLink, useLocation } from "react-router-dom";
 import PasswordTextField from "../components/PasswordTextField";
 import TextField from "../components/TextField";
 import PageNotFound from "./PageNotFound";
-
+import { buttonRed } from "../theme/Theme";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -88,7 +88,13 @@ const LoginScreen = () => {
                   <HStack spacing="1" justifyContent="center">
                     <Text color="muted">
                       Don't have an account?
-                      <Button as={ReactLink} to="/registration" varaint="link">
+                      <Button
+                        as={ReactLink}
+                        to="/registration"
+                        varaint="link"
+                        sx={buttonRed}
+                        ml="10px"
+                      >
                         Sign up
                       </Button>
                     </Text>
@@ -127,7 +133,7 @@ const LoginScreen = () => {
                     <Stack spacing="6">
                       <LightMode>
                         <Button
-                          colorScheme="red"
+                          sx={buttonRed}
                           _hover={{ bg: hoverColor }}
                           size="lg"
                           fontSize="md"
