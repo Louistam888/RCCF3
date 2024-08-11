@@ -17,7 +17,6 @@ const TextField = ({ label, type, name, placeholder }) => {
         type={type}
         name={name}
         placeholder={placeholder}
-       
       />
       <FormErrorMessage>{meta.error}</FormErrorMessage>
     </FormControl>

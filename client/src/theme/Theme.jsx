@@ -17,13 +17,13 @@ const theme = extendTheme({
       fontSize: "md",
     },
     buttonRed: {
-      _hover: { bg: "black", color:"white" },
-      bgColor: "blue.300",
+      _hover: { bg: "black", color: "white" },
+      bgColor: "#c2122f",
       color: "#f2f2f2",
     },
     buttonBlue: {
-      _hover: { bg: "black", color:"white" },
-      bgColor: "#c2122f",
+      _hover: { bg: "black", color: "white" },
+      bgColor: "#401e9e",
       color: "#f2f2f2",
     },
   },
