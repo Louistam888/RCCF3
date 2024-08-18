@@ -74,7 +74,7 @@ const Navbar = () => {
   //function to loop through menu items
   const MenuItems = ({ links }) => {
     return links.map((link) => (
-      <NavLink key={link.linkName} to={link.path}>
+      <NavLink key={link.linkName} path={link.path}>
         <Text fontSize={{ md: "1rem", lg: "1.2rem" }}>
           {link.linkName.toUpperCase()}
         </Text>
