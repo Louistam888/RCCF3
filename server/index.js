@@ -57,6 +57,10 @@ if (process.env.NODE_ENV == "development") {
   );
 }
 
+app.get(`/api/cron-task`, (req, res) => {
+  res.send({ message: "cron job executed successfully" });
+});
+
 app.listen(port, () => {
   console.log(`Server runs on port ${port}.`);
 });
