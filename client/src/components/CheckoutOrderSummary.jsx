@@ -19,6 +19,7 @@ import CheckoutItem from "./CheckoutItem";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { buttonRed, buttonBlue } from "../theme/Theme";
+import TestCreditCard from "../screens/TestCreditCard";
 
 const CheckoutOrderSummary = () => {
   //chakra
@@ -29,7 +30,7 @@ const CheckoutOrderSummary = () => {
   const cartItems = useSelector((state) => state.cart);
   const { cart, subtotal, expressShipping } = cartItems;
   const orderItems = useSelector((state) => state.order);
-  const { shippingAddress } = orderItems;
+   const { shippingAddress } = orderItems;
 
   const shipping = useCallback(() => {
     let shippingCost =
@@ -68,7 +69,7 @@ const CheckoutOrderSummary = () => {
         expressShipping: expressShipping,
         addressInfo: shippingAddress,
       };
-
+      
       // Make a POST request to your backend to create a checkout session
       const response = await axios.post(
         `/api/stripe/create-checkout-session`,
@@ -170,6 +171,10 @@ const CheckoutOrderSummary = () => {
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </Text>
         </Flex>
+        <Text>
+          IMPORTANT: To complete checkout, use this{" "}
+          <Link as={ReactLink} color="blue" textDecoration="underline" target="_blank" to={"/testcreditcard"}> test credit card addressInfo</Link> on the next screen (opens in new window)
+        </Text>
       </Stack>
       <Stack>
         <Button as={ReactLink} to="/cart" sx={buttonRed}>
