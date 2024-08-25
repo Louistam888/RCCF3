@@ -31,8 +31,7 @@ const CheckoutOrderSummary = () => {
   const { cart, subtotal, expressShipping } = cartItems;
   const orderItems = useSelector((state) => state.order);
   const {
-    shippingAddress,
-    shippingAddres: { postalCode },
+    shippingAddress,   
   } = orderItems;
   const user = useSelector((state) => state.user);
   const {
@@ -78,7 +77,7 @@ const CheckoutOrderSummary = () => {
         email: email,
         firstName: firstName,
         lastName: lastName,
-        postalCode: postalCode,
+        postalCode: shippingAddress.postalCode,
       };
 
       // Make a POST request to your backend to create a checkout session
