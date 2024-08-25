@@ -23,6 +23,7 @@ import OrderSuccessScreen from "./screens/OrderSuccessScreen";
 import OrderFailedScreen from "./screens/OrderFailed";
 import Orders from "./screens/Orders";
 import FloatingContactButton from "./components/FloatingContactButton";
+import TestCreditCard from "./screens/TestCreditCard";
 import { ScrollToTop } from "react-router-scroll-to-top";
 
 const App = () => {
@@ -55,6 +56,10 @@ const App = () => {
             <Route
               path="/adminConsole"
               element={<AdminConsoleScreen />}
+            ></Route>
+            <Route
+              path="/testcreditcard"
+              element={<TestCreditCard />}
             ></Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>

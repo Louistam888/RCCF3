@@ -41,6 +41,11 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
           },
         },
       ],
+      customerInfo: {
+        // firstName: "JOhn",
+        // lastName: "doe",
+        email: "john.doe@example.com"
+      },
       payment_method_types: ["card"],
       line_items: lineItems,
       automatic_tax: {
