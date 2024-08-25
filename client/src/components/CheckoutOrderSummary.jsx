@@ -30,9 +30,14 @@ const CheckoutOrderSummary = () => {
   const cartItems = useSelector((state) => state.cart);
   const { cart, subtotal, expressShipping } = cartItems;
   const orderItems = useSelector((state) => state.order);
-  const { shippingAddress } = orderItems;
-  const user = useSelector((state)=> state.user)
-  const {userInfo: {email , firstName, lastName} } = user
+  const {
+    shippingAddress,
+    shippingAddres: { postalCode },
+  } = orderItems;
+  const user = useSelector((state) => state.user);
+  const {
+    userInfo: { email, firstName, lastName },
+  } = user;
 
   const shipping = useCallback(() => {
     let shippingCost =
@@ -71,8 +76,11 @@ const CheckoutOrderSummary = () => {
         expressShipping: expressShipping,
         addressInfo: shippingAddress,
         email: email,
+        firstName: firstName,
+        lastName: lastName,
+        postalCode: postalCode,
       };
-      
+
       // Make a POST request to your backend to create a checkout session
       const response = await axios.post(
         `/api/stripe/create-checkout-session`,
@@ -176,7 +184,17 @@ const CheckoutOrderSummary = () => {
         </Flex>
         <Text>
           IMPORTANT: To complete checkout, use this{" "}
-          <Link as={ReactLink} color="blue" textDecoration="underline" target="_blank" to={"/testcreditcard"}> test credit card addressInfo</Link> on the next screen (opens in new window)
+          <Link
+            as={ReactLink}
+            color="blue"
+            textDecoration="underline"
+            target="_blank"
+            to={"/testcreditcard"}
+          >
+            {" "}
+            test credit card address info
+          </Link>{" "}
+          on the next screen (opens in new window)
         </Text>
       </Stack>
       <Stack>
