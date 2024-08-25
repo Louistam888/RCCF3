@@ -30,7 +30,9 @@ const CheckoutOrderSummary = () => {
   const cartItems = useSelector((state) => state.cart);
   const { cart, subtotal, expressShipping } = cartItems;
   const orderItems = useSelector((state) => state.order);
-   const { shippingAddress } = orderItems;
+  const { shippingAddress } = orderItems;
+  const user = useSelector((state)=> state.user)
+  const {userInfo: {email , firstName, lastName} } = user
 
   const shipping = useCallback(() => {
     let shippingCost =
@@ -68,6 +70,7 @@ const CheckoutOrderSummary = () => {
         shipping: shipping(),
         expressShipping: expressShipping,
         addressInfo: shippingAddress,
+        email: email,
       };
       
       // Make a POST request to your backend to create a checkout session
