@@ -13,10 +13,7 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
       products,
       shipping,
       addressInfo,
-      email,
-      firstName,
-      lastName,
-      postalCode,
+      email,    
     } = req.body;
 
     if (!products || !Array.isArray(products) || products.length === 0) {
@@ -37,10 +34,7 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
 
     // Create stripe session
     const session = await stripe.checkout.sessions.create({
-      customer_email: email,
-      address: {
-        postalCode: postalCode,
-      },
+      customer_email: email,    
       shipping_options: [
         {
           shipping_rate_data: {
