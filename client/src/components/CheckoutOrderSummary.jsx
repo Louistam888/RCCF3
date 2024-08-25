@@ -19,7 +19,6 @@ import CheckoutItem from "./CheckoutItem";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { buttonRed, buttonBlue } from "../theme/Theme";
-import TestCreditCard from "../screens/TestCreditCard";
 
 const CheckoutOrderSummary = () => {
   //chakra
@@ -30,12 +29,10 @@ const CheckoutOrderSummary = () => {
   const cartItems = useSelector((state) => state.cart);
   const { cart, subtotal, expressShipping } = cartItems;
   const orderItems = useSelector((state) => state.order);
-  const {
-    shippingAddress,   
-  } = orderItems;
+  const { shippingAddress } = orderItems;
   const user = useSelector((state) => state.user);
   const {
-    userInfo: { email, firstName, lastName },
+    userInfo: { email },
   } = user;
 
   const shipping = useCallback(() => {
@@ -75,9 +72,6 @@ const CheckoutOrderSummary = () => {
         expressShipping: expressShipping,
         addressInfo: shippingAddress,
         email: email,
-        firstName: firstName,
-        lastName: lastName,
-        postalCode: "M1A 2A3",
       };
 
       // Make a POST request to your backend to create a checkout session
