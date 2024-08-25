@@ -56,6 +56,9 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
           allow_promotion_codes: true,
         },
       },
+      customerInfo: {
+        email: "john.doe@example.com",
+      },
       success_url: "https://rccf3.onrender.com/ordersuccess",
       cancel_url: "https://rccf3.onrender.com/orderfailed",
     });
