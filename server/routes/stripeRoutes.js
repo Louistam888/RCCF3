@@ -9,7 +9,7 @@ const endpointSecret = process.env.STRIPE_ENDPOINT; //change for web endpoint
 
 stripeRoutes.post("/create-checkout-session", async (req, res) => {
   try {
-    const { products, shipping, addressInfo } = req.body;
+    const { products, shipping, addressInfo, email } = req.body;
 
     if (!products || !Array.isArray(products) || products.length === 0) {
       return res.status(400).json({ error: "No products provided." });
@@ -29,6 +29,7 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
 
     // Create stripe session
     const session = await stripe.checkout.sessions.create({
+      customer_email: email,
       shipping_options: [
         {
           shipping_rate_data: {
@@ -55,9 +56,6 @@ stripeRoutes.post("/create-checkout-session", async (req, res) => {
           enabled: true,
           allow_promotion_codes: true,
         },
-      },
-      customerInfo: {
-        email: "john.doe@example.com",
       },
       success_url: "https://rccf3.onrender.com/ordersuccess",
       cancel_url: "https://rccf3.onrender.com/orderfailed",
