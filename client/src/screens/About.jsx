@@ -46,7 +46,7 @@ const About = () => {
           {" "}
           about us
         </Heading>
-        <Flex gap="10px">
+        <Flex gap="10px" direction={{ base: "column", lg: "row" }}>
           <Box
             h="300px"
             w={{ base: "100%", lg: "40%" }}
