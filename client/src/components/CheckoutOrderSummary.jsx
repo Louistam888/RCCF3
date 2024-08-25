@@ -77,7 +77,7 @@ const CheckoutOrderSummary = () => {
         email: email,
         firstName: firstName,
         lastName: lastName,
-        postalCode: shippingAddress.postalCode,
+        postalCode: "M1A 2A3",
       };
 
       // Make a POST request to your backend to create a checkout session
